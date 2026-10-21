@@ -31,9 +31,9 @@ export const site = {
 
 // Replace the placeholders with your real links.
 export const contact = {
-  email: "saifaptech100.com",
-  github: "www.linkedin.com/in/saif-nawaz-154891352",
-  linkedin: "https://github.com/saifnawaz",
+  email: "saifaptech100@gmail.com",
+  github: "https://github.com/saifnawaz",
+  linkedin: "https://www.linkedin.com/in/saif-nawaz-154891352",
 };
 
 export const navLinks = [
