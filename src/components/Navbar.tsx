@@ -34,8 +34,10 @@ export function Navbar() {
       }`}
     >
       <Container className="flex h-16 items-center justify-between">
+        {/* Plain <a> so Lenis smooth-scrolls on the home page */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a
-          href="#top"
+          href="/#top"
           className="text-lg font-extrabold tracking-[-0.03em]"
           onClick={() => setOpen(false)}
         >
@@ -47,7 +49,7 @@ export function Navbar() {
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
+                  href={`/${link.href}`}
                   className="mono link-u text-muted transition-colors hover:text-fg"
                 >
                   {link.label}
@@ -95,7 +97,7 @@ export function Navbar() {
             {navLinks.map((link, i) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
+                  href={`/${link.href}`}
                   onClick={() => setOpen(false)}
                   className="flex items-baseline gap-4 py-3 text-2xl font-bold tracking-[-0.03em]"
                 >

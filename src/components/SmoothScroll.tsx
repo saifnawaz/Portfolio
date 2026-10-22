@@ -11,7 +11,7 @@ export function SmoothScroll() {
 
     const lenis = new Lenis({
       autoRaf: true,
-      // Handles in-page #links; offset clears the 64px sticky navbar.
+      // Handles in-page #links (and /#links on the home page); offset clears the 64px sticky navbar.
       anchors: { offset: -64 },
     });
     return () => lenis.destroy();
