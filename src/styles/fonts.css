@@ -33,3 +33,24 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* Fallback faces sized to Satoshi's widths (measured against Arial), so text
+   wraps the same before and after the web font arrives: no layout shift. */
+@font-face {
+  font-family: "Satoshi Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Helvetica");
+  font-weight: 400;
+  size-adjust: 98.58%;
+  ascent-override: 101.4%;
+  descent-override: 25.4%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Satoshi Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Helvetica");
+  font-weight: 500;
+  size-adjust: 101.38%;
+  ascent-override: 98.6%;
+  descent-override: 24.7%;
+  line-gap-override: 0%;
+}

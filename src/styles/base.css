@@ -225,6 +225,12 @@ body::after {
 .js [data-split]:not(.is-split):not(.is-done) {
   opacity: 0; /* until fonts are in and lines are measured */
 }
+/* Flex column: the lines' negative margins must add up, not collapse, so the
+   split text is exactly as tall as the original (no jump when restored). */
+.is-split {
+  display: flex;
+  flex-direction: column;
+}
 .split-line {
   display: block;
   overflow: hidden;

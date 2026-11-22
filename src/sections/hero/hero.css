@@ -41,13 +41,13 @@
 
 /* Top: statement (left) + "Currently" (right); stacked on small screens. */
 .hero__top {
-  align-self: center;
+  align-self: end; /* bottom-anchored: font swaps in the statement can't shift the rest */
   display: grid;
   gap: 2.5rem;
-  padding-block: 1.5rem clamp(2rem, 5vh, 4rem);
+  padding-block: 1.5rem clamp(2.5rem, 9vh, 6rem);
 }
 .hero__statement {
-  max-width: 19ch;
+  max-width: 13em; /* em, not ch: ch changes with the font and would rewrap on swap */
   font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem); /* ~28-40px */
   font-weight: 500;
   line-height: 1.15;
@@ -92,6 +92,17 @@
 .hero__statement .split-line > span {
   transition-delay: calc(0.9s + var(--line, 0) * 90ms);
 }
+/* The whole top block waits (invisible, so font-swap reflow can't count as a
+   layout shift) until fonts are in and the intro starts. */
+.js .hero__top {
+  visibility: hidden;
+  opacity: 0;
+}
+.hero.is-ready .hero__top {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.8s ease 0.8s;
+}
 .js .hero__now-row {
   opacity: 0;
   translate: 0 0.5rem;
@@ -107,7 +118,7 @@
 /* One-liner, above the name */
 .hero__line {
   align-self: end;
-  max-width: 32ch;
+  max-width: 18em;
   margin-bottom: clamp(1.25rem, 3vw, 2.5rem);
   overflow: hidden;
   font-size: var(--text-lg);
@@ -144,11 +155,21 @@
 /* Corner details, below the name */
 .hero__meta {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0.5rem 1.5rem;
+  flex-direction: column; /* stacked on narrow screens: a fixed two lines, whatever the font */
+  gap: 0.35rem 1.5rem;
   margin-top: clamp(1rem, 2.5vw, 1.75rem);
   color: var(--ink-muted);
+}
+@media (min-width: 40rem) {
+  .hero__meta {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+/* Reserve the clock's final width ("10:20 UTC+5", monospace) so filling it in can't reflow. */
+.hero__meta time {
+  display: inline-block;
+  min-width: calc(11ch + 0.7em);
 }
 .hero__status {
   display: inline-flex;
@@ -186,7 +207,9 @@
     translate: none;
   }
   .js .hero__meta,
-  .js .hero__now-row {
+  .js .hero__now-row,
+  .js .hero__top {
+    visibility: visible;
     opacity: 1;
     translate: none;
   }
