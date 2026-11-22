@@ -29,7 +29,7 @@
 .hero__name {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: clamp(5.5rem, 1rem + 22vw, 16rem);
+  font-size: clamp(5.5rem, 1rem + 25vw, 16rem);
   line-height: 0.82;
   letter-spacing: -0.035em;
 }
@@ -107,6 +107,9 @@
   .hero__portrait img {
     width: auto;
     height: 100%;
+  }
+  .hero__name {
+    font-size: min(16rem, 16vw); /* keeps the name clear of the face */
   }
   .hero__foot {
     border-top: 0;
