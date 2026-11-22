@@ -1,137 +1,184 @@
-.projects__list {
-  display: grid;
-  gap: clamp(4.5rem, 9vw, 8.5rem);
-}
-
+/* Column layout shared by the header row and each project row (desktop). */
+.projects__head,
 .project {
-  display: grid;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  --cols: 3.5rem minmax(0, 1fr) 11rem 13rem 8rem 1.5rem;
 }
 
-/* Screenshot ------------------------------------------------------------- */
-.project__shot {
+.projects__head {
+  display: none;
+  padding-bottom: 1rem;
+  color: var(--ink-faint);
+}
+
+.projects__list {
+  border-top: 1px solid var(--line);
+}
+
+/* Row (mobile first: stacked) -------------------------------------------- */
+.project {
   position: relative;
-  display: block;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  grid-template-areas:
+    "num main arrow"
+    ". role role"
+    ". stack stack"
+    ". status status"
+    ". extras extras"
+    ". thumb thumb";
+  gap: 0.35rem 0.75rem;
+  padding-block: clamp(1.5rem, 3vw, 2.25rem);
+  border-bottom: 1px solid var(--line);
+  transition: opacity 0.4s ease;
+}
+.project__num {
+  grid-area: num;
+  padding-top: 0.55em;
+  color: var(--ink-faint);
+}
+.project__main {
+  grid-area: main;
+  margin-bottom: 0.5rem;
+}
+.project__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  transition: translate 0.6s var(--ease-out);
+}
+.project__blurb {
+  max-width: 52ch;
+  margin-top: 0.5rem;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+.project__role {
+  grid-area: role;
+}
+.project__stack {
+  grid-area: stack;
+  color: var(--ink-muted);
+}
+.project__role,
+.project__stack {
+  font-size: var(--text-sm);
+}
+.project__status {
+  grid-area: status;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--ink-muted);
+}
+.project__arrow {
+  grid-area: arrow;
+  padding-top: 0.3em;
+  font-size: 1.25rem;
+  transition: translate 0.5s var(--ease-out);
+}
+.project__extras {
+  grid-area: extras;
+  position: relative;
+  z-index: 1; /* above the row-wide link */
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+.project__thumb {
+  grid-area: thumb;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  margin-top: 1rem;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid var(--line);
+}
+
+/* The title link covers the whole row, so the row is the click target. */
+.project__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* Desktop: one line per project, aligned columns -------------------------- */
+@media (min-width: 64rem) {
+  .projects__head,
+  .project {
+    display: grid;
+    grid-template-columns: var(--cols);
+    grid-template-areas: "num main role stack status arrow" ". extras extras extras extras extras" ". thumb thumb thumb thumb thumb";
+    column-gap: 1.5rem;
+    align-items: baseline;
+  }
+  .projects__head > span:nth-child(2) {
+    grid-column: 2;
+  }
+  .project__main {
+    margin-bottom: 0;
+  }
+  .project__num {
+    padding-top: 0;
+  }
+  .project__arrow {
+    justify-self: end;
+    padding-top: 0;
+  }
+  .project__thumb {
+    max-width: 32rem;
+  }
+}
+
+/* Mouse + motion: screenshots float next to the cursor instead of sitting inline. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .js .project__thumb {
+    display: none;
+  }
+}
+
+/* Hover: the row under the cursor stays bright, the others step back. */
+.js .project.is-in {
+  transition: opacity 0.4s ease; /* after the scroll reveal, dimming responds instantly */
+}
+@media (hover: hover) {
+  .projects__list:hover .project:not(:hover) {
+    opacity: 0.35;
+  }
+  .project:has(.project__link):hover .project__title {
+    translate: 0.5rem 0;
+  }
+  .project:hover .project__arrow {
+    translate: 0.2rem -0.2rem;
+  }
+}
+
+/* Floating preview (created by preview.js) */
+.project-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  width: clamp(16rem, 22vw, 24rem);
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border: 1px solid var(--line-strong);
   background: var(--bg-raised);
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.92;
+  transition:
+    opacity 0.3s ease,
+    scale 0.5s var(--ease-out);
 }
-.project__shot img {
+.project-preview.is-visible {
+  opacity: 1;
+  scale: 1;
+}
+.project-preview img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top;
-  transition: transform 1.2s var(--ease-out);
-}
-@media (hover: hover) {
-  a.project__shot:hover img {
-    transform: scale(1.025);
-  }
-}
-
-.project__placeholder {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background: var(--bg-raised);
-}
-.project__placeholder-title {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 2rem + 5vw, 6rem);
-  letter-spacing: -0.02em;
-}
-.project__placeholder .label {
-  position: absolute;
-  right: 1rem;
-  bottom: 0.85rem;
-  color: var(--ink-faint);
-}
-
-/* Info ------------------------------------------------------------------- */
-.project__index {
-  color: var(--ink-faint);
-}
-.project__title {
-  margin: 0.75rem 0 1rem;
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 1.6rem + 3.2vw, 4.25rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-.project__blurb {
-  max-width: 46ch;
-  color: var(--ink-muted);
-}
-
-.project__meta {
-  display: grid;
-  gap: 0.6rem;
-  margin-top: 1.75rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line);
-  font-size: var(--text-sm);
-}
-.project__meta > div {
-  display: grid;
-  grid-template-columns: 5.5rem 1fr;
-  gap: 1rem;
-  align-items: baseline;
-}
-.project__meta dt {
-  color: var(--ink-faint);
-}
-.project__meta dd {
-  margin: 0;
-}
-
-.project__stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.15rem 0.5rem;
-}
-.project__stack li:not(:last-child)::after {
-  content: "/";
-  margin-left: 0.5rem;
-  color: var(--ink-faint);
-}
-
-.project__status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-}
-.project__status::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border: 1px solid var(--accent);
-  border-radius: 50%;
-}
-.project__status.is-live::before {
-  background: var(--accent);
-}
-
-.project__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.75rem;
-  margin-top: 1.75rem;
-}
-
-/* Desktop: screenshot and text side by side, alternating sides ------------ */
-@media (min-width: 56rem) {
-  .project {
-    grid-template-columns: 7fr 5fr;
-    align-items: center;
-    gap: clamp(2.5rem, 5vw, 5.5rem);
-  }
-  .project:nth-child(even) {
-    grid-template-columns: 5fr 7fr;
-  }
-  .project:nth-child(even) .project__shot {
-    order: 2;
-  }
 }
