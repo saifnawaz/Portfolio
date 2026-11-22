@@ -7,12 +7,12 @@ import { html } from "../../lib/html.js";
 import { sectionHead } from "../../lib/ui.js";
 
 const list = (title, rows, i) => html`
-  <div class="toolkit__col" data-reveal style="--reveal-i: ${i}">
-    <h3 class="toolkit__title label">${title}</h3>
+  <div class="toolkit__col">
+    <h3 class="toolkit__title label" data-reveal style="--reveal-i: ${i}">${title}</h3>
     <ul class="toolkit__rows" role="list">
       ${rows.map(
-        (row) => html`
-          <li class="toolkit__row">
+        (row, r) => html`
+          <li class="toolkit__row" data-reveal style="--reveal-i: ${i + r * 0.6}">
             ${row.url
               ? html`<a class="toolkit__name" href="${row.url}" target="_blank" rel="noopener noreferrer"
                   >${row.name}<span class="sr-only"> (opens in a new tab)</span></a
