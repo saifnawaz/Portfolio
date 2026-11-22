@@ -2,6 +2,7 @@
 import "./styles/index.css";
 import sections from "./sections/index.js"; // also pulls in each section's CSS
 import "./layout/footer.js"; // for its CSS
+import { initNav } from "./layout/nav.js";
 import { initReveal } from "./lib/reveal.js";
 import { initClock } from "./lib/clock.js";
 
@@ -12,5 +13,6 @@ for (const section of sections) {
   if (element) section.init?.(element);
 }
 
+initNav();
 initReveal();
 initClock();

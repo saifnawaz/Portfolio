@@ -6,6 +6,7 @@
 import content from "./data/content.js";
 import sections from "./sections/index.js";
 import head from "./layout/head.js";
+import nav from "./layout/nav.js";
 import footer from "./layout/footer.js";
 import { html } from "./lib/html.js";
 
@@ -20,6 +21,7 @@ export function render() {
 
   const body = html`
     <a class="skip-link" href="#main">Skip to content</a>
+    ${nav(content, page)}
     <main id="main" tabindex="-1">${page.map((section) => section.render(content, section))}</main>
     ${footer(content)}
   `;
