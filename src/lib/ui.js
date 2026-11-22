@@ -9,6 +9,12 @@ export const sectionHead = ({ id, number, label, title }) => html`
   </header>
 `;
 
+/** Label + big heading for the sticky aside of a two-column (.cols) section. */
+export const asideHead = ({ id, number, label, title }) => html`
+  <p class="cols__label label" data-reveal><span aria-hidden="true">(${number})</span> ${label}</p>
+  <h2 class="cols__title" id="${id}-title" data-split>${rich(title)}</h2>
+`;
+
 /**
  * A link, or a muted "soon" label while its url is still empty.
  * { magnetic: true } makes the link drift toward the cursor (lib/magnetic.js).

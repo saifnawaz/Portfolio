@@ -110,20 +110,23 @@ export default {
     label: "Toolkit",
     title: "Stack & certificates",
     stackTitle: "Stack",
+    // usedIn: project slugs (see projects.items[].slug). Empty shows "Coursework".
     stack: [
-      { name: "JavaScript", tag: "Web" },
-      { name: "PHP / Laravel", tag: "Backend" },
-      { name: "Python", tag: "AI / Scripting" },
-      { name: "C / C++", tag: "Core" },
-      { name: "Java", tag: "Core" },
-      { name: "SQL", tag: "Data" },
-      { name: "Git / GitHub", tag: "Tools" },
+      { name: "JavaScript", tag: "Web", usedIn: ["library", "assembled"] },
+      { name: "PHP / Laravel", tag: "Backend", usedIn: ["tika"] },
+      { name: "Python", tag: "AI / Scripting", usedIn: ["library"] },
+      { name: "C / C++", tag: "Core", usedIn: [] },
+      { name: "Java", tag: "Core", usedIn: [] },
+      { name: "SQL", tag: "Data", usedIn: ["tika"] },
+      { name: "Git / GitHub", tag: "Tools", usedIn: ["tika", "library", "assembled"] },
     ],
     certificatesTitle: "Certificates",
+    // image: a scan or photo of the certificate (e.g. "/assets/certificates/aptech.webp").
+    // With an image, the row previews it on hover and opens it full-screen on click.
     certificates: [
-      { name: "Diploma in Software Development", issuer: "Aptech" },
-      { name: "German A2", issuer: "Goethe-Institut" },
-      { name: "Design Hackathon: Assembled", issuer: "founding.dev" },
+      { name: "Diploma in Software Development", issuer: "Aptech", year: "", image: "" }, // TODO: year, image
+      { name: "German A2", issuer: "Goethe-Institut", year: "", image: "" }, // TODO: year, image
+      { name: "Design Hackathon: Assembled", issuer: "founding.dev", year: "", image: "" }, // TODO: year, image
     ],
   },
 

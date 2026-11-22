@@ -1,51 +1,84 @@
 /**
- * Stack + certificates, from content.toolkit.
- * A certificate can take an optional `url` (e.g. a credential link).
- * On phones the stack is a two-column grid of cells; certificates stay a list.
+ * Toolkit, from content.toolkit, in the same two columns as About: the label
+ * and heading stick on the left while the lists scroll on the right.
+ *
+ * Stack: one row per skill (name + tag). Hovering or focusing a row fills it
+ * red and shows the projects it was used in (`usedIn`, project slugs), or
+ * "Coursework". On phones it is a two-column grid with that line always shown.
+ *
+ * Certificates: rows like the project list. With an `image`, hovering floats
+ * the image next to the cursor (lib/preview.js) and clicking or tapping opens
+ * it full-screen (lib/lightbox.js); without JS the link opens the image itself.
  */
 import "./toolkit.css";
 import { html } from "../../lib/html.js";
-import { sectionHead } from "../../lib/ui.js";
+import { asideHead, projectSlug } from "../../lib/ui.js";
+import { initPreview } from "../../lib/preview.js";
+import { openLightbox } from "../../lib/lightbox.js";
 
-const list = (title, rows, i, kind) => html`
-  <div class="toolkit__col">
-    <h3 class="toolkit__title label" data-reveal style="--reveal-i: ${i}">${title}</h3>
-    <ul class="toolkit__rows toolkit__rows--${kind}" role="list">
-      ${rows.map(
-        (row, r) => html`
-          <li class="toolkit__row" data-reveal style="--reveal-i: ${i + r * 0.6}">
-            ${row.url
-              ? html`<a class="toolkit__name" href="${row.url}" target="_blank" rel="noopener noreferrer"
-                  >${row.name}<span class="sr-only"> (opens in a new tab)</span></a
-                >`
-              : html`<span class="toolkit__name">${row.name}</span>`}
-            <span class="toolkit__tag label">${row.tag}</span>
-          </li>
-        `,
-      )}
-    </ul>
-  </div>
+const usedInText = (slugs, titles) =>
+  slugs?.length ? `Used in: ${slugs.map((slug) => titles.get(slug) ?? slug).join(" · ")}` : "Coursework";
+
+const skill = (item, i, titles) => html`
+  <li class="skill" tabindex="0" data-reveal style="--reveal-i: ${i}">
+    <span class="skill__name">${item.name}</span>
+    <span class="skill__tag label">${item.tag}</span>
+    <span class="skill__used label">${usedInText(item.usedIn, titles)}</span>
+  </li>
+`;
+
+const certificate = (item, i) => html`
+  <li class="cert" data-reveal style="--reveal-i: ${i}" ${item.image ? html`data-image="${item.image}"` : ""}>
+    <h4 class="cert__name">
+      ${item.image
+        ? html`<a class="cert__link" href="${item.image}">${item.name}<span class="sr-only"> (view certificate)</span></a>`
+        : item.name}
+    </h4>
+    <p class="cert__issuer label"><span class="sr-only">Issued by </span>${item.issuer}</p>
+    <p class="cert__year label">${item.year ?? ""}</p>
+    <span class="cert__arrow" aria-hidden="true">${item.image ? "↗" : ""}</span>
+  </li>
 `;
 
 export default {
   id: "toolkit",
 
-  render: ({ toolkit }, { label, number }) => html`
-    <section class="section toolkit" id="toolkit" aria-labelledby="toolkit-title">
-      <div class="wrap">
-        ${sectionHead({ id: "toolkit", number, label, title: toolkit.title })}
-        <div class="split">
-          <div class="toolkit__grid">
-            ${list(toolkit.stackTitle, toolkit.stack, 0, "stack")}
-            ${list(
-              toolkit.certificatesTitle,
-              toolkit.certificates.map((c) => ({ name: c.name, tag: c.issuer, url: c.url })),
-              1,
-              "certificates",
-            )}
+  render: ({ toolkit, projects }, { label, number }) => {
+    const titles = new Map((projects?.items ?? []).map((item) => [projectSlug(item), item.title]));
+    return html`
+      <section class="section toolkit" id="toolkit" aria-labelledby="toolkit-title">
+        <div class="wrap cols">
+          <div class="cols__aside">${asideHead({ id: "toolkit", number, label, title: toolkit.title })}</div>
+
+          <div class="cols__body">
+            <div>
+              <h3 class="cols__block-title label" data-reveal>${toolkit.stackTitle}</h3>
+              <ul class="skills" role="list">
+                ${toolkit.stack.map((item, i) => skill(item, i, titles))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="cols__block-title label" data-reveal>${toolkit.certificatesTitle}</h3>
+              <ol class="certs" role="list">
+                ${toolkit.certificates.map(certificate)}
+              </ol>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  `,
+      </section>
+    `;
+  },
+
+  init(section) {
+    const list = section.querySelector(".certs");
+    initPreview(list, { item: ".cert" });
+    list?.addEventListener("click", (event) => {
+      const link = event.target.closest(".cert__link");
+      if (!link || event.metaKey || event.ctrlKey || event.shiftKey) return;
+      event.preventDefault();
+      const name = link.firstChild.textContent.trim();
+      openLightbox({ src: link.getAttribute("href"), alt: `${name} certificate`, caption: name });
+    });
+  },
 };

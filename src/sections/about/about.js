@@ -8,7 +8,8 @@
  * Without JS (or with reduced motion) everything is plain, static text.
  */
 import "./about.css";
-import { html, rich } from "../../lib/html.js";
+import { html } from "../../lib/html.js";
+import { asideHead } from "../../lib/ui.js";
 import { onScroll, reducedMotion } from "../../lib/scroll.js";
 import { initPath, renderPath } from "./path.js";
 import { initInterests, renderInterests } from "./interests.js";
@@ -20,25 +21,22 @@ export default {
 
   render: ({ about }, { label, number }) => html`
     <section class="section about" id="about" aria-labelledby="about-title">
-      <div class="wrap about__grid">
-        <div class="about__intro">
-          <p class="about__label label" data-reveal><span aria-hidden="true">(${number})</span> ${label}</p>
-          <h2 class="about__statement" id="about-title" data-split>${rich(about.statement)}</h2>
-        </div>
+      <div class="wrap cols">
+        <div class="cols__aside">${asideHead({ id: "about", number, label, title: about.statement })}</div>
 
-        <div class="about__body">
+        <div class="cols__body">
           <p class="about__bio">${about.bio}</p>
 
           ${about.path?.length
-            ? html`<div class="about__block">
-                <h3 class="about__block-title label" data-reveal>${about.pathTitle}</h3>
+            ? html`<div>
+                <h3 class="cols__block-title label" data-reveal>${about.pathTitle}</h3>
                 ${renderPath(about.path)}
               </div>`
             : ""}
 
           ${about.interests?.length
-            ? html`<div class="about__block">
-                <h3 class="about__block-title label" data-reveal>${about.interestsTitle}</h3>
+            ? html`<div>
+                <h3 class="cols__block-title label" data-reveal>${about.interestsTitle}</h3>
                 ${renderInterests(about.interests)}
               </div>`
             : ""}

@@ -1,74 +1,205 @@
-.toolkit__grid {
-  display: grid;
-  gap: clamp(var(--stack), 5vw, 3.5rem) clamp(2rem, 5vw, 5rem);
-}
-@media (min-width: 48rem) {
-  .toolkit__grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.toolkit__title {
-  margin-bottom: 1rem;
-  color: var(--ink-faint);
-}
-
-.toolkit__rows {
+/* Toolkit: skill rows and certificate rows, in the language of the project list. */
+.skills,
+.certs {
   border-top: 1px solid var(--line);
 }
-.toolkit__row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1rem;
-  padding-block: 1rem;
+.skill,
+.cert {
+  position: relative;
+  isolation: isolate;
   border-bottom: 1px solid var(--line);
-  font-size: var(--text-md);
 }
-.toolkit__tag {
-  flex-shrink: 0;
-  color: var(--ink-faint);
-  text-align: right;
-}
-a.toolkit__name {
-  text-decoration: underline 1px transparent;
-  text-underline-offset: 0.3em;
-  transition: text-decoration-color 0.3s;
-}
-a.toolkit__name:hover {
-  text-decoration-color: var(--accent);
+/* After the scroll reveal, hover dimming responds instantly (no stagger delay). */
+.js .skill.is-in,
+.js .cert.is-in {
+  transition: opacity 0.4s ease;
 }
 
-/* Phones: the stack becomes a compact two-column grid (name + small tag);
-   certificates stay a list with tighter rows. */
-@media (max-width: 47.99rem) {
-  .toolkit__title {
-    margin-bottom: 0.75rem;
+/* Skill row: name + tag on the left, "Used in" appears on the right. */
+.skill {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 0.9rem;
+  padding-block: 1.05rem;
+}
+.skill__name {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.25;
+}
+.skill__tag {
+  color: var(--ink-faint);
+}
+.skill__used {
+  justify-self: end;
+  text-align: right;
+  color: var(--ink-faint);
+  opacity: 0;
+  translate: 0.75rem 0;
+  transition:
+    opacity 0.3s ease,
+    translate 0.5s var(--ease-out);
+}
+.skill:focus-visible {
+  outline-offset: -1px;
+  outline-color: var(--on-accent);
+}
+
+/* Certificate row: name | issuer | year | arrow. The name links to the image
+   and covers the whole row (the click opens the lightbox). */
+.cert {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 10rem 3.5rem 1.25rem;
+  align-items: baseline;
+  column-gap: 1.25rem;
+  padding-block: 1.15rem;
+}
+.cert__name {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.25;
+  transition: translate 0.6s var(--ease-out);
+}
+.cert__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.cert__link:focus-visible {
+  outline: none; /* the row's red fill shows focus */
+}
+.cert__issuer,
+.cert__year {
+  color: var(--ink-faint);
+}
+.cert__arrow {
+  justify-self: end;
+  transition: translate 0.5s var(--ease-out);
+}
+
+@media (min-width: 64rem) {
+  .skill,
+  .cert {
+    padding-inline: 1rem; /* breathing room inside the red fill */
   }
-  .toolkit__rows--stack {
+}
+
+/* Red wipe, as on the project rows: the row fills red from the left on hover
+   (or keyboard focus); text turns near-black (5.65:1), secondary text --on-accent-muted. */
+.skill::before,
+.cert::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+.skill > *,
+.cert > * {
+  transition: color 0.3s ease;
+}
+@media (hover: hover) {
+  .skills:hover .skill:not(:hover),
+  .certs:hover .cert:not(:hover) {
+    opacity: 0.35;
+  }
+  .skill:hover::before,
+  .cert:hover::before {
+    transform: scaleX(1);
+  }
+  .skill:hover,
+  .cert:hover {
+    color: var(--on-accent);
+  }
+  .skill:hover :is(.skill__tag, .skill__used),
+  .cert:hover :is(.cert__issuer, .cert__year) {
+    color: var(--on-accent-muted);
+  }
+  .skill:hover .skill__used {
+    color: var(--on-accent);
+    opacity: 1;
+    translate: 0 0;
+  }
+  .cert:has(.cert__link):hover .cert__name {
+    translate: 0.5rem 0;
+  }
+  .cert:hover .cert__arrow {
+    translate: 0.2rem -0.2rem;
+  }
+}
+.skill:focus-visible::before,
+.cert:has(.cert__link:focus-visible)::before {
+  transform: scaleX(1);
+}
+.skill:focus-visible,
+.cert:has(.cert__link:focus-visible) {
+  color: var(--on-accent);
+}
+.skill:focus-visible .skill__tag,
+.cert:has(.cert__link:focus-visible) :is(.cert__issuer, .cert__year) {
+  color: var(--on-accent-muted);
+}
+.skill:focus-visible .skill__used {
+  color: var(--on-accent);
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Phones: the stack is a two-column grid with "Used in" always shown under
+   each skill (an odd last cell spans both columns); certificates stay rows. */
+@media (max-width: 47.99rem) {
+  .skills {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     border-left: 1px solid var(--line);
   }
-  .toolkit__rows--stack .toolkit__row {
+  .skill {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: flex-start;
-    gap: 0.15rem;
-    padding: 0.7rem 0.8rem;
+    gap: 0.2rem;
+    padding: 0.75rem 0.8rem 0.8rem;
     border-right: 1px solid var(--line);
+  }
+  .skill:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+  .skill__name {
     font-size: var(--text-base);
     line-height: 1.35;
   }
-  .toolkit__rows--stack .toolkit__tag {
+  .skill__used {
+    justify-self: auto;
+    margin-top: 0.35rem;
     text-align: left;
+    font-size: 0.6875rem;
+    opacity: 1;
+    translate: none;
   }
-  /* An odd one out at the end spans both columns. */
-  .toolkit__rows--stack .toolkit__row:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
+  .cert {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "name name arrow"
+      "issuer year year";
+    column-gap: 0.75rem;
+    row-gap: 0.3rem;
+    padding-block: 0.85rem;
   }
-  .toolkit__rows--certificates .toolkit__row {
-    padding-block: 0.7rem;
+  .cert__name {
+    grid-area: name;
     font-size: var(--text-base);
+  }
+  .cert__issuer {
+    grid-area: issuer;
+  }
+  .cert__year {
+    grid-area: year;
+  }
+  .cert__arrow {
+    grid-area: arrow;
   }
 }

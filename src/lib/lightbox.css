@@ -1,0 +1,64 @@
+/* Full-screen image viewer (lib/lightbox.js) */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: var(--nav-h) var(--gutter) var(--gutter);
+  border: 0;
+  background: rgb(8 8 8 / 0.97);
+  color: var(--ink);
+  cursor: zoom-out;
+}
+.lightbox[open] {
+  display: grid;
+  place-items: center;
+  animation: lightbox-in 0.3s ease both;
+}
+.lightbox::backdrop {
+  background: transparent;
+}
+.lightbox__close {
+  position: absolute;
+  top: 0.75rem;
+  right: calc(var(--gutter) - 0.75rem);
+  min-height: 44px;
+  padding: 0 0.75rem;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+.lightbox__figure {
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+  max-width: 100%;
+  margin: 0;
+}
+.lightbox__img {
+  max-width: min(100%, 72rem);
+  max-height: calc(100svh - var(--nav-h) - var(--gutter) - 3rem);
+  width: auto;
+  height: auto;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-raised);
+  cursor: default;
+  animation: lightbox-img-in 0.5s var(--ease-out) both;
+}
+.lightbox__caption {
+  color: var(--ink-muted);
+}
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes lightbox-img-in {
+  from {
+    scale: 0.96;
+  }
+}
