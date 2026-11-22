@@ -96,6 +96,62 @@
   border: 1px solid var(--line);
 }
 
+/* Phones and tablets: the number sits small above the title, so text gets the
+   full width; role · stack · status share one line of small mono meta. */
+@media (max-width: 63.99rem) {
+  .project {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "num arrow"
+      "main arrow"
+      "meta meta"
+      "extras extras"
+      "thumb thumb";
+    gap: 0;
+    padding-block: 1.5rem 1.25rem;
+  }
+  .project__num {
+    padding-top: 0;
+    margin-bottom: 0.35rem;
+  }
+  .project__arrow {
+    align-self: start;
+    padding-top: 1.1rem;
+  }
+  .project__main {
+    margin-bottom: 0.9rem;
+  }
+  .project__meta {
+    grid-area: meta;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  /* One run of text: it wraps like a sentence, and each "·" stays at the end
+     of the item before it (non-breaking space in front, normal space after). */
+  .project__meta > p {
+    display: inline;
+    font-size: inherit;
+    color: inherit;
+  }
+  .project__meta > p:not(:last-child)::after {
+    content: "\a0 ·" / "";
+  }
+  .project__meta > .project__role {
+    color: var(--ink-muted);
+  }
+  .project__meta > .project__status {
+    display: inline-flex;
+    gap: 0.45rem;
+  }
+  .project__thumb {
+    margin-top: 1rem;
+  }
+}
+
 /* The title link covers the whole row, so the row is the click target. */
 .project__link::after {
   content: "";
@@ -105,6 +161,9 @@
 
 /* Desktop: one line per project, aligned columns -------------------------- */
 @media (min-width: 64rem) {
+  .project__meta {
+    display: contents; /* role, stack and status are columns of the row */
+  }
   .projects__head,
   .project {
     display: grid;
@@ -187,7 +246,7 @@
   .project:hover {
     color: var(--on-accent);
   }
-  .project:hover > :is(.project__num, .project__stack, .project__status),
+  .project:hover :is(.project__num, .project__stack, .project__status),
   .project:hover .project__blurb {
     color: var(--on-accent-muted);
   }
@@ -202,7 +261,7 @@
 .project:has(.project__link:focus-visible) {
   color: var(--on-accent);
 }
-.project:has(.project__link:focus-visible) > :is(.project__num, .project__stack, .project__status),
+.project:has(.project__link:focus-visible) :is(.project__num, .project__stack, .project__status),
 .project:has(.project__link:focus-visible) .project__blurb {
   color: var(--on-accent-muted);
 }
@@ -214,4 +273,13 @@
   .project {
     padding-inline: 1rem; /* breathing room inside the red fill */
   }
+}
+/* On the red fill the meta's role reads in full near-black, like the title. */
+@media (hover: hover) {
+  .project:hover .project__meta > .project__role {
+    color: var(--on-accent);
+  }
+}
+.project:has(.project__link:focus-visible) .project__meta > .project__role {
+  color: var(--on-accent);
 }

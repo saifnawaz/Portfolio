@@ -34,11 +34,13 @@ const row = (item, i) => {
         <p class="project__blurb">${item.blurb}</p>
       </div>
 
-      <p class="project__role"><span class="sr-only">Role: </span>${item.role}</p>
-      <p class="project__stack"><span class="sr-only">Stack: </span>${item.stack.join(" / ")}</p>
-      <p class="project__status label">
-        <span class="dot ${live ? "" : "is-hollow"}" aria-hidden="true"></span>${item.status}
-      </p>
+      <div class="project__meta">
+        <p class="project__role"><span class="sr-only">Role: </span>${item.role}</p>
+        <p class="project__stack"><span class="sr-only">Stack: </span>${item.stack.join(" / ")}</p>
+        <p class="project__status label">
+          <span class="dot ${live ? "" : "is-hollow"}" aria-hidden="true"></span>${item.status}
+        </p>
+      </div>
       <span class="project__arrow" aria-hidden="true">${primary ? "↗" : ""}</span>
 
       ${extras.length ? html`<p class="project__extras label">${extras.map((link) => smartLink(link))}</p>` : ""}
