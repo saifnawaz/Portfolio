@@ -38,3 +38,33 @@ a.toolkit__name {
 a.toolkit__name:hover {
   text-decoration-color: var(--accent);
 }
+
+/* Phones: the stack becomes a compact two-column grid (name + small tag);
+   certificates stay a list with tighter rows. */
+@media (max-width: 47.99rem) {
+  .toolkit__title {
+    margin-bottom: 0.75rem;
+  }
+  .toolkit__rows--stack {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-left: 1px solid var(--line);
+  }
+  .toolkit__rows--stack .toolkit__row {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.15rem;
+    padding: 0.7rem 0.8rem;
+    border-right: 1px solid var(--line);
+    font-size: var(--text-base);
+    line-height: 1.35;
+  }
+  .toolkit__rows--stack .toolkit__tag {
+    text-align: left;
+  }
+  .toolkit__rows--certificates .toolkit__row {
+    padding-block: 0.7rem;
+    font-size: var(--text-base);
+  }
+}
