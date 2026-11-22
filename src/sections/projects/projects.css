@@ -154,6 +154,68 @@
   }
 }
 
+/* Red wipe: on hover (or keyboard focus) the row fills red from the left and
+   its text turns near-black (5.65:1); secondary text uses --on-accent-muted. */
+.project {
+  isolation: isolate;
+}
+.project::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+.project > * {
+  transition: color 0.3s ease;
+}
+.project .dot {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+@media (hover: hover) {
+  .project:hover::before {
+    transform: scaleX(1);
+  }
+}
+.project:has(.project__link:focus-visible)::before {
+  transform: scaleX(1);
+}
+@media (hover: hover) {
+  .project:hover {
+    color: var(--on-accent);
+  }
+  .project:hover > :is(.project__num, .project__stack, .project__status),
+  .project:hover .project__blurb {
+    color: var(--on-accent-muted);
+  }
+  .project:hover .dot {
+    background: var(--on-accent);
+  }
+  .project:hover .dot.is-hollow {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--on-accent);
+  }
+}
+.project:has(.project__link:focus-visible) {
+  color: var(--on-accent);
+}
+.project:has(.project__link:focus-visible) > :is(.project__num, .project__stack, .project__status),
+.project:has(.project__link:focus-visible) .project__blurb {
+  color: var(--on-accent-muted);
+}
+.project__link:focus-visible {
+  outline-color: var(--on-accent);
+}
+@media (min-width: 64rem) {
+  .projects__head,
+  .project {
+    padding-inline: 1rem; /* breathing room inside the red fill */
+  }
+}
+
 /* Floating preview (created by preview.js) */
 .project-preview {
   position: fixed;
