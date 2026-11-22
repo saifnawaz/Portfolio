@@ -161,6 +161,31 @@
   transition-delay: 0s;
 }
 
+/* Phones: looser tracking on the statement (tight tracking squeezes words at
+   this size) and a tighter rhythm between the blocks and the timeline points. */
+@media (max-width: 47.99rem) {
+  .about__grid,
+  .about__body {
+    gap: var(--stack);
+  }
+  .about__label {
+    margin-bottom: 1.25rem;
+  }
+  .about__statement {
+    letter-spacing: -0.01em;
+    word-spacing: normal;
+  }
+  .about__block-title {
+    margin-bottom: 1.25rem;
+  }
+  .path {
+    gap: 1.25rem;
+  }
+  .path__when {
+    margin-bottom: 0.35rem;
+  }
+}
+
 /* Horizontal from tablet width: dots along a line across the top. */
 @media (min-width: 40rem) {
   .path {
