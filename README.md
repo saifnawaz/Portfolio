@@ -11,10 +11,11 @@ npm run preview   # serve the built site locally
 
 ## Editing content
 
-All text and data live in [`src/data/content.js`](src/data/content.js): bio, facts, projects, stack, certificates, contact links, and page title/description.
+All text and data live in [`src/data/content.js`](src/data/content.js): the About statement, bio, path and interests, projects, stack, certificates, contact links, and page title/description.
 
-- `*word*` sets a word in a quieter secondary tone (in the hero statement, red instead).
+- `*word*` sets a word in a quieter secondary tone (in the hero and About statements, red instead).
 - The hero's statement and "Currently" list are `hero.statement` and `hero.currently`.
+- About: `about.path` is the timeline (the last point is red and pulses); `about.interests` are the "Off the clock" words, each with an optional `image` that floats next to the cursor on hover (tap on touch).
 - An empty `url: ""` shows a muted "(soon)" label instead of a broken link.
 - Images go in `public/` and are referenced from the root, e.g. `"/assets/projects/tika.webp"`. Project screenshots look best at 16:10 (1440×900).
 - Search the file for `TODO` to find the placeholders: email, LinkedIn, résumé, GitHub repos, the Tika screenshot, and the production URL.
@@ -28,7 +29,8 @@ src/
   sections/              one folder per section (JS + CSS together)
     index.js             the page order: add, remove, reorder here
     hero/                the name: fit-to-width, letter intro, cursor field, shrink-into-nav
-    about/  projects/  toolkit/  contact/
+    about/               sticky statement, word-brighten bio, Path timeline, interests
+    projects/  toolkit/  contact/
   layout/                nav, footer, <head> tags, background (dot grid)
   lib/                   scroll (Lenis), reveals, magnetic links, cursor, clock, html templating
   styles/                tokens.css (colours, type, spacing), base.css, fonts
@@ -91,6 +93,7 @@ Background: a fixed canvas dot grid (`layout/background.js`; dots warm to red ne
 | `data-magnetic` | Link drifts toward the cursor (desktop). |
 | `lib/scroll.js` | Lenis smooth scroll; `onScroll(fn)` / `onResize(fn)` for scroll-linked effects. |
 | `lib/cursor.js` | Custom cursor dot that grows over links (desktop mouse only). |
+| `lib/preview.js` | Floating image next to the cursor over items with `data-image` (project rows, interests). |
 
 Everything is off with `prefers-reduced-motion`: native scrolling, no animations, all content visible.
 
