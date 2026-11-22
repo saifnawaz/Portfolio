@@ -8,7 +8,7 @@
 import "./contact.css";
 import { html } from "../../lib/html.js";
 import { sectionHead, smartLink } from "../../lib/ui.js";
-import { onScroll, reducedMotion } from "../../lib/scroll.js";
+import { onScroll, reducedMotion, whenNear } from "../../lib/scroll.js";
 
 export default {
   id: "contact",
@@ -43,7 +43,7 @@ export default {
   init(section) {
     const title = section.querySelector(".contact__title");
     if (!title) return;
-    fitTitle(section, title);
+    whenNear(section, () => fitTitle(section, title));
     if (reducedMotion) return;
     // Entering from the bottom of the viewport -> its middle: scale 0.85 -> 1.
     onScroll(() => {

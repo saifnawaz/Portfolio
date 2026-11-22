@@ -32,6 +32,23 @@ export function onResize(fn) {
   return () => resizeFns.delete(fn);
 }
 
+/**
+ * Calls fn() once, when el comes within a viewport's height of the screen
+ * (layout reads for things further down stay out of the page load).
+ */
+export function whenNear(el, fn) {
+  if (!("IntersectionObserver" in window)) return fn();
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      observer.disconnect();
+      fn();
+    },
+    { rootMargin: "100% 0px 100% 0px" },
+  );
+  observer.observe(el);
+}
+
 /** Freezes page scrolling (e.g. while the mobile menu is open), or releases it. */
 export function lockScroll(locked) {
   if (locked) lenis?.stop();

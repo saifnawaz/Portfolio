@@ -6,7 +6,9 @@
  *                   lines, each sliding up out of its own mask. Once revealed,
  *                   the original markup is restored so it reflows on resize.
  *
- * Splitting waits for web fonts, since line breaks depend on them.
+ * Splitting waits for web fonts, since line breaks depend on them, and happens
+ * only as an element is revealed: one layout per element, spread over the
+ * scroll, instead of all of them at once while the page loads.
  * Everything is skipped for reduced-motion users (CSS keeps it all visible).
  */
 import { reducedMotion } from "./scroll.js";
@@ -17,7 +19,8 @@ export function initReveal(root = document) {
     return;
   }
 
-  const pending = new Map(); // split element -> its original HTML
+  const toSplit = new Set(); // waiting to be split when revealed
+  const pending = new Map(); // split element -> its original HTML, until restored
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -32,22 +35,33 @@ export function initReveal(root = document) {
   );
 
   const reveal = (el) => {
-    el.classList.add("is-in");
-    if (!pending.has(el)) return;
-    const lines = el.querySelectorAll(".split-line > span");
-    const restore = () => {
-      if (!pending.has(el)) return;
-      el.innerHTML = pending.get(el);
-      el.classList.remove("is-split");
-      el.classList.add("is-done");
-      pending.delete(el);
-    };
-    lines[lines.length - 1]?.addEventListener("transitionend", restore, { once: true });
-    // In case transitionend never fires: wait out the last line's delay + duration.
-    const last = lines[lines.length - 1];
-    const style = last && getComputedStyle(last);
-    const seconds = style ? parseFloat(style.transitionDelay) + parseFloat(style.transitionDuration) : 0;
-    setTimeout(restore, seconds * 1000 + 300);
+    if (!toSplit.has(el)) {
+      el.classList.add("is-in");
+      return;
+    }
+    toSplit.delete(el);
+    pending.set(el, el.innerHTML);
+    splitLines(el);
+    // Two frames, so the lines' hidden start position is styled before they slide.
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        el.classList.add("is-in");
+        const lines = el.querySelectorAll(".split-line > span");
+        const last = lines[lines.length - 1];
+        const restore = () => {
+          if (!pending.has(el)) return;
+          el.innerHTML = pending.get(el);
+          el.classList.remove("is-split");
+          el.classList.add("is-done");
+          pending.delete(el);
+        };
+        last?.addEventListener("transitionend", restore, { once: true });
+        // In case transitionend never fires: wait out the last line's delay + duration.
+        const style = last && getComputedStyle(last);
+        const seconds = style ? parseFloat(style.transitionDelay) + parseFloat(style.transitionDuration) : 0;
+        setTimeout(restore, seconds * 1000 + 300);
+      }),
+    );
   };
 
   root.querySelectorAll("[data-reveal]").forEach((el) => observer.observe(el));
@@ -59,26 +73,11 @@ export function initReveal(root = document) {
       if ([...el.children].some((child) => child.children.length)) {
         el.classList.add("is-done"); // nested markup: just fade it with the rest
         el.setAttribute("data-reveal", "");
-        observer.observe(el);
-        continue;
+      } else {
+        toSplit.add(el);
       }
-      pending.set(el, el.innerHTML);
-      splitLines(el);
       observer.observe(el);
     }
-  });
-
-  // Line breaks change with width: re-split anything not revealed yet.
-  let timer = 0;
-  window.addEventListener("resize", () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      for (const [el, original] of pending) {
-        if (el.classList.contains("is-in")) continue;
-        el.innerHTML = original;
-        splitLines(el);
-      }
-    }, 150);
   });
 }
 
@@ -87,8 +86,8 @@ export function initReveal(root = document) {
  * elements (e.g. <em>) are kept: each word remembers its wrapper.
  */
 function splitLines(el) {
-  // Measure in normal flow: a re-split (on resize) still has .is-split, whose
-  // flex column would put every word on its own "line".
+  // Measure in normal flow: if it was split before, .is-split's flex column
+  // would put every word on its own "line".
   el.classList.remove("is-split");
 
   // Words, each with its inline wrapper (or null) and whether a space precedes it.

@@ -12,18 +12,25 @@ import { initBackground } from "./layout/background.js";
 
 window.__portfolioReady = true;
 
-initScroll();
+function start() {
+  initScroll();
 
-for (const section of sections) {
-  const element = document.getElementById(section.id);
-  if (element) section.init?.(element);
+  for (const section of sections) {
+    const element = document.getElementById(section.id);
+    if (element) section.init?.(element);
+  }
+
+  initNav();
+  initReveal();
+  initClock();
+  initMagnetic();
+  initCursor();
 }
 
-initNav();
-initReveal();
-initClock();
-initMagnetic();
-initCursor();
+// Start one frame in: the browser first lays out and paints the prerendered
+// page on its own, so the measurements below read a finished layout instead
+// of forcing the first (most expensive) one inside this script.
+requestAnimationFrame(() => setTimeout(start, 0));
 
 // Decorative background: after load, off the critical path.
 const idle = window.requestIdleCallback ?? ((fn) => setTimeout(fn, 200));

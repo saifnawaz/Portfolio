@@ -8,7 +8,7 @@
  * is fully drawn and every point is shown.
  */
 import { html } from "../../lib/html.js";
-import { onResize, onScroll, reducedMotion } from "../../lib/scroll.js";
+import { onResize, onScroll, reducedMotion, whenNear } from "../../lib/scroll.js";
 
 const clamp01 = (n) => Math.min(Math.max(n, 0), 1);
 
@@ -43,9 +43,12 @@ export function initPath(list) {
     list.style.setProperty("--end", `${(horizontal ? box.width : box.height) - to}px`);
     stops = centers.map((c) => (c - from) / (to - from || 1));
   };
-  measure();
-  onResize(measure);
-  document.fonts?.ready.then(measure); // text wrapping moves the dots on narrow screens
+  // Measured once it is near the screen (fonts are in by then: text wrapping
+  // moves the dots on narrow screens), and again on resize.
+  whenNear(list, () => {
+    (document.fonts?.ready ?? Promise.resolve()).then(measure);
+    onResize(measure);
+  });
 
   if (reducedMotion) return;
   list.setAttribute("data-scrub", "");
