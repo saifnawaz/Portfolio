@@ -1,0 +1,38 @@
+/* Design tokens: change the look of the whole site from here. */
+:root {
+  /* Color */
+  --bg: #080808;
+  --bg-raised: #0f0f0e;
+  --ink: #f1ede6; /* off-white body text */
+  --ink-muted: #a8a39b; /* secondary text */
+  --ink-faint: #8a857e; /* small labels, still >= 4.5:1 on --bg */
+  --line: #1f1e1c; /* hairlines */
+  --line-strong: #34312d;
+  --accent: #ffb36b;
+  --accent-ink: #140c04; /* text placed on --accent */
+
+  /* Type */
+  --font-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --text-xs: 0.75rem; /* mono labels */
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  --text-xl: clamp(1.75rem, 1.1rem + 2.6vw, 3.25rem); /* serif lead */
+  --text-2xl: clamp(2.75rem, 1.5rem + 5.2vw, 6rem); /* section titles */
+  --text-display: clamp(4.75rem, 1rem + 15vw, 15rem); /* hero, contact */
+
+  /* Space */
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --max-width: 84rem;
+  --section-y: clamp(6rem, 3.5rem + 9vw, 11rem);
+  --split: minmax(10rem, 1fr) 3fr; /* label column | content column */
+
+  /* Shape + motion */
+  --radius: 4px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration: 0.9s;
+}

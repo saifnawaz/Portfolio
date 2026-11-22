@@ -1,1 +1,1 @@
-console.log("portfolio");
+import "./styles/index.css";
