@@ -10,8 +10,7 @@
 }
 
 .hero__name {
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: var(--font-display);
   font-size: clamp(5.5rem, 1rem + 25vw, 16rem);
   line-height: 0.82;
   letter-spacing: -0.035em;

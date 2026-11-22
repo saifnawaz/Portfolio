@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [
     prerender({ entry: "/src/render.js" }),
     // Fonts visible on first paint: the hero name and body text.
-    preloadFonts([/instrument-serif-latin-400-italic/, /inter-latin-400-normal/]),
+    preloadFonts([/ClashDisplay-Semibold/, /Satoshi-Regular/]),
   ],
 });

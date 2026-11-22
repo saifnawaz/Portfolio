@@ -1,7 +1,7 @@
 /* Small partials shared by several sections. */
 import { html, rich } from "./html.js";
 
-/** Numbered label + big italic heading, on the shared two-column grid. */
+/** Numbered label + big heading, on the shared two-column grid. */
 export const sectionHead = ({ id, number, label, title }) => html`
   <header class="section-head split" data-reveal>
     <p class="section-head__label label"><span aria-hidden="true">(${number})</span> ${label}</p>

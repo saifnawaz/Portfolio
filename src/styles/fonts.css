@@ -1,5 +1,35 @@
-/* Self-hosted fonts, latin subset only (Vite bundles and hashes the files). */
-@import "@fontsource/instrument-serif/latin-400.css";
-@import "@fontsource/instrument-serif/latin-400-italic.css";
-@import "@fontsource/inter/latin-400.css";
-@import "@fontsource/jetbrains-mono/latin-400.css";
+/*
+ * Self-hosted fonts (Vite bundles and hashes the files).
+ * Clash Display and Satoshi: Fontshare (ITF Free Font License), files in src/assets/fonts.
+ * Geist Mono: @fontsource/geist-mono, latin subset.
+ */
+@import "@fontsource/geist-mono/latin-400.css"; /* @import must come first */
+
+@font-face {
+  font-family: "Clash Display";
+  src: url("../assets/fonts/ClashDisplay-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Clash Display";
+  src: url("../assets/fonts/ClashDisplay-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("../assets/fonts/Satoshi-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("../assets/fonts/Satoshi-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
