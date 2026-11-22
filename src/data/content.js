@@ -25,7 +25,7 @@ export default {
   hero: {
     firstName: "Saif",
     lastName: "Nawaz",
-    tagline: "AI student at the University of Karachi",
+    study: "BS-AI · University of Karachi", // shown in the details under the name
     status: "Open to internships",
     // *asterisks* here are highlighted in red
     statement: "I build *web apps* and I'm learning how *machines think*.",

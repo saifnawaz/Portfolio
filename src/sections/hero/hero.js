@@ -1,5 +1,6 @@
 /**
- * Hero: the name, edge to edge, plus a one-liner and two corner details.
+ * Hero: a statement and a "Currently" list, then the name edge to edge, with
+ * small details under it (status, study, location + clock).
  *
  * - Each letter is its own span (for the intro and the cursor reaction).
  *   (Clash Display has no kerning table, so splitting the name loses nothing.)
@@ -47,8 +48,6 @@ export default {
             : ""}
         </div>
 
-        <p class="hero__line"><span>${hero.tagline}</span></p>
-
         <h1 class="hero__name" id="hero-title">
           <span class="sr-only">${hero.firstName} ${hero.lastName}</span>
           <span class="hero__name-text" aria-hidden="true">${word(first, 0)} ${word(last, first.length)}</span>
@@ -56,6 +55,7 @@ export default {
 
         <div class="hero__meta label">
           <p class="hero__status"><span class="dot" aria-hidden="true"></span>${hero.status}</p>
+          ${hero.study ? html`<p>${hero.study}</p>` : ""}
           <p>
             ${site.location} <span aria-hidden="true">·</span>
             <time data-clock data-tz="${site.timezone}" data-suffix="${site.utcOffset}">${site.utcOffset}</time>
