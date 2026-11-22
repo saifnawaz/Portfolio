@@ -2,7 +2,8 @@
  * About, in two columns (one on mobile):
  *   left   the section label and a big statement (sticky on desktop)
  *   right  a short bio whose words brighten as you scroll through it,
- *          then "Path", a timeline that draws itself (path.js)
+ *          then "Path", a timeline that draws itself (path.js),
+ *          and "Off the clock", interests with hover images (interests.js)
  *
  * Without JS (or with reduced motion) everything is plain, static text.
  */
@@ -10,6 +11,7 @@ import "./about.css";
 import { html, rich } from "../../lib/html.js";
 import { onScroll, reducedMotion } from "../../lib/scroll.js";
 import { initPath, renderPath } from "./path.js";
+import { initInterests, renderInterests } from "./interests.js";
 
 const DIM = 0.5; // starting opacity: still 4.5:1 against the background
 
@@ -33,6 +35,13 @@ export default {
                 ${renderPath(about.path)}
               </div>`
             : ""}
+
+          ${about.interests?.length
+            ? html`<div class="about__block">
+                <h3 class="about__block-title label" data-reveal>${about.interestsTitle}</h3>
+                ${renderInterests(about.interests)}
+              </div>`
+            : ""}
         </div>
       </div>
     </section>
@@ -42,6 +51,7 @@ export default {
     const bio = section.querySelector(".about__bio");
     if (bio && !reducedMotion) scrubWords(bio);
     initPath(section.querySelector(".path"));
+    initInterests(section.querySelector(".interests"));
   },
 };
 

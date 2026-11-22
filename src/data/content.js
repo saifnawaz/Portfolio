@@ -50,6 +50,7 @@ export default {
     ],
     interestsTitle: "Off the clock",
     // image is optional: on hover it floats next to the cursor (tap on touch).
+    // Add imageAlt to describe it; leave it out if the image is decorative.
     interests: [
       { name: "Books", image: "" }, // e.g. "/assets/interests/books.webp"
       { name: "Music", image: "" },
