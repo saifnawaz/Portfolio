@@ -3,10 +3,13 @@ import "./styles/index.css";
 import sections from "./sections/index.js"; // also pulls in each section's CSS
 import "./layout/footer.js"; // for its CSS
 import { initNav } from "./layout/nav.js";
+import { initScroll } from "./lib/scroll.js";
 import { initReveal } from "./lib/reveal.js";
 import { initClock } from "./lib/clock.js";
 
 window.__portfolioReady = true;
+
+initScroll();
 
 for (const section of sections) {
   const element = document.getElementById(section.id);
