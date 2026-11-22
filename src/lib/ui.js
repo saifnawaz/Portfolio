@@ -17,6 +17,7 @@ export const smartLink = ({ label, url }, className = "link", { magnetic = false
   if (!url) {
     return html`<span class="${className} is-soon">${label} <span class="soon">(soon)</span></span>`;
   }
+  if (/^www\./i.test(url)) url = `https://${url}`; // "www.example.com" would otherwise be a path on this site
   const external = /^https?:\/\//.test(url);
   return html`<a class="${className}" href="${url}" ${external ? html`target="_blank" rel="noopener noreferrer"` : ""} ${magnetic ? html`data-magnetic` : ""}
     >${label}<span class="arrow" aria-hidden="true">↗</span>${external ? html`<span class="sr-only"> (opens in a new tab)</span>` : ""}</a

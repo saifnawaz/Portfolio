@@ -100,12 +100,12 @@
   }
 }
 
-/* Phones: a shorter hero, balanced in the viewport. The statement sits in the
-   upper third (one share of the free space above it, two below), the
+/* Phones: a shorter hero, balanced in the viewport. The free space is split
+   evenly above the statement and between "Currently" and the name, the
    "Currently" rows are compact, and the name + details close it at the bottom. */
 @media (max-width: 47.99rem) {
   .hero {
-    grid-template-rows: 1fr auto 2fr auto auto;
+    grid-template-rows: 1fr auto 1fr auto auto;
     padding-top: calc(var(--nav-h) + 1rem);
   }
   .hero__top {

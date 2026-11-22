@@ -63,6 +63,10 @@ a.toolkit__name:hover {
   .toolkit__rows--stack .toolkit__tag {
     text-align: left;
   }
+  /* An odd one out at the end spans both columns. */
+  .toolkit__rows--stack .toolkit__row:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
   .toolkit__rows--certificates .toolkit__row {
     padding-block: 0.7rem;
     font-size: var(--text-base);

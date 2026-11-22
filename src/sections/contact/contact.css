@@ -73,3 +73,40 @@
 .contact .link::after {
   background: var(--on-accent);
 }
+
+/* Phones: "Let's talk" fills the row like the hero name; the links become
+   full-width rows (label left, arrow or "(soon)" right, 1px dividers, 56px tall). */
+@media (max-width: 47.99rem) {
+  .contact .wrap {
+    container-type: inline-size; /* 100cqi = the content width */
+  }
+  .contact__title {
+    font-size: calc(100cqi / var(--title-em, 4.62));
+    white-space: nowrap;
+  }
+  .contact__links {
+    display: block;
+    border-top: 1px solid rgb(8 8 8 / 0.25);
+  }
+  .contact__links li {
+    border-bottom: 1px solid rgb(8 8 8 / 0.25);
+  }
+  .contact__links .link {
+    --hit: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    min-height: 56px;
+    padding-block: 0;
+  }
+  .contact__links .link::before,
+  .contact__links .link::after {
+    display: none;
+  }
+  .contact__links .arrow {
+    font-size: 1rem;
+  }
+}
+

@@ -1,7 +1,9 @@
 /**
  * Contact, from content.contact. Until `email` is filled in, the big heading
  * is plain text and the email row shows "(soon)".
- * "Let's talk" scales up slightly as it scrolls into view.
+ * "Let's talk" scales up slightly as it scrolls into view. On phones it fills
+ * the width like the hero name (CSS: 100cqi / --title-em, measured here), and
+ * the links become full-width rows.
  */
 import "./contact.css";
 import { html } from "../../lib/html.js";
@@ -18,7 +20,7 @@ export default {
           >${contact.title}<span class="contact__arrow" aria-hidden="true">↗</span
           ><span class="sr-only">, email ${email}</span></a
         >`
-      : contact.title;
+      : html`<span>${contact.title}</span>`;
 
     return html`
       <section class="section contact" id="contact" aria-labelledby="contact-title" data-surface="accent">
@@ -40,7 +42,9 @@ export default {
 
   init(section) {
     const title = section.querySelector(".contact__title");
-    if (!title || reducedMotion) return;
+    if (!title) return;
+    fitTitle(section, title);
+    if (reducedMotion) return;
     // Entering from the bottom of the viewport -> its middle: scale 0.85 -> 1.
     onScroll(() => {
       const top = title.getBoundingClientRect().top;
@@ -49,3 +53,16 @@ export default {
     });
   },
 };
+
+/** Measures the title's width in em (once Clash Display is in), so CSS can make it fill the row. */
+function fitTitle(section, title) {
+  const timeout = new Promise((resolve) => setTimeout(resolve, 2500));
+  Promise.race([document.fonts.load('600 100px "Clash Display"'), timeout])
+    .catch(() => {})
+    .then(() => {
+      const text = title.firstElementChild; // the inline text (or the email link)
+      const em = text.offsetWidth / parseFloat(getComputedStyle(title).fontSize); // offsetWidth ignores the scale
+      if (em > 0) section.style.setProperty("--title-em", em.toFixed(4));
+    });
+}
+
