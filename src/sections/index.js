@@ -9,5 +9,6 @@
  */
 import hero from "./hero/hero.js";
 import about from "./about/about.js";
+import projects from "./projects/projects.js";
 
-export default [hero, about];
+export default [hero, about, projects];

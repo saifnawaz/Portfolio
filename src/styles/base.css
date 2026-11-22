@@ -134,6 +134,15 @@ p {
 .link:hover .arrow {
   transform: translate(2px, -2px);
 }
+/* A link whose url is still empty in content.js */
+.link.is-soon {
+  color: var(--ink-faint);
+  border-bottom-style: dashed;
+}
+.link.is-soon:hover {
+  color: var(--ink-faint);
+  border-color: var(--line-strong);
+}
 .muted {
   color: var(--ink-faint);
 }

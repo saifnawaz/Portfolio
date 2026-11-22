@@ -12,7 +12,7 @@ export const sectionHead = ({ id, number, label, title }) => html`
 /** A link, or a muted "soon" label while its url is still empty. */
 export const smartLink = ({ label, url }, className = "link") => {
   if (!url) {
-    return html`<span class="${className} is-soon">${label} <span class="soon">soon</span></span>`;
+    return html`<span class="${className} is-soon">${label} <span class="soon">(soon)</span></span>`;
   }
   const external = /^https?:\/\//.test(url);
   return html`<a class="${className}" href="${url}" ${external ? html`target="_blank" rel="noopener noreferrer"` : ""}
