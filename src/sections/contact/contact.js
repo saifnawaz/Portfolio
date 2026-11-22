@@ -21,7 +21,7 @@ export default {
       : contact.title;
 
     return html`
-      <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <section class="section contact" id="contact" aria-labelledby="contact-title" data-surface="accent">
         <div class="wrap">
           ${sectionHead({ id: "contact", number, label })}
           <h2 class="contact__title" id="contact-title">${title}</h2>

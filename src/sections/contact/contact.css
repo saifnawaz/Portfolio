@@ -44,3 +44,32 @@
     align-items: start;
   }
 }
+
+/* Red surface: near-black text (5.65:1), muted text in --on-accent-muted (4.77:1). */
+.contact {
+  border-top: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.contact ::selection {
+  background: var(--on-accent);
+  color: var(--accent);
+}
+.contact :focus-visible {
+  outline-color: var(--on-accent);
+}
+.contact .section-head__label,
+.contact .contact__note,
+.contact .soon,
+.contact .link.is-soon {
+  color: var(--on-accent-muted);
+}
+.contact .contact__foot {
+  border-top-color: rgb(8 8 8 / 0.25);
+}
+.contact .link:not(.is-soon)::before {
+  background: rgb(8 8 8 / 0.35);
+}
+.contact .link::after {
+  background: var(--on-accent);
+}
