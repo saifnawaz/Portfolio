@@ -10,5 +10,6 @@
 import hero from "./hero/hero.js";
 import about from "./about/about.js";
 import projects from "./projects/projects.js";
+import toolkit from "./toolkit/toolkit.js";
 
-export default [hero, about, projects];
+export default [hero, about, projects, toolkit];

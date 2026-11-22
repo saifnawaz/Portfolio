@@ -1,0 +1,38 @@
+.toolkit__grid {
+  display: grid;
+  gap: 3.5rem clamp(2rem, 5vw, 5rem);
+}
+@media (min-width: 48rem) {
+  .toolkit__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.toolkit__title {
+  margin-bottom: 1rem;
+  color: var(--ink-faint);
+}
+
+.toolkit__rows {
+  border-top: 1px solid var(--line);
+}
+.toolkit__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--text-md);
+}
+.toolkit__tag {
+  flex-shrink: 0;
+  color: var(--ink-faint);
+  text-align: right;
+}
+a.toolkit__name {
+  transition: color 0.25s;
+}
+a.toolkit__name:hover {
+  color: var(--accent);
+}
