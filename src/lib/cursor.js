@@ -30,6 +30,7 @@ export function initCursor() {
   );
   document.addEventListener("pointerover", (event) => {
     dot.classList.toggle("is-hover", Boolean(event.target.closest?.(INTERACTIVE)));
+    dot.classList.toggle("on-accent", Boolean(event.target.closest?.('[data-surface="accent"]')));
   });
   root.addEventListener("pointerleave", () => dot.classList.remove("is-visible"));
   window.addEventListener("pointerdown", () => dot.classList.add("is-down"));

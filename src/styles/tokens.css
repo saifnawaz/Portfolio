@@ -1,6 +1,6 @@
 /* Design tokens: change the look of the whole site from here. */
 :root {
-  /* Colour: monochrome, the accent is only for tiny details (status dots, hover underlines) */
+  /* Colour: monochrome + one red accent (hero highlights, project hover, contact, small details) */
   --bg: #080808;
   --bg-raised: #101010;
   --ink: #efede8; /* off-white text */
@@ -8,7 +8,9 @@
   --ink-faint: #86847f; /* small labels, 5.4:1 */
   --line: #1d1d1c; /* 1px dividers */
   --line-strong: #353431;
-  --accent: #ffb36b;
+  --accent: #ff3b30; /* red: used boldly, in few places */
+  --on-accent: #080808; /* text on red: 5.65:1 */
+  --on-accent-muted: #3a0d0a; /* secondary text on red: 4.77:1 */
 
   /* Type */
   --font-display: "Clash Display", "Helvetica Neue", Arial, sans-serif; /* name + headings */
