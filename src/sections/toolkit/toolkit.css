@@ -1,6 +1,6 @@
 .toolkit__grid {
   display: grid;
-  gap: 3.5rem clamp(2rem, 5vw, 5rem);
+  gap: clamp(var(--stack), 5vw, 3.5rem) clamp(2rem, 5vw, 5rem);
 }
 @media (min-width: 48rem) {
   .toolkit__grid {

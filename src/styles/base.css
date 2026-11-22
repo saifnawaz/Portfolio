@@ -11,7 +11,6 @@ html {
   color-scheme: dark;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scroll-padding-top: var(--nav-h);
 }
 html.is-scroll-locked {
   overflow: hidden; /* mobile menu open */
@@ -182,9 +181,24 @@ main:focus {
   padding-block: var(--section-y);
   border-top: 1px solid var(--line);
 }
+/* Jump targets stop just below the fixed nav (Lenis reads this too). */
+section[id] {
+  scroll-margin-top: var(--nav-h);
+}
+/* Keyboard focus scrolled into view also clears the nav. */
+a,
+button,
+[tabindex] {
+  scroll-margin-top: calc(var(--nav-h) + 1rem);
+}
 .section-head {
   margin-bottom: clamp(3.5rem, 7vw, 7rem);
   align-items: baseline;
+}
+@media (max-width: 47.99rem) {
+  .section-head {
+    margin-bottom: var(--stack);
+  }
 }
 .section-head > .section-head__label {
   grid-column: 1; /* stays in the label column even when there is no title */

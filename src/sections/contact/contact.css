@@ -24,7 +24,7 @@
 .contact__foot {
   display: grid;
   gap: 2rem;
-  margin-top: clamp(3rem, 6vw, 5rem);
+  margin-top: clamp(var(--stack), 6vw, 5rem);
   padding-top: 1.5rem;
   border-top: 1px solid var(--line);
 }

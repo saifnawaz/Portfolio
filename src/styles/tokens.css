@@ -33,7 +33,16 @@
   --split: minmax(10rem, 1fr) 3fr; /* label column | content column */
   --nav-h: 4rem;
 
+  --stack: 2.25rem; /* space between blocks inside a section, on phones */
+
   /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --duration: 0.9s;
+}
+
+/* Phones: tighter vertical rhythm (~80px between sections). */
+@media (max-width: 47.99rem) {
+  :root {
+    --section-y: 2.5rem;
+  }
 }
