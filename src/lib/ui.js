@@ -1,11 +1,11 @@
 /* Small partials shared by several sections. */
 import { html, rich } from "./html.js";
 
-/** Numbered label + big heading, on the shared two-column grid. */
+/** Numbered label + big heading (revealed line by line), on the shared two-column grid. */
 export const sectionHead = ({ id, number, label, title }) => html`
-  <header class="section-head split" data-reveal>
-    <p class="section-head__label label"><span aria-hidden="true">(${number})</span> ${label}</p>
-    ${title ? html`<h2 class="section-head__title" id="${id}-title">${rich(title)}</h2>` : ""}
+  <header class="section-head split">
+    <p class="section-head__label label" data-reveal><span aria-hidden="true">(${number})</span> ${label}</p>
+    ${title ? html`<h2 class="section-head__title" id="${id}-title" data-split>${rich(title)}</h2>` : ""}
   </header>
 `;
 

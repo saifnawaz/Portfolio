@@ -25,7 +25,7 @@ export default {
           <h2 class="contact__title" id="contact-title" data-reveal>${title}</h2>
 
           <div class="contact__foot" data-reveal style="--reveal-i: 1">
-            <p class="contact__note">${contact.note}</p>
+            <p class="contact__note" data-split>${contact.note}</p>
             <ul class="contact__links label" role="list">
               <li>${smartLink({ label: email || "Email", url: email ? `mailto:${email}` : "" })}</li>
               ${contact.links.map((link) => html`<li>${smartLink(link)}</li>`)}

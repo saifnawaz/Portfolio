@@ -210,6 +210,27 @@ main:focus {
   transform: none;
 }
 
+/* Line-by-line reveal ([data-split], see lib/reveal.js) */
+.js [data-split]:not(.is-split):not(.is-done) {
+  opacity: 0; /* until fonts are in and lines are measured */
+}
+.split-line {
+  display: block;
+  overflow: hidden;
+  /* room for accents and descenders inside the mask */
+  padding: 0.1em 0 0.16em;
+  margin: -0.1em 0 -0.16em;
+}
+.split-line > span {
+  display: block;
+  translate: 0 110%;
+  transition: translate 1.1s var(--ease-out);
+  transition-delay: calc(var(--line, 0) * 90ms);
+}
+.is-in .split-line > span {
+  translate: 0 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -217,7 +238,8 @@ main:focus {
     animation: none !important;
     transition: none !important;
   }
-  .js [data-reveal] {
+  .js [data-reveal],
+  .js [data-split]:not(.is-split):not(.is-done) {
     opacity: 1;
     transform: none;
   }
