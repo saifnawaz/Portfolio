@@ -1,0 +1,36 @@
+.about__lead {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  max-width: 30em;
+}
+.about__lead em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.about__facts {
+  display: grid;
+  gap: 2rem;
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+.about__fact {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.about__fact dt {
+  color: var(--ink-faint);
+  margin-bottom: 0.6rem;
+}
+.about__fact dd {
+  margin: 0;
+  max-width: 28ch;
+  color: var(--ink-muted);
+}
+
+@media (min-width: 48rem) {
+  .about__facts {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

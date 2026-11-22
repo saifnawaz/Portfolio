@@ -8,5 +8,6 @@
  * Its CSS sits next to it and is imported by the module.
  */
 import hero from "./hero/hero.js";
+import about from "./about/about.js";
 
-export default [hero];
+export default [hero, about];
