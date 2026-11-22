@@ -27,6 +27,14 @@
   padding-inline: var(--gutter);
 }
 
+@media (pointer: coarse) {
+  .site-nav__brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px; /* tap target; the logo itself stays where it was */
+  }
+}
+
 /* Logo: same face, case and spacing as the hero name, so the hand-over is seamless. */
 .site-nav__logo {
   display: inline-block;

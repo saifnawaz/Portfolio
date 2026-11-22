@@ -119,17 +119,19 @@ main:focus {
 
 /* Link: a thin rule at rest, an accent underline that draws in on hover. */
 .link {
+  --hit: 0px; /* extra tap area above and below (touch screens), layout unchanged */
   position: relative;
   display: inline-flex;
   align-items: baseline;
   gap: 0.35em;
-  padding-bottom: 3px;
+  padding-block: var(--hit) calc(3px + var(--hit));
+  margin-block: calc(-1 * var(--hit));
 }
 .link::before,
 .link::after {
   content: "";
   position: absolute;
-  inset: auto 0 0;
+  inset: auto 0 var(--hit);
   height: 1px;
   background: var(--line-strong);
 }
@@ -148,6 +150,11 @@ main:focus {
 }
 .link:hover .arrow {
   transform: translate(2px, -2px);
+}
+@media (pointer: coarse) {
+  .link {
+    --hit: 0.75rem; /* 44px+ tall targets */
+  }
 }
 /* A link whose url is still empty in content.js */
 .link.is-soon {

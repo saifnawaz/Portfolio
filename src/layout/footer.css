@@ -12,6 +12,13 @@
 .site-footer__top {
   transition: color 0.25s;
 }
+@media (pointer: coarse) {
+  .site-footer__top {
+    display: inline-block;
+    padding-block: 0.875rem; /* 44px+ tap target, without changing the footer's height */
+    margin-block: -0.875rem;
+  }
+}
 .site-footer__top:hover {
   color: var(--ink);
 }
