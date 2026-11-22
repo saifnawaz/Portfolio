@@ -27,6 +27,13 @@ export default {
     lastName: "Nawaz",
     tagline: "AI student at the University of Karachi",
     status: "Open to internships",
+    // *asterisks* here are highlighted in red
+    statement: "I build *web apps* and I'm learning how *machines think*.",
+    currently: [
+      { label: "Now building", value: "Tika, in Laravel" },
+      { label: "Reading", value: "Book title" }, // TODO
+      { label: "Listening", value: "Artist or album" }, // TODO
+    ],
   },
 
   about: {

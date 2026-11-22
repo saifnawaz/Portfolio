@@ -8,7 +8,7 @@
  * - The Karachi clock is any element with [data-clock] (see lib/clock.js).
  */
 import "./hero.css";
-import { html } from "../../lib/html.js";
+import { html, rich } from "../../lib/html.js";
 import { initLetterField } from "./letters.js";
 import { initNameMorph } from "./morph.js";
 
@@ -28,6 +28,23 @@ export default {
     const last = hero.lastName.toUpperCase();
     return html`
       <section class="hero" id="hero" aria-labelledby="hero-title">
+        <div class="hero__top">
+          ${hero.statement ? html`<p class="hero__statement" data-split>${rich(hero.statement)}</p>` : ""}
+          ${hero.currently?.length
+            ? html`<div class="hero__now">
+                <p class="hero__now-title label">Currently</p>
+                <dl>
+                  ${hero.currently.map(
+                    (item, i) => html`<div class="hero__now-row" style="--i: ${i}">
+                      <dt class="label">${item.label}</dt>
+                      <dd>${item.value}</dd>
+                    </div>`,
+                  )}
+                </dl>
+              </div>`
+            : ""}
+        </div>
+
         <p class="hero__line"><span>${hero.tagline}</span></p>
 
         <h1 class="hero__name" id="hero-title">
