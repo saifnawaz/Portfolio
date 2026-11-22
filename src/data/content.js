@@ -6,7 +6,7 @@
  * - Each section reads the block with the same key as its id
  *   (sections/about reads `about`, and so on).
  * - A block with a `label` gets a numbered heading and a nav link.
- * - Wrap words in *asterisks* to set them in the accent colour.
+ * - Wrap words in *asterisks* to set them in a quieter secondary tone.
  * - An empty url ("") renders as a muted "soon" label, never a broken link.
  * - Images go in /public and are referenced from the site root ("/assets/...").
  */
@@ -31,8 +31,8 @@ export default {
 
   about: {
     label: "About",
-    title: "Hello, I'm *Saif.*",
-    lead: "I'm a BS Artificial Intelligence student at the University of Karachi. I like building things people *actually use*, and understanding how they work underneath.",
+    title: "Hello, I'm Saif.",
+    lead: "I'm a BS Artificial Intelligence student at the University of Karachi. I like building things people actually use, and understanding how they work underneath.",
     facts: [
       { label: "Studying", text: "BS Artificial Intelligence, University of Karachi" },
       { label: "Before that", text: "Diploma in Software Development, Aptech" },
@@ -42,7 +42,7 @@ export default {
 
   projects: {
     label: "Work",
-    title: "Selected *projects*",
+    title: "Selected projects",
     items: [
       {
         title: "Tika",
@@ -85,7 +85,7 @@ export default {
 
   toolkit: {
     label: "Toolkit",
-    title: "Stack & *certificates*",
+    title: "Stack & certificates",
     stackTitle: "Stack",
     stack: [
       { name: "JavaScript", tag: "Web" },

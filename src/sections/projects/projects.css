@@ -36,10 +36,7 @@
   inset: 0;
   display: grid;
   place-items: center;
-  background:
-    radial-gradient(110% 90% at 18% 12%, rgb(255 179 107 / 0.14), transparent 55%),
-    radial-gradient(80% 70% at 88% 92%, rgb(255 179 107 / 0.07), transparent 60%),
-    var(--bg-raised);
+  background: var(--bg-raised);
 }
 .project__placeholder-title {
   font-family: var(--font-display);
@@ -115,7 +112,6 @@
 }
 .project__status.is-live::before {
   background: var(--accent);
-  box-shadow: 0 0 10px var(--accent);
 }
 
 .project__links {

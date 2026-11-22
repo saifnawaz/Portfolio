@@ -31,8 +31,10 @@
   text-align: right;
 }
 a.toolkit__name {
-  transition: color 0.25s;
+  text-decoration: underline 1px transparent;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 0.3s;
 }
 a.toolkit__name:hover {
-  color: var(--accent);
+  text-decoration-color: var(--accent);
 }

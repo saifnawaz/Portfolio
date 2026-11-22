@@ -11,12 +11,7 @@ html {
   color-scheme: dark;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scroll-padding-top: 5rem;
-}
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
+  scroll-padding-top: var(--nav-h);
 }
 body {
   min-height: 100svh;
@@ -46,20 +41,23 @@ h1,
 h2,
 h3,
 h4 {
-  font-weight: 400;
+  font-weight: 500;
   text-wrap: balance;
 }
 p {
   text-wrap: pretty;
 }
+em {
+  font-style: normal;
+  color: var(--ink-muted); /* *asterisks* in content.js: a quieter tone */
+}
 ::selection {
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--ink);
+  color: var(--bg);
 }
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 1px solid var(--ink);
   outline-offset: 4px;
-  border-radius: 2px;
 }
 main:focus {
   outline: none; /* focused only as a skip-link / back-to-top target */
@@ -77,7 +75,7 @@ main:focus {
   font-size: var(--text-xs);
   font-weight: 400;
   line-height: 1.5;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 .split {
@@ -109,30 +107,42 @@ main:focus {
   left: 0.75rem;
   z-index: 200;
   padding: 0.6rem 1rem;
-  background: var(--accent);
-  color: var(--accent-ink);
-  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--bg);
   transform: translateY(-200%);
 }
 .skip-link:focus-visible {
   transform: none;
 }
 
-/* Text link with an underline that warms up on hover */
+/* Link: a thin rule at rest, an accent underline that draws in on hover. */
 .link {
+  position: relative;
   display: inline-flex;
   align-items: baseline;
   gap: 0.35em;
-  padding-bottom: 2px;
-  border-bottom: 1px solid var(--line-strong);
-  transition: color 0.25s, border-color 0.25s;
+  padding-bottom: 3px;
 }
-.link:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+.link::before,
+.link::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: var(--line-strong);
+}
+.link::after {
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-out);
+}
+.link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 .link .arrow {
-  transition: transform 0.35s var(--ease-out);
+  transition: transform 0.4s var(--ease-out);
 }
 .link:hover .arrow {
   transform: translate(2px, -2px);
@@ -140,14 +150,28 @@ main:focus {
 /* A link whose url is still empty in content.js */
 .link.is-soon {
   color: var(--ink-faint);
-  border-bottom-style: dashed;
 }
-.link.is-soon:hover {
-  color: var(--ink-faint);
-  border-color: var(--line-strong);
+.link.is-soon::before {
+  background: transparent;
 }
-.muted {
+.link.is-soon::after {
+  display: none;
+}
+.soon {
   color: var(--ink-faint);
+}
+
+/* Small status dot (the accent's main job) */
+.dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.dot.is-hollow {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--ink-faint);
 }
 
 /* Sections --------------------------------------------------------------- */
@@ -156,7 +180,7 @@ main:focus {
   border-top: 1px solid var(--line);
 }
 .section-head {
-  margin-bottom: clamp(3rem, 6vw, 5.5rem);
+  margin-bottom: clamp(3.5rem, 7vw, 7rem);
   align-items: baseline;
 }
 .section-head > .section-head__label {
@@ -166,41 +190,16 @@ main:focus {
 .section-head__title {
   font-family: var(--font-display);
   font-size: var(--text-2xl);
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-}
-.section-head__title em {
-  color: var(--accent);
-}
-
-/* Film grain ------------------------------------------------------------- */
-body::after {
-  content: "";
-  position: fixed;
-  inset: -10%;
-  z-index: 100;
-  pointer-events: none;
-  opacity: 0.06;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 0.8s steps(4) infinite;
-}
-@keyframes grain {
-  25% {
-    transform: translate(-3%, 2%);
-  }
-  50% {
-    transform: translate(2%, -3%);
-  }
-  75% {
-    transform: translate(-2%, -2%);
-  }
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
 }
 
 /* Scroll reveal ---------------------------------------------------------- */
 /* Only hidden when JS is running (html.js), so content is never lost. */
 .js [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 1.75rem, 0);
+  transform: translate3d(0, 1.5rem, 0);
   transition:
     opacity var(--duration) var(--ease-out),
     transform calc(var(--duration) * 1.3) var(--ease-out);
@@ -215,10 +214,8 @@ body::after {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    transition-delay: 0s !important;
+    animation: none !important;
+    transition: none !important;
   }
   .js [data-reveal] {
     opacity: 1;

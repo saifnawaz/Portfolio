@@ -61,7 +61,6 @@
   height: 7px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 12px var(--accent);
 }
 
 @media (min-width: 48rem) {

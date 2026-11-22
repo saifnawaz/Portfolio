@@ -9,9 +9,6 @@
   align-items: flex-start;
   transition: color 0.4s;
 }
-.contact__title a:hover {
-  color: var(--accent);
-}
 .contact__arrow {
   margin: 0.2em 0 0 0.12em;
   font-family: var(--font-sans);
