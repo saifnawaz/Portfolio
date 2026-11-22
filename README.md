@@ -13,7 +13,8 @@ npm run preview   # serve the built site locally
 
 All text and data live in [`src/data/content.js`](src/data/content.js): bio, facts, projects, stack, certificates, contact links, and page title/description.
 
-- `*word*` sets a word in a quieter secondary tone.
+- `*word*` sets a word in a quieter secondary tone (in the hero statement, red instead).
+- The hero's statement and "Currently" list are `hero.statement` and `hero.currently`.
 - An empty `url: ""` shows a muted "(soon)" label instead of a broken link.
 - Images go in `public/` and are referenced from the root, e.g. `"/assets/projects/tika.webp"`. Project screenshots look best at 16:10 (1440×900).
 - Search the file for `TODO` to find the placeholders: email, LinkedIn, résumé, GitHub repos, the Tika screenshot, and the production URL.
@@ -28,7 +29,7 @@ src/
     index.js             the page order: add, remove, reorder here
     hero/                the name: fit-to-width, letter intro, cursor field, shrink-into-nav
     about/  projects/  toolkit/  contact/
-  layout/                nav, footer, <head> tags
+  layout/                nav, footer, <head> tags, background (dot grid)
   lib/                   scroll (Lenis), reveals, magnetic links, cursor, clock, html templating
   styles/                tokens.css (colours, type, spacing), base.css, fonts
   assets/fonts/          Clash Display + Satoshi (self-hosted)
@@ -77,7 +78,9 @@ Replace `src/sections/hero/` with a new design; keep the page's single `<h1>` in
 
 ### Change the look
 
-Colours, fonts, type scale and spacing are CSS variables in [`src/styles/tokens.css`](src/styles/tokens.css). The palette is monochrome; the accent (`--accent`) is only for tiny details like status dots and hover underlines.
+Colours, fonts, type scale and spacing are CSS variables in [`src/styles/tokens.css`](src/styles/tokens.css). The palette is monochrome plus one red (`--accent`), used in a few bold places: hero highlights, the project-row hover fill, the contact section, and small details. Text on red uses `--on-accent` (near-black, 5.65:1) or `--on-accent-muted` (4.77:1); white on red fails AA, so avoid it.
+
+Background: a fixed canvas dot grid (`layout/background.js`; dots warm to red near the cursor on desktop), a drifting red glow behind the hero (`hero/glow.js`) and a static film grain (`base.css`). All of it is static with reduced motion.
 
 ### Motion toolkit
 
