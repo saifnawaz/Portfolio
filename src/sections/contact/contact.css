@@ -1,23 +1,24 @@
 .contact__title {
   font-family: var(--font-display);
+  font-weight: 600;
   font-size: var(--text-display);
-  line-height: 0.88;
-  letter-spacing: -0.035em;
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  transform-origin: left bottom; /* scales up from its baseline (contact.js) */
 }
 .contact__title a {
   display: inline-flex;
   align-items: flex-start;
-  transition: color 0.4s;
 }
 .contact__arrow {
-  margin: 0.2em 0 0 0.12em;
+  margin: 0.15em 0 0 0.1em;
   font-family: var(--font-sans);
-  font-style: normal;
-  font-size: 0.26em;
-  transition: transform 0.5s var(--ease-out);
+  font-weight: 400;
+  font-size: 0.22em;
+  transition: translate 0.5s var(--ease-out);
 }
 .contact__title a:hover .contact__arrow {
-  transform: translate(0.15em, -0.15em);
+  translate: 0.15em -0.15em;
 }
 
 .contact__foot {

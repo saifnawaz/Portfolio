@@ -9,13 +9,16 @@ export const sectionHead = ({ id, number, label, title }) => html`
   </header>
 `;
 
-/** A link, or a muted "soon" label while its url is still empty. */
-export const smartLink = ({ label, url }, className = "link") => {
+/**
+ * A link, or a muted "soon" label while its url is still empty.
+ * { magnetic: true } makes the link drift toward the cursor (lib/magnetic.js).
+ */
+export const smartLink = ({ label, url }, className = "link", { magnetic = false } = {}) => {
   if (!url) {
     return html`<span class="${className} is-soon">${label} <span class="soon">(soon)</span></span>`;
   }
   const external = /^https?:\/\//.test(url);
-  return html`<a class="${className}" href="${url}" ${external ? html`target="_blank" rel="noopener noreferrer"` : ""}
+  return html`<a class="${className}" href="${url}" ${external ? html`target="_blank" rel="noopener noreferrer"` : ""} ${magnetic ? html`data-magnetic` : ""}
     >${label}<span class="arrow" aria-hidden="true">↗</span>${external ? html`<span class="sr-only"> (opens in a new tab)</span>` : ""}</a
   >`;
 };
