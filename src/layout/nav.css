@@ -32,8 +32,14 @@
   font-size: 1.5rem;
   line-height: 1;
 }
+/* Small screens show initials; the full name stays readable to screen readers. */
 .site-nav__brand-full {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .site-nav__links {
@@ -52,7 +58,11 @@
 
 @media (min-width: 30rem) {
   .site-nav__brand-full {
-    display: inline;
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
   }
   .site-nav__brand-short {
     display: none;

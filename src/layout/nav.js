@@ -15,9 +15,9 @@ export default function nav({ site }, sections) {
   return html`
     <header class="site-nav" data-nav>
       <div class="wrap site-nav__inner">
-        <a class="site-nav__brand" href="#main" aria-label="${site.name}, back to top">
+        <a class="site-nav__brand" href="#main">
           <span class="site-nav__brand-full">${site.name}</span>
-          <span class="site-nav__brand-short">${initials(site.name)}</span>
+          <span class="site-nav__brand-short" aria-hidden="true">${initials(site.name)}</span>
         </a>
         <nav aria-label="Sections">
           <ul class="site-nav__links label" role="list">
@@ -36,7 +36,7 @@ export function initNav() {
   const header = document.querySelector("[data-nav]");
   if (!header) return;
 
-  let lastY = window.scrollY;
+  let lastY = 0;
   let queued = false;
 
   const update = () => {
@@ -59,5 +59,9 @@ export function initNav() {
   );
   // Never hide it while a keyboard user is inside it.
   header.addEventListener("focusin", () => header.classList.remove("is-hidden"));
-  update();
+  // First read on the next frame, so startup doesn't force a synchronous layout.
+  requestAnimationFrame(() => {
+    lastY = window.scrollY;
+    update();
+  });
 }
