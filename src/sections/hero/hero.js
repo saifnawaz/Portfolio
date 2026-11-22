@@ -9,6 +9,7 @@
  */
 import "./hero.css";
 import { html } from "../../lib/html.js";
+import { initLetterField } from "./letters.js";
 
 const NAME_FONT = '600 100px "Clash Display"';
 
@@ -54,6 +55,11 @@ export default {
         // Two frames so the hidden start state is painted before the intro runs.
         requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add("is-ready")));
       });
+
+    // Letters react to the mouse only while the name is still the hero (not mid-shrink).
+    initLetterField(hero, [...hero.querySelectorAll(".hero__char")], {
+      isActive: () => window.scrollY < 40,
+    });
   },
 };
 
