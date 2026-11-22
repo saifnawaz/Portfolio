@@ -10,6 +10,7 @@
 import "./hero.css";
 import { html } from "../../lib/html.js";
 import { initLetterField } from "./letters.js";
+import { initNameMorph } from "./morph.js";
 
 const NAME_FONT = '600 100px "Clash Display"';
 
@@ -20,6 +21,7 @@ const word = (text, start) =>
 
 export default {
   id: "hero",
+  dockLogo: true, // the name shrinks into the nav logo on scroll (see morph.js)
 
   render: ({ hero, site }) => {
     const first = hero.firstName.toUpperCase();
@@ -47,11 +49,13 @@ export default {
   init(hero) {
     const text = hero.querySelector(".hero__name-text");
     const timeout = new Promise((resolve) => setTimeout(resolve, 2500));
+    const remeasure = initNameMorph(text);
 
     Promise.race([document.fonts.load(NAME_FONT), timeout])
       .catch(() => {})
       .then(() => {
         fit(hero, text);
+        remeasure();
         // Two frames so the hidden start state is painted before the intro runs.
         requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add("is-ready")));
       });
@@ -65,6 +69,9 @@ export default {
 
 /** Measures the name's width in em, so CSS can size it to fill the row exactly. */
 function fit(hero, text) {
+  const previous = text.style.transform;
+  text.style.transform = "none"; // measure the unscaled name
   const size = parseFloat(getComputedStyle(text).fontSize);
   hero.style.setProperty("--name-em", (text.getBoundingClientRect().width / size).toFixed(4));
+  text.style.transform = previous;
 }

@@ -1,29 +1,27 @@
 /**
  * Fixed top nav. Links are generated from the sections that have a label in
  * content.js, so adding or removing a section updates the nav by itself.
+ *
+ * The logo is the site name. If a section sets `dockLogo: true` (the hero),
+ * that section reveals the logo itself (the name shrinks into it) by toggling
+ * `.is-compact`; otherwise the logo is always visible and the nav turns solid
+ * once the page scrolls.
  */
 import "./nav.css";
 import { html } from "../lib/html.js";
-
-const initials = (name) =>
-  name
-    .split(/\s+/)
-    .map((word) => word[0])
-    .join("");
+import { onScroll } from "../lib/scroll.js";
 
 export default function nav({ site }, sections) {
+  const docked = sections.some((section) => section.dockLogo);
   return html`
-    <header class="site-nav" data-nav>
-      <div class="wrap site-nav__inner">
-        <a class="site-nav__brand" href="#main">
-          <span class="site-nav__brand-full">${site.name}</span>
-          <span class="site-nav__brand-short" aria-hidden="true">${initials(site.name)}</span>
-        </a>
+    <header class="site-nav" data-nav ${docked ? html`data-dock` : ""}>
+      <div class="site-nav__inner">
+        <a class="site-nav__brand" href="#main"><span class="site-nav__logo">${site.name}</span></a>
         <nav aria-label="Sections">
           <ul class="site-nav__links label" role="list">
             ${sections
               .filter((section) => section.label)
-              .map((section) => html`<li><a href="#${section.id}">${section.label}</a></li>`)}
+              .map((section) => html`<li><a class="site-nav__link" href="#${section.id}">${section.label}</a></li>`)}
           </ul>
         </nav>
       </div>
@@ -31,37 +29,8 @@ export default function nav({ site }, sections) {
   `;
 }
 
-/** Hide while scrolling down, show on the way back up. */
 export function initNav() {
   const header = document.querySelector("[data-nav]");
-  if (!header) return;
-
-  let lastY = 0;
-  let queued = false;
-
-  const update = () => {
-    queued = false;
-    const y = window.scrollY;
-    header.classList.toggle("is-scrolled", y > 24);
-    if (Math.abs(y - lastY) < 6) return; // ignore tiny jitters
-    header.classList.toggle("is-hidden", y > lastY && y > window.innerHeight * 0.5);
-    lastY = y;
-  };
-
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(update);
-    },
-    { passive: true },
-  );
-  // Never hide it while a keyboard user is inside it.
-  header.addEventListener("focusin", () => header.classList.remove("is-hidden"));
-  // First read on the next frame, so startup doesn't force a synchronous layout.
-  requestAnimationFrame(() => {
-    lastY = window.scrollY;
-    update();
-  });
+  if (!header || header.hasAttribute("data-dock")) return;
+  onScroll((y) => header.classList.toggle("is-compact", y > 24));
 }

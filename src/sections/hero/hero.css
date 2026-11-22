@@ -32,6 +32,7 @@
 }
 .hero__name-text {
   display: inline-block;
+  transform-origin: 0 0; /* shrinks toward its top-left corner, where the nav logo sits */
   /* Mask for the intro: clips only below the line, so letters can rise out of it. */
   clip-path: inset(-0.5em -0.5em 0 -0.5em);
 }

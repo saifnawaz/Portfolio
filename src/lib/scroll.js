@@ -6,7 +6,9 @@
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 
-export const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Guarded: this module is also loaded at build time (prerender), where there is no window.
+export const reducedMotion =
+  typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const scrollFns = new Set();
 const resizeFns = new Set();
