@@ -13,6 +13,9 @@ html {
   text-size-adjust: 100%;
   scroll-padding-top: var(--nav-h);
 }
+html.is-scroll-locked {
+  overflow: hidden; /* mobile menu open */
+}
 body {
   min-height: 100svh;
   background: var(--bg);

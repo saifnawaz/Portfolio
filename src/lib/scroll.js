@@ -32,6 +32,13 @@ export function onResize(fn) {
   return () => resizeFns.delete(fn);
 }
 
+/** Freezes page scrolling (e.g. while the mobile menu is open), or releases it. */
+export function lockScroll(locked) {
+  if (locked) lenis?.stop();
+  else lenis?.start();
+  document.documentElement.classList.toggle("is-scroll-locked", locked);
+}
+
 export function initScroll() {
   if (!reducedMotion) {
     lenis = new Lenis({ autoRaf: true, lerp: 0.1 });

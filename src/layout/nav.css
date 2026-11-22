@@ -76,10 +76,113 @@
   transform-origin: left;
 }
 
-/* Narrow phones: tighter labels so logo + four links fit on one row. */
+/* Menu button: only on narrow screens, and only with JS (it needs it to open). */
+.site-nav__menu {
+  display: none;
+  min-height: 44px; /* touch target */
+  margin-right: -0.75rem;
+  padding: 0 0.75rem;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+@media (max-width: 47.99rem) {
+  .js .site-nav__links {
+    display: none;
+  }
+  .js .site-nav__menu {
+    display: block;
+  }
+}
+/* Without JS on narrow phones: tighter labels so logo + four links fit on one row. */
 @media (max-width: 26rem) {
   .site-nav__links {
     font-size: 0.6875rem;
     letter-spacing: 0.02em;
+  }
+}
+
+/* Full-screen menu (a modal <dialog>) ------------------------------------- */
+.site-menu {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+.site-menu[open] {
+  display: flex;
+  flex-direction: column;
+  animation: site-menu-in 0.3s ease both;
+}
+.site-menu::backdrop {
+  background: var(--bg);
+}
+.site-menu__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: var(--nav-h);
+  padding-inline: var(--gutter);
+  border-bottom: 1px solid var(--line);
+}
+.site-menu__close {
+  min-height: 44px;
+  margin-right: -0.75rem;
+  padding: 0 0.75rem;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+.site-menu__links {
+  display: grid;
+  padding: clamp(2rem, 8vh, 4rem) var(--gutter) 2rem;
+}
+.site-menu__links li {
+  overflow: hidden; /* mask for the staggered slide-up */
+  border-bottom: 1px solid var(--line);
+}
+.site-menu__link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  padding-block: 0.6rem 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 13vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.site-menu[open] .site-menu__link {
+  animation: site-menu-link-in 0.9s var(--ease-out) both;
+  animation-delay: calc(0.08s + var(--i) * 0.07s);
+}
+.site-menu__num {
+  color: var(--ink-faint);
+  translate: 0 -0.2em;
+}
+.site-menu__link:active {
+  color: var(--accent);
+}
+.site-menu__link:focus-visible {
+  outline-offset: -1px;
+}
+@keyframes site-menu-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes site-menu-link-in {
+  from {
+    translate: 0 105%;
   }
 }
