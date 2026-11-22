@@ -27,12 +27,6 @@ export default {
     lastName: "Nawaz",
     tagline: "AI student at the University of Karachi",
     status: "Open to internships",
-    portrait: {
-      src: "/assets/portrait.jpg",
-      alt: "Black and white portrait of Saif Nawaz",
-      width: 900,
-      height: 1024,
-    },
   },
 
   about: {

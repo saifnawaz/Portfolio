@@ -11,16 +11,6 @@ export default {
 
   render: ({ hero, site }) => html`
     <section class="hero" id="hero" aria-labelledby="hero-title">
-      <div class="hero__portrait">
-        <img
-          src="${hero.portrait.src}"
-          alt="${hero.portrait.alt}"
-          width="${hero.portrait.width}"
-          height="${hero.portrait.height}"
-          fetchpriority="high"
-        />
-      </div>
-
       <div class="hero__inner wrap">
         <h1 class="hero__name" id="hero-title">
           <span class="hero__line"><span>${hero.firstName}</span></span>

@@ -1,8 +1,7 @@
 /* <head> tags built from content.site, so page metadata lives with the rest of the text. */
 import { html } from "../lib/html.js";
 
-export default function head({ site, hero }) {
-  const image = site.url && new URL(hero.portrait.src, site.url).href;
+export default function head({ site }) {
   return html`
     <title>${site.title}</title>
     <meta name="description" content="${site.description}" />
@@ -14,8 +13,7 @@ export default function head({ site, hero }) {
     <meta name="twitter:card" content="summary" />
     ${site.url
       ? html`<link rel="canonical" href="${site.url}" />
-          <meta property="og:url" content="${site.url}" />
-          <meta property="og:image" content="${image}" />`
+          <meta property="og:url" content="${site.url}" />`
       : ""}
   `;
 }

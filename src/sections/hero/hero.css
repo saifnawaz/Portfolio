@@ -9,23 +9,6 @@
   background: var(--bg);
 }
 
-/* Portrait: its black backdrop melts into --bg via `lighten`, and the bottom fades out. */
-.hero__portrait {
-  position: absolute;
-  z-index: -1;
-  top: 4.5rem;
-  right: -12%;
-  width: min(96%, 34rem);
-  mix-blend-mode: lighten;
-  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 92%);
-  mask-image: linear-gradient(to bottom, #000 45%, transparent 92%);
-  animation: hero-fade 1.8s var(--ease-out) both;
-}
-.hero__portrait img {
-  width: 100%;
-  height: auto;
-}
-
 .hero__name {
   font-family: var(--font-serif);
   font-style: italic;
@@ -93,21 +76,8 @@
   }
 }
 
-/* Landscape screens: portrait anchored bottom-right, name over its left edge. */
+/* Landscape screens */
 @media (min-width: 56rem) and (min-aspect-ratio: 1 / 1) {
-  .hero__portrait {
-    top: auto;
-    bottom: 0;
-    right: max(var(--gutter), (100vw - var(--max-width)) / 2 + var(--gutter));
-    width: auto;
-    height: 92%;
-    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 98%);
-    mask-image: linear-gradient(to bottom, #000 60%, transparent 98%);
-  }
-  .hero__portrait img {
-    width: auto;
-    height: 100%;
-  }
   .hero__name {
     font-size: min(16rem, 16vw); /* keeps the name clear of the face */
   }
