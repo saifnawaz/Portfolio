@@ -16,6 +16,7 @@
 
 /* Row (mobile first: stacked) -------------------------------------------- */
 .project {
+  scroll-margin-top: calc(var(--nav-h) + 1.5rem); /* jump target from the hero's cards */
   position: relative;
   display: grid;
   grid-template-columns: 2.5rem minmax(0, 1fr) auto;

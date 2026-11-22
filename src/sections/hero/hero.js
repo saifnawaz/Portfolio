@@ -1,6 +1,7 @@
 /**
- * Hero: a statement and a "Currently" list, then the name edge to edge, with
- * small details under it (status, study, location + clock).
+ * Hero: a statement and a "Currently" list, a fanned stack of project cards
+ * (desktop, stack.js), then the name edge to edge, with small details under it
+ * (status, study, location + clock).
  *
  * - Each letter is its own span (for the intro and the cursor reaction).
  *   (Clash Display has no kerning table, so splitting the name loses nothing.)
@@ -13,6 +14,7 @@ import { html, rich } from "../../lib/html.js";
 import { initLetterField } from "./letters.js";
 import { initNameMorph } from "./morph.js";
 import { initGlow } from "./glow.js";
+import { renderStack } from "./stack.js";
 
 const NAME_FONT = '600 100px "Clash Display"';
 
@@ -25,27 +27,30 @@ export default {
   id: "hero",
   dockLogo: true, // the name shrinks into the nav logo on scroll (see morph.js)
 
-  render: ({ hero, site }) => {
+  render: ({ hero, site, projects }) => {
     const first = hero.firstName.toUpperCase();
     const last = hero.lastName.toUpperCase();
     return html`
       <section class="hero" id="hero" aria-labelledby="hero-title">
         <div class="hero__glow" aria-hidden="true"><span></span></div>
         <div class="hero__top">
-          ${hero.statement ? html`<p class="hero__statement" data-split>${rich(hero.statement)}</p>` : ""}
-          ${hero.currently?.length
-            ? html`<div class="hero__now">
-                <p class="hero__now-title label">Currently</p>
-                <dl>
-                  ${hero.currently.map(
-                    (item, i) => html`<div class="hero__now-row" style="--i: ${i}">
-                      <dt class="label">${item.label}</dt>
-                      <dd>${item.value}</dd>
-                    </div>`,
-                  )}
-                </dl>
-              </div>`
-            : ""}
+          <div class="hero__intro">
+            ${hero.statement ? html`<p class="hero__statement" data-split>${rich(hero.statement)}</p>` : ""}
+            ${hero.currently?.length
+              ? html`<div class="hero__now">
+                  <p class="hero__now-title label">Currently</p>
+                  <dl>
+                    ${hero.currently.map(
+                      (item, i) => html`<div class="hero__now-row" style="--i: ${i}">
+                        <dt class="label">${item.label}</dt>
+                        <dd>${item.value}</dd>
+                      </div>`,
+                    )}
+                  </dl>
+                </div>`
+              : ""}
+          </div>
+          ${projects?.items?.length ? renderStack(projects.items) : ""}
         </div>
 
         <h1 class="hero__name" id="hero-title">

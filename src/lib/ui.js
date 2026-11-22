@@ -22,3 +22,9 @@ export const smartLink = ({ label, url }, className = "link", { magnetic = false
     >${label}<span class="arrow" aria-hidden="true">↗</span>${external ? html`<span class="sr-only"> (opens in a new tab)</span>` : ""}</a
   >`;
 };
+
+/** A project's slug ("tika"), from content.js or derived from its title. */
+export const projectSlug = (item) => item.slug ?? item.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+/** Anchor id of a project row, e.g. "project-tika" (the hero cards and toolkit link here). */
+export const projectId = (item) => `project-${projectSlug(item)}`;

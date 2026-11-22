@@ -65,16 +65,18 @@ export default {
     title: "Selected projects",
     items: [
       {
+        slug: "tika", // used in links (#project-tika) and by toolkit.stack[].usedIn
         title: "Tika",
         blurb:
           "A child vaccination booking system. It started as an unfinished PHP project; I'm rebuilding it properly in Laravel with new features and a new identity.",
         role: "Solo",
         stack: ["Laravel", "PHP", "MySQL"],
-        status: "In progress",
+        status: "",
         image: "", // TODO: e.g. "/assets/projects/tika.webp"
         links: [{ label: "GitHub", url: "" }], // TODO: repo link
       },
       {
+        slug: "library",
         title: "Library System",
         blurb:
           "An OOP course project: all the library logic lives in Python classes, with a web frontend on top and an LLM assistant that only answers library questions.",
@@ -88,6 +90,7 @@ export default {
         ],
       },
       {
+        slug: "assembled",
         title: "Assembled",
         blurb:
           "Design hackathon entry: a landing page for a PC shop where the computer comes apart piece by piece as you scroll.",
@@ -128,10 +131,10 @@ export default {
     label: "Contact",
     title: "Let's talk",
     note: "I'm looking for software and AI internships. Email is the fastest way to reach me.",
-    email: "", // TODO: your email address (the big heading becomes a mailto link)
+    email: "saifaptech100@gmail.com", // TODO: your email address (the big heading becomes a mailto link)
     links: [
       { label: "GitHub", url: "https://github.com/saifnawaz" },
-      { label: "LinkedIn", url: "" }, // TODO
+      { label: "LinkedIn", url: "www.linkedin.com/in/saif-nawaz-154891352" }, // TODO
       { label: "Résumé", url: "" }, // TODO: put resume.pdf in /public and use "/resume.pdf"
     ],
   },

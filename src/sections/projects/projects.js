@@ -8,7 +8,7 @@
  */
 import "./projects.css";
 import { html } from "../../lib/html.js";
-import { sectionHead, smartLink } from "../../lib/ui.js";
+import { projectId, sectionHead, smartLink } from "../../lib/ui.js";
 import { initPreview } from "../../lib/preview.js";
 
 const pad = (n) => String(n).padStart(2, "0");
@@ -20,7 +20,7 @@ const row = (item, i) => {
   const alt = item.imageAlt ?? `Screenshot of ${item.title}`;
 
   return html`
-    <li class="project" data-reveal style="--reveal-i: ${i}" ${item.image ? html`data-image="${item.image}"` : ""}>
+    <li class="project" id="${projectId(item)}" data-reveal style="--reveal-i: ${i}" ${item.image ? html`data-image="${item.image}"` : ""}>
       <span class="project__num label">${pad(i + 1)}</span>
 
       <div class="project__main">

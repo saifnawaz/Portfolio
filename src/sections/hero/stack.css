@@ -1,0 +1,129 @@
+/* Fanned project cards in the hero (desktop only). */
+.stack {
+  display: none;
+}
+@media (min-width: 56rem) {
+  .stack {
+    position: relative;
+    display: block;
+    width: clamp(18rem, 27vw, 27rem);
+    aspect-ratio: 5 / 4;
+    margin-right: clamp(0rem, 4vw, 4rem);
+  }
+}
+
+.stack {
+  align-self: center;
+}
+.stack__card {
+  /* Offset from the middle card: -1, 0, 1 for three cards. */
+  --off: calc(var(--i) - (var(--n) - 1) / 2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 66%;
+  aspect-ratio: 16 / 10;
+  margin: -20.625% 0 0 -33%; /* centred: half the card's height and width (both % of the stack's width) */
+  transform-origin: 50% 100%;
+  rotate: calc(var(--off) * 6deg);
+  translate: calc(var(--off) * 16%) calc(var(--off) * var(--off) * 4%);
+  transition:
+    rotate 0.7s var(--ease-out),
+    translate 0.7s var(--ease-out);
+}
+
+/* Gentle idle float, each card a little out of step. */
+.stack__link {
+  display: block;
+  height: 100%;
+  animation: stack-float 6s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * -2.2s);
+}
+@keyframes stack-float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-7px);
+  }
+}
+.stack__link:focus-visible {
+  outline-offset: 3px;
+}
+
+.stack__frame {
+  position: relative;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-raised);
+  box-shadow:
+    0 24px 48px -20px rgb(0 0 0 / 0.85),
+    0 2px 8px rgb(0 0 0 / 0.35);
+  transition:
+    translate 0.5s var(--ease-out),
+    scale 0.5s var(--ease-out),
+    filter 0.4s ease;
+}
+.stack__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+/* A project without a screenshot: its name, set like a cover. */
+.stack__blank {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0.9rem 1rem;
+  background: radial-gradient(120% 90% at 100% 0%, rgb(255 59 48 / 0.12), transparent 60%), var(--bg-raised);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stack__blank .label {
+  color: var(--ink-faint);
+}
+
+/* The card's name, in mono, shown when it is lifted. */
+.stack__name {
+  position: absolute;
+  left: 0.6rem;
+  bottom: 0.6rem;
+  padding: 0.3rem 0.5rem 0.25rem;
+  background: var(--bg);
+  color: var(--ink);
+  opacity: 0;
+  translate: 0 0.3rem;
+  transition:
+    opacity 0.3s ease,
+    translate 0.4s var(--ease-out);
+}
+.stack__card:is(:hover, :focus-within) {
+  z-index: 5;
+}
+.stack__card:is(:hover, :focus-within) .stack__name {
+  opacity: 1;
+  translate: 0 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Hover the stack: the cards fan out. */
+  .stack:is(:hover, :focus-within) .stack__card {
+    rotate: calc(var(--off) * 9deg);
+    translate: calc(var(--off) * 40% - 8%) calc(var(--off) * var(--off) * 7%); /* % of the card: stays inside the page */
+  }
+  /* Hover a card: it lifts, the others step back. */
+  .stack__card:is(:hover, :focus-within) .stack__frame {
+    translate: 0 -7%;
+    scale: 1.05;
+  }
+  .stack:has(.stack__card:is(:hover, :focus-within)) .stack__card:not(:hover, :focus-within) .stack__frame {
+    filter: brightness(0.55);
+  }
+}

@@ -74,6 +74,14 @@ export function initScroll() {
   });
 }
 
+/** Page offset of an element's layout box, ignoring transforms (a row still
+    waiting for its scroll reveal is translated down; its final spot is not). */
+function layoutTop(el) {
+  let y = 0;
+  for (let node = el; node; node = node.offsetParent) y += node.offsetTop;
+  return y;
+}
+
 /** Smooth-scrolls in-page links through Lenis and moves focus to the target. */
 function onAnchorClick(event) {
   if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) return;
@@ -83,7 +91,7 @@ function onAnchorClick(event) {
   if (!target) return;
 
   event.preventDefault();
-  lenis.scrollTo(id === "main" ? 0 : target);
+  lenis.scrollTo(id === "main" ? 0 : layoutTop(target) - (parseFloat(getComputedStyle(target).scrollMarginTop) || 0));
   if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
   target.focus({ preventScroll: true });
   history.pushState(null, "", `#${id}`);
