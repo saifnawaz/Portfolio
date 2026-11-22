@@ -7,4 +7,6 @@
  *   init(element)           optional, runs in the browser for behaviour
  * Its CSS sits next to it and is imported by the module.
  */
-export default [];
+import hero from "./hero/hero.js";
+
+export default [hero];

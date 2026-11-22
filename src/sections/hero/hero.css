@@ -1,0 +1,126 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-height: 100svh;
+  padding-block: 7rem clamp(1.5rem, 4vw, 2.75rem);
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* Portrait: its black backdrop melts into --bg via `lighten`, and the bottom fades out. */
+.hero__portrait {
+  position: absolute;
+  z-index: -1;
+  top: 4.5rem;
+  right: -12%;
+  width: min(96%, 34rem);
+  mix-blend-mode: lighten;
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 92%);
+  mask-image: linear-gradient(to bottom, #000 45%, transparent 92%);
+  animation: hero-fade 1.8s var(--ease-out) both;
+}
+.hero__portrait img {
+  width: 100%;
+  height: auto;
+}
+
+.hero__name {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(5.5rem, 1rem + 22vw, 16rem);
+  line-height: 0.82;
+  letter-spacing: -0.035em;
+}
+/* Each line rises out of its own mask on load. Padding keeps italic overhangs unclipped. */
+.hero__line {
+  display: block;
+  overflow: hidden;
+  padding: 0.06em 0.12em 0.1em 0;
+  margin-bottom: -0.1em;
+}
+.hero__line:last-child {
+  padding-left: 0.5em;
+}
+.hero__line > span {
+  display: block;
+  animation: hero-rise 1.3s var(--ease-out) both;
+}
+.hero__line:last-child > span {
+  animation-delay: 0.08s;
+}
+
+.hero__foot {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  animation: hero-fade 1.4s 0.35s var(--ease-out) both;
+}
+.hero__tagline {
+  font-size: var(--text-lg);
+  max-width: 40ch;
+}
+.hero__meta {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--ink-muted);
+}
+.hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ink);
+}
+.hero__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+@media (min-width: 48rem) {
+  .hero__foot {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+  .hero__meta {
+    text-align: right;
+    justify-items: end;
+  }
+}
+
+/* Landscape screens: portrait anchored bottom-right, name over its left edge. */
+@media (min-width: 56rem) and (min-aspect-ratio: 1 / 1) {
+  .hero__portrait {
+    top: auto;
+    bottom: 0;
+    right: max(var(--gutter), (100vw - var(--max-width)) / 2 + var(--gutter));
+    width: auto;
+    height: 92%;
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 98%);
+    mask-image: linear-gradient(to bottom, #000 60%, transparent 98%);
+  }
+  .hero__portrait img {
+    width: auto;
+    height: 100%;
+  }
+  .hero__foot {
+    border-top: 0;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    transform: translateY(105%);
+  }
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+}
