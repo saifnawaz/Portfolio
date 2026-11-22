@@ -14,7 +14,7 @@ npm run preview   # serve the built site locally
 All text and data live in [`src/data/content.js`](src/data/content.js): the About statement, bio, path and interests, projects, stack, certificates, contact links, and page title/description.
 
 - `*word*` sets a word in a quieter secondary tone (in the hero and About statements, red instead).
-- The hero's statement and "Currently" list are `hero.statement` and `hero.currently`.
+- The hero's statement and "Currently" list are `hero.statement` and `hero.currently`; `hero.study` is the line in the details under the name. (On phones narrower than 380px the "Currently" list is hidden.)
 - About: `about.path` is the timeline (the last point is red and pulses); `about.interests` are the "Off the clock" words, each with an optional `image` that floats next to the cursor on hover (tap on touch).
 - An empty `url: ""` shows a muted "(soon)" label instead of a broken link.
 - Images go in `public/` and are referenced from the root, e.g. `"/assets/projects/tika.webp"`. Project screenshots look best at 16:10 (1440×900).
@@ -31,7 +31,7 @@ src/
     hero/                the name: fit-to-width, letter intro, cursor field, shrink-into-nav
     about/               sticky statement, word-brighten bio, Path timeline, interests
     projects/  toolkit/  contact/
-  layout/                nav, footer, <head> tags, background (dot grid)
+  layout/                nav (+ full-screen menu on phones), footer, <head> tags, background (dot grid)
   lib/                   scroll (Lenis), reveals, magnetic links, cursor, clock, html templating
   styles/                tokens.css (colours, type, spacing), base.css, fonts
   assets/fonts/          Clash Display + Satoshi (self-hosted)
@@ -67,7 +67,7 @@ Sections render to HTML on the server, so the shipped page already contains ever
    };
    ```
 
-2. Add `talks: { label: "Talks", title: "...", ... }` to `content.js`. The `label` gives it a number and a nav link.
+2. Add `talks: { label: "Talks", title: "...", ... }` to `content.js`. The `label` gives it a number and a nav link (and a link in the phone menu).
 3. Import it in `src/sections/index.js` and put it in the list.
 
 ### Remove or reorder a section
