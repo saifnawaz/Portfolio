@@ -1,0 +1,17 @@
+.site-footer {
+  padding-block: 1.75rem 2.25rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-faint);
+}
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+}
+.site-footer__top {
+  transition: color 0.25s;
+}
+.site-footer__top:hover {
+  color: var(--ink);
+}
