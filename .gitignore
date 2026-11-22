@@ -1,0 +1,7 @@
+node_modules
+dist
+.vercel
+.DS_Store
+*.log
+# original single-file version, kept locally for reference
+simple-portfolio.zip
