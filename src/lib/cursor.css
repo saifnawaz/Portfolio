@@ -1,0 +1,39 @@
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  pointer-events: none;
+  mix-blend-mode: difference; /* stays visible over light screenshots, inverts link text */
+}
+.cursor::before {
+  content: "";
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-radius: 50%;
+  background: var(--ink);
+  opacity: 0;
+  scale: 0.18; /* ~8px dot at rest */
+  transition:
+    scale 0.45s var(--ease-out),
+    opacity 0.3s ease;
+}
+.cursor.is-visible::before {
+  opacity: 1;
+}
+.cursor.is-hover::before {
+  scale: 1;
+}
+.cursor.is-down::before {
+  scale: 0.14;
+}
+.cursor.is-hover.is-down::before {
+  scale: 0.85;
+}

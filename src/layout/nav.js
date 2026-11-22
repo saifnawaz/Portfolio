@@ -21,7 +21,7 @@ export default function nav({ site }, sections) {
           <ul class="site-nav__links label" role="list">
             ${sections
               .filter((section) => section.label)
-              .map((section) => html`<li><a class="site-nav__link" href="#${section.id}">${section.label}</a></li>`)}
+              .map((section) => html`<li><a class="site-nav__link" href="#${section.id}" data-magnetic>${section.label}</a></li>`)}
           </ul>
         </nav>
       </div>

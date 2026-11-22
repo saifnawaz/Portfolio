@@ -6,6 +6,8 @@ import { initNav } from "./layout/nav.js";
 import { initScroll } from "./lib/scroll.js";
 import { initReveal } from "./lib/reveal.js";
 import { initClock } from "./lib/clock.js";
+import { initMagnetic } from "./lib/magnetic.js";
+import { initCursor } from "./lib/cursor.js";
 
 window.__portfolioReady = true;
 
@@ -19,3 +21,5 @@ for (const section of sections) {
 initNav();
 initReveal();
 initClock();
+initMagnetic();
+initCursor();
