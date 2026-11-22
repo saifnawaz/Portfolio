@@ -3,9 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Saif Nawaz</title>
+    <!--head-->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script>
+      // Lets scroll-reveal hide content until it animates in. If the app
+      // script hasn't started within 3s, show everything instead.
+      document.documentElement.classList.add("js");
+      setTimeout(() => window.__portfolioReady || document.documentElement.classList.remove("js"), 3000);
+    </script>
   </head>
   <body>
+    <!--app-->
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
