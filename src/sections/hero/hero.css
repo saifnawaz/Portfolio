@@ -103,6 +103,9 @@
     gap: 1.75rem;
     padding-block: 0 2rem;
   }
+  .hero__glow {
+    top: 4.5rem; /* a fixed offset: never moves while the hero's height settles */
+  }
   .hero__name {
     grid-row: 4;
   }

@@ -87,6 +87,10 @@ export function initReveal(root = document) {
  * elements (e.g. <em>) are kept: each word remembers its wrapper.
  */
 function splitLines(el) {
+  // Measure in normal flow: a re-split (on resize) still has .is-split, whose
+  // flex column would put every word on its own "line".
+  el.classList.remove("is-split");
+
   // Words, each with its inline wrapper (or null) and whether a space precedes it.
   const words = [];
   let spaceBefore = false;
