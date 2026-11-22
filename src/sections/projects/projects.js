@@ -2,14 +2,14 @@
  * Projects as a list, from content.projects.items. Add a project by adding an object.
  *
  * - The whole row opens the project's first link that has a url.
- * - Desktop: hovering a row floats its screenshot next to the cursor (preview.js).
+ * - Desktop: hovering a row floats its screenshot next to the cursor (lib/preview.js).
  *   Touch, no JS, or reduced motion: the screenshot is shown inline in the row.
  * - Status "Live" gets a filled accent dot, anything else (e.g. "In progress") a hollow one.
  */
 import "./projects.css";
 import { html } from "../../lib/html.js";
 import { sectionHead, smartLink } from "../../lib/ui.js";
-import { initPreview } from "./preview.js";
+import { initPreview } from "../../lib/preview.js";
 
 const pad = (n) => String(n).padStart(2, "0");
 
@@ -66,6 +66,6 @@ export default {
   `,
 
   init(section) {
-    initPreview(section.querySelector(".projects__list"));
+    initPreview(section.querySelector(".projects__list"), { item: ".project" });
   },
 };

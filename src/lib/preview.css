@@ -1,0 +1,28 @@
+/* Floating hover preview (created by lib/preview.js) */
+.hover-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  width: clamp(16rem, 22vw, 24rem);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-raised);
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.92;
+  transition:
+    opacity 0.3s ease,
+    scale 0.5s var(--ease-out);
+}
+.hover-preview.is-visible {
+  opacity: 1;
+  scale: 1;
+}
+.hover-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}

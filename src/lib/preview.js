@@ -1,20 +1,24 @@
 /**
- * Desktop hover preview: one floating screenshot that follows the cursor
- * while it is over a project row with a `data-image`. Mouse only, off for
- * reduced motion (rows then show their inline screenshot instead, via CSS).
+ * Hover preview: one floating image that follows the cursor while it is over
+ * an item with a `data-image` inside `list`. Used by the project rows and the
+ * About interests. Mouse only, off for reduced motion (callers show the image
+ * inline instead).
+ *
+ *   initPreview(listElement, { item: ".project" })
  */
-import { onScroll, reducedMotion } from "../../lib/scroll.js";
+import "./preview.css";
+import { onScroll, reducedMotion } from "./scroll.js";
 
 const EASE = 0.16; // smoothing per 60fps frame
 const GAP = 28; // px between cursor and preview
 
-export function initPreview(list) {
+export function initPreview(list, { item = "[data-image]" } = {}) {
   const canHover = matchMedia("(hover: hover) and (pointer: fine)").matches;
   if (!list || !canHover || reducedMotion) return;
-  const rows = [...list.querySelectorAll("[data-image]")];
-  if (!rows.length) return;
+  const sources = [...list.querySelectorAll("[data-image]")];
+  if (!sources.length) return;
 
-  const box = Object.assign(document.createElement("div"), { className: "project-preview" });
+  const box = Object.assign(document.createElement("div"), { className: "hover-preview" });
   box.setAttribute("aria-hidden", "true");
   const img = Object.assign(document.createElement("img"), { alt: "", decoding: "async" });
   box.append(img);
@@ -27,8 +31,8 @@ export function initPreview(list) {
   let last = 0;
   let visible = false;
 
-  const show = (row) => {
-    const src = row?.dataset.image;
+  const show = (el) => {
+    const src = el?.dataset.image;
     if (src) {
       if (img.getAttribute("src") !== src) img.src = src;
       if (!visible) [x, y] = [pointer.x, pointer.y]; // appear at the cursor, don't fly in
@@ -38,10 +42,9 @@ export function initPreview(list) {
     list.classList.toggle("is-previewing", visible);
   };
 
-  const rowAtPointer = () => {
-    if (!pointer) return null;
-    const row = document.elementFromPoint(pointer.x, pointer.y)?.closest(".project");
-    return row && list.contains(row) ? row : null;
+  const itemAt = (target) => {
+    const el = target?.closest(item);
+    return el && list.contains(el) ? el : null;
   };
 
   const tick = (now) => {
@@ -65,19 +68,19 @@ export function initPreview(list) {
     if (!frame) frame = requestAnimationFrame(tick);
   };
 
-  list.addEventListener("pointerenter", () => rows.forEach((row) => (new Image().src = row.dataset.image)), {
+  list.addEventListener("pointerenter", () => sources.forEach((el) => (new Image().src = el.dataset.image)), {
     once: true,
   });
   list.addEventListener("pointermove", (event) => {
     if (event.pointerType !== "mouse") return;
     pointer = { x: event.clientX, y: event.clientY };
-    show(event.target.closest(".project"));
+    show(itemAt(event.target));
     start();
   });
   list.addEventListener("pointerleave", () => show(null));
 
-  // Rows move under a still cursor while scrolling: keep the preview in sync.
+  // Items move under a still cursor while scrolling: keep the preview in sync.
   onScroll(() => {
-    if (visible) show(rowAtPointer());
+    if (visible && pointer) show(itemAt(document.elementFromPoint(pointer.x, pointer.y)));
   });
 }
