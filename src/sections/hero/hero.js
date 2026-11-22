@@ -11,6 +11,7 @@ import "./hero.css";
 import { html, rich } from "../../lib/html.js";
 import { initLetterField } from "./letters.js";
 import { initNameMorph } from "./morph.js";
+import { initGlow } from "./glow.js";
 
 const NAME_FONT = '600 100px "Clash Display"';
 
@@ -28,6 +29,7 @@ export default {
     const last = hero.lastName.toUpperCase();
     return html`
       <section class="hero" id="hero" aria-labelledby="hero-title">
+        <div class="hero__glow" aria-hidden="true"><span></span></div>
         <div class="hero__top">
           ${hero.statement ? html`<p class="hero__statement" data-split>${rich(hero.statement)}</p>` : ""}
           ${hero.currently?.length
@@ -76,6 +78,8 @@ export default {
         // Two frames so the hidden start state is painted before the intro runs.
         requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add("is-ready")));
       });
+
+    initGlow(hero);
 
     // Letters react to the mouse only while the name is still the hero (not mid-shrink).
     initLetterField(hero, [...hero.querySelectorAll(".hero__char")], {

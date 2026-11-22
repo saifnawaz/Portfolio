@@ -1,9 +1,42 @@
 .hero {
+  position: relative;
+  isolation: isolate; /* keeps the glow behind hero content, above the dot grid */
+  overflow: clip;
   container-type: inline-size; /* 100cqi = the row the name fills */
   display: grid;
   grid-template-rows: 1fr auto auto auto;
   min-height: 100svh;
   padding: calc(var(--nav-h) + 2rem) var(--gutter) clamp(1.25rem, 3vw, 2rem);
+}
+
+/* Red glow: a soft radial gradient (no blur filter needed). The inner layer
+   drifts slowly; the outer layer follows the mouse (glow.js). */
+.hero__glow {
+  position: absolute;
+  z-index: -1;
+  top: 10%;
+  left: 30%;
+  width: max(32rem, 60vw);
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+.hero__glow > span {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 59 48 / 0.11), rgb(255 59 48 / 0.04) 55%, transparent);
+  animation: hero-glow-drift 38s ease-in-out infinite alternate;
+}
+@keyframes hero-glow-drift {
+  0% {
+    transform: translate(-8%, 4%) scale(1);
+  }
+  50% {
+    transform: translate(6%, -6%) scale(1.08);
+  }
+  100% {
+    transform: translate(-2%, 8%) scale(0.95);
+  }
 }
 
 /* Top: statement (left) + "Currently" (right); stacked on small screens. */
