@@ -73,7 +73,7 @@ export default {
         stack: ["Laravel", "PHP", "MySQL"],
         status: "",
         image: "", // TODO: e.g. "/assets/projects/tika.webp"
-        links: [{ label: "GitHub", url: "" }], // TODO: repo link
+        links: [{ label: "GitHub", url: "https://github.com/saifnawaz/Tika.git" }], // TODO: repo link
       },
       {
         slug: "library",
