@@ -38,12 +38,24 @@ export default {
 
   about: {
     label: "About",
-    title: "Hello, I'm Saif.",
-    lead: "I'm a BS Artificial Intelligence student at the University of Karachi. I like building things people actually use, and understanding how they work underneath.",
-    facts: [
-      { label: "Studying", text: "BS Artificial Intelligence, University of Karachi" },
-      { label: "Before that", text: "Diploma in Software Development, Aptech" },
-      { label: "Outside code", text: "Books, music, cricket, chess and story games" },
+    // *asterisks* here are highlighted in red
+    statement: "I like knowing how things work *underneath*.",
+    bio: "I'm a BS Artificial Intelligence student at the University of Karachi. I like building things people actually use, then taking them apart to see how they work.",
+    pathTitle: "Path",
+    // The line draws through these in order; the last point is red and pulses.
+    path: [
+      { when: "Before", title: "Aptech", detail: "Diploma in Software Development" },
+      { when: "Now", title: "University of Karachi", detail: "BS Artificial Intelligence" },
+      { when: "Next", title: "Internship", detail: "Software or AI" },
+    ],
+    interestsTitle: "Off the clock",
+    // image is optional: on hover it floats next to the cursor (tap on touch).
+    interests: [
+      { name: "Books", image: "" }, // e.g. "/assets/interests/books.webp"
+      { name: "Music", image: "" },
+      { name: "Cricket", image: "" },
+      { name: "Chess", image: "" },
+      { name: "Story games", image: "" },
     ],
   },
 

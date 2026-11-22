@@ -1,44 +1,37 @@
 /**
- * About: heading, a lead paragraph whose words brighten as you scroll through
- * it, and three facts. Without JS (or with reduced motion) the lead is plain text.
+ * About, in two columns (one on mobile):
+ *   left   the section label and a big statement (sticky on desktop)
+ *   right  a short bio whose words brighten as you scroll through it
+ *
+ * Without JS (or with reduced motion) everything is plain, static text.
  */
 import "./about.css";
 import { html, rich } from "../../lib/html.js";
-import { sectionHead } from "../../lib/ui.js";
 import { onScroll, reducedMotion } from "../../lib/scroll.js";
 
-const DIM = 0.4; // starting opacity: still >= 3:1 contrast for this large text
+const DIM = 0.5; // starting opacity: still 4.5:1 against the background
 
 export default {
   id: "about",
 
   render: ({ about }, { label, number }) => html`
     <section class="section about" id="about" aria-labelledby="about-title">
-      <div class="wrap">
-        ${sectionHead({ id: "about", number, label, title: about.title })}
+      <div class="wrap about__grid">
+        <div class="about__intro">
+          <p class="about__label label" data-reveal><span aria-hidden="true">(${number})</span> ${label}</p>
+          <h2 class="about__statement" id="about-title" data-split>${rich(about.statement)}</h2>
+        </div>
 
-        <div class="split">
-          <div>
-            <p class="about__lead">${rich(about.lead)}</p>
-            <dl class="about__facts">
-              ${about.facts.map(
-                (fact, i) => html`
-                  <div class="about__fact" data-reveal style="--reveal-i: ${i}">
-                    <dt class="label">${fact.label}</dt>
-                    <dd>${fact.text}</dd>
-                  </div>
-                `,
-              )}
-            </dl>
-          </div>
+        <div class="about__body">
+          <p class="about__bio">${about.bio}</p>
         </div>
       </div>
     </section>
   `,
 
   init(section) {
-    const lead = section.querySelector(".about__lead");
-    if (lead && !reducedMotion) scrubWords(lead);
+    const bio = section.querySelector(".about__bio");
+    if (bio && !reducedMotion) scrubWords(bio);
   },
 };
 
