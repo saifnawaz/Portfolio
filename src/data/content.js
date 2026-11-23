@@ -63,6 +63,21 @@ export default {
     title: "Selected projects",
     items: [
       {
+        slug: "agent-sprint",
+        title: "Agent Sprint: Student Helpdesk Triage Agent",
+        blurb:
+          "An AI agent that reads student helpdesk emails (English, Roman Urdu, Urdu), sorts them by category and urgency, escalates sensitive cases to humans, and drafts policy-compliant replies. Built at Agent Sprint, NED.",
+        role: "Team project with Anas Furqan · Sentec Hackathon",
+        stack: ["Python", "Gemini", "Streamlit"],
+        status: "Live",
+        image: "/images/projects/agent-sprint.webp",
+        imageAlt: "The agent's Helpdesk Triage Control Room dashboard: processed, escalated and priority counts with category and priority charts",
+        links: [
+          { label: "Live demo", url: "https://ned-agent-sprint.streamlit.app" },
+          { label: "GitHub", url: "https://github.com/Anas-Furqan/NED-Agent-Sprint" },
+        ],
+      },
+      {
         slug: "tika", // used in links (#project-tika) and by toolkit.stack[].usedIn
         title: "Tika",
         blurb:
@@ -110,11 +125,11 @@ export default {
     stack: [
       { name: "JavaScript", tag: "Web", usedIn: ["library", "assembled"] },
       { name: "PHP / Laravel", tag: "Backend", usedIn: ["tika"] },
-      { name: "Python", tag: "AI / Scripting", usedIn: ["library"] },
+      { name: "Python", tag: "AI / Scripting", usedIn: ["agent-sprint", "library"] },
       { name: "C / C++", tag: "Core", usedIn: [] },
       { name: "Java", tag: "Core", usedIn: [] },
       { name: "SQL", tag: "Data", usedIn: ["tika"] },
-      { name: "Git / GitHub", tag: "Tools", usedIn: ["tika", "library", "assembled"] },
+      { name: "Git / GitHub", tag: "Tools", usedIn: ["agent-sprint", "tika", "library"] },
     ],
     certificatesTitle: "Certificates",
     // image: a scan or photo of the certificate (e.g. "/images/certs/aptech.webp").
