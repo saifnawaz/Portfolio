@@ -100,7 +100,7 @@ export default {
         image: "/images/projects/library-system.webp",
         links: [
           { label: "Live site", url: "https://saifnawaz.pythonanywhere.com" },
-          { label: "GitHub", url: "https://github.com/saifnawaz/University-Library-Management-System.git" }, // TODO: repo link
+          { label: "GitHub", url: "https://github.com/saifnawaz/University-Library-Management-System.git" },
         ],
       },
       {
