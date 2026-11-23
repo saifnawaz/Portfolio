@@ -16,7 +16,7 @@ export default {
     title: "Saif Nawaz · AI student & developer",
     description:
       "Saif Nawaz, BS Artificial Intelligence student at the University of Karachi. Building for the web, learning AI, open to internships.",
-    url: "", // TODO: production URL, e.g. "https://saifnawaz.vercel.app" (turns on social preview tags)
+    url: "https://saifnawaz.vercel.app", // TODO: production URL, e.g. "https://saifnawaz.vercel.app" (turns on social preview tags)
     location: "Karachi, PK",
     timezone: "Asia/Karachi",
     utcOffset: "UTC+5",
@@ -71,7 +71,7 @@ export default {
           "A child vaccination booking system. It started as an unfinished PHP project; I'm rebuilding it properly in Laravel with new features and a new identity.",
         role: "Solo",
         stack: ["Laravel", "PHP", "MySQL"],
-        status: "",
+        status: "Done",
         image: "", // TODO: e.g. "/assets/projects/tika.webp"
         links: [{ label: "GitHub", url: "https://github.com/saifnawaz/Tika.git" }], // TODO: repo link
       },
@@ -124,9 +124,9 @@ export default {
     // image: a scan or photo of the certificate (e.g. "/assets/certificates/aptech.webp").
     // With an image, the row previews it on hover and opens it full-screen on click.
     certificates: [
-      { name: "Diploma in Software Development", issuer: "Aptech", year: "", image: "" }, // TODO: year, image
-      { name: "German A2", issuer: "Goethe-Institut", year: "", image: "" }, // TODO: year, image
-      { name: "Design Hackathon: Assembled", issuer: "founding.dev", year: "", image: "" }, // TODO: year, image
+      { name: "Diploma in Software Development", issuer: "Aptech", year: "2026", image: "" }, // TODO: year, image
+      { name: "German A2", issuer: "Goethe-Institut", year: "2026", image: "" }, // TODO: year, image
+      { name: "Design Hackathon: Assembled", issuer: "founding.dev", year: "2026", image: "" }, // TODO: year, image
     ],
   },
 
