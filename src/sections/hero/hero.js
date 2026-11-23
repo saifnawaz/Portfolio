@@ -23,6 +23,9 @@ const NAME_FONT = '600 100px "Clash Display"';
 // Rough em widths of 4- and 5-letter words, until JS measures the real ones.
 const WORD_EM = { 4: 2.35, 5: 3.82 };
 
+// " · " inside a value: a no-break space before the dot keeps it off the start of a line.
+const glueDots = (text) => String(text).replace(/ · /g, "\u00a0· ");
+
 const word = (text, start) =>
   html`<span class="hero__word" style="--word-em: ${WORD_EM[text.length] ?? text.length * 0.75}">${[...text].map(
     (char, i) => html`<span class="hero__char" style="--i: ${start + i}">${char}</span>`,
@@ -65,7 +68,7 @@ export default {
 
         <div class="hero__meta label">
           <p class="hero__status"><span class="dot" aria-hidden="true"></span>${hero.status}</p>
-          ${hero.study ? html`<p>${hero.study}</p>` : ""}
+          ${hero.study ? html`<p>${glueDots(hero.study)}</p>` : ""}
           <p>
             ${site.location} <span aria-hidden="true">·</span>
             <time data-clock data-tz="${site.timezone}" data-suffix="${site.utcOffset}">${site.utcOffset}</time>

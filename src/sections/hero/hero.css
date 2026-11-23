@@ -273,9 +273,11 @@
     gap: 0.35rem 0;
     margin-top: 1rem;
   }
-  .hero__meta > p:nth-child(2)::before {
-    content: "·" / "";
-    margin-inline: 0.6em;
+  /* The "·" ends the item before it, glued on with a no-break space, so a
+     separator can end a line but never start one when the line wraps. */
+  .hero__meta > p:first-child:not(:only-child)::after {
+    content: "\a0·" / "";
+    margin-right: 0.6em;
   }
   .hero__meta > p:nth-child(n + 3) {
     display: none; /* location + clock: desktop only */
