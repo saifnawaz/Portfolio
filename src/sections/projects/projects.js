@@ -4,12 +4,14 @@
  * - The whole row opens the project's first link that has a url.
  * - Desktop: hovering a row floats its screenshot next to the cursor (lib/preview.js).
  *   Touch, no JS, or reduced motion: the screenshot is shown inline in the row.
+ * - Touch: the row crossing the middle of the screen fills red (lib/touch.js).
  * - Status "Live" gets a filled accent dot, anything else (e.g. "In progress") a hollow one.
  */
 import "./projects.css";
 import { html } from "../../lib/html.js";
 import { projectId, sectionHead, smartLink } from "../../lib/ui.js";
 import { initPreview } from "../../lib/preview.js";
+import { initScrollActive } from "../../lib/touch.js";
 
 const pad = (n) => String(n).padStart(2, "0");
 
@@ -68,6 +70,8 @@ export default {
   `,
 
   init(section) {
-    initPreview(section.querySelector(".projects__list"), { item: ".project" });
+    const list = section.querySelector(".projects__list");
+    initPreview(list, { item: ".project" });
+    initScrollActive(list, ".project");
   },
 };

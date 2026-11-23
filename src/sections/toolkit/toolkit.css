@@ -203,3 +203,26 @@
     grid-area: arrow;
   }
 }
+
+/* Touch: the skill and certificate crossing the middle of the screen fill like
+   hovered ones (.is-active is set by lib/touch.js, only in touch mode). */
+.skill.is-active::before,
+.cert.is-active::before {
+  transform: scaleX(1);
+}
+.skill.is-active,
+.cert.is-active {
+  color: var(--on-accent);
+}
+.skill.is-active .skill__tag,
+.cert.is-active :is(.cert__issuer, .cert__year) {
+  color: var(--on-accent-muted);
+}
+.skill.is-active .skill__used {
+  color: var(--on-accent);
+  opacity: 1;
+  translate: 0 0;
+}
+.cert.is-active .cert__arrow {
+  translate: 0.2rem -0.2rem;
+}

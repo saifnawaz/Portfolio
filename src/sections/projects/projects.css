@@ -284,3 +284,29 @@
 .project:has(.project__link:focus-visible) .project__meta > .project__role {
   color: var(--on-accent);
 }
+
+/* Touch: the row crossing the middle of the screen fills like a hovered one
+   (.is-active is set by lib/touch.js, only in touch mode). */
+.project.is-active::before {
+  transform: scaleX(1);
+}
+.project.is-active {
+  color: var(--on-accent);
+}
+.project.is-active :is(.project__num, .project__stack, .project__status),
+.project.is-active .project__blurb {
+  color: var(--on-accent-muted);
+}
+.project.is-active .project__meta > .project__role {
+  color: var(--on-accent);
+}
+.project.is-active .dot {
+  background: var(--on-accent);
+}
+.project.is-active .dot.is-hollow {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--on-accent);
+}
+.project.is-active .project__arrow {
+  translate: 0.2rem -0.2rem;
+}

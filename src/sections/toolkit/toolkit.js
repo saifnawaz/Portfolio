@@ -6,6 +6,9 @@
  * red and shows the projects it was used in (`usedIn`, project slugs), or
  * "Coursework". On phones it is a two-column grid with that line always shown.
  *
+ * Touch: instead of hover, the skill and certificate crossing the middle of
+ * the screen fill red (lib/touch.js), one per list.
+ *
  * Certificates: rows like the project list. With an `image`, hovering floats
  * the image next to the cursor (lib/preview.js) and clicking or tapping opens
  * it full-screen (lib/lightbox.js); without JS the link opens the image itself.
@@ -15,6 +18,7 @@ import { html } from "../../lib/html.js";
 import { asideHead, projectSlug } from "../../lib/ui.js";
 import { initPreview } from "../../lib/preview.js";
 import { openLightbox } from "../../lib/lightbox.js";
+import { initScrollActive } from "../../lib/touch.js";
 
 const usedInText = (slugs, titles) =>
   slugs?.length ? `Used in: ${slugs.map((slug) => titles.get(slug) ?? slug).join(" · ")}` : "Coursework";
@@ -73,6 +77,8 @@ export default {
   init(section) {
     const list = section.querySelector(".certs");
     initPreview(list, { item: ".cert" });
+    initScrollActive(section.querySelector(".skills"), ".skill");
+    initScrollActive(list, ".cert");
     list?.addEventListener("click", (event) => {
       const link = event.target.closest(".cert__link");
       if (!link || event.metaKey || event.ctrlKey || event.shiftKey) return;
