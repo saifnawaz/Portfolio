@@ -8,7 +8,8 @@
  * - A block with a `label` gets a numbered heading and a nav link.
  * - Wrap words in *asterisks* to set them in a quieter secondary tone.
  * - An empty url ("") renders as a muted "soon" label, never a broken link.
- * - Images go in /public and are referenced from the site root ("/assets/...").
+ * - Images go in /public/images/{projects,certs,interests} as WebP and are
+ *   referenced from the site root ("/images/projects/tika.webp").
  */
 export default {
   site: {
@@ -31,7 +32,7 @@ export default {
     statement: "I build *web apps* and I'm learning how *machines think*.",
     currently: [
       { label: "Now building", value: "Tika, in Laravel" },
-      { label: "Reading", value: "Book title" }, // TODO
+      { label: "Reading", value: "Tuesdays with Morrie" },
       { label: "Listening", value: "Artist or album" }, // TODO
     ],
   },
@@ -40,7 +41,7 @@ export default {
     label: "About",
     // *asterisks* here are highlighted in red
     statement: "I like knowing how things work *underneath*.",
-    bio: "I'm a BS Artificial Intelligence student at the University of Karachi. I like building things people actually use, then taking them apart to see how they work.",
+    bio: "I'm Saif. I love creating things, reading and thinking. I like computer science, I'm fascinated by artificial intelligence, and I enjoy learning how computers work. AI is my field.",
     pathTitle: "Path",
     // The line draws through these in order; the last point is red and pulses.
     path: [
@@ -52,7 +53,7 @@ export default {
     // image is optional: on hover it floats next to the cursor (tap on touch).
     // Add imageAlt to describe it; leave it out if the image is decorative.
     interests: [
-      { name: "Books", image: "" }, // e.g. "/assets/interests/books.webp"
+      { name: "Books", image: "" }, // e.g. "/images/interests/books.webp"
       { name: "Music", image: "" },
       { name: "Cricket", image: "" },
       { name: "Chess", image: "" },
@@ -71,9 +72,10 @@ export default {
           "A child vaccination booking system. It started as an unfinished PHP project; I'm rebuilding it properly in Laravel with new features and a new identity.",
         role: "Solo",
         stack: ["Laravel", "PHP", "MySQL"],
-        status: "Done",
-        image: "", // TODO: e.g. "/assets/projects/tika.webp"
-        links: [{ label: "GitHub", url: "https://github.com/saifnawaz/Tika.git" }], // TODO: repo link
+        status: "Complete",
+        image: "/images/projects/tika.webp",
+        imageAlt: "Tika's landing page",
+        links: [{ label: "GitHub", url: "https://github.com/saifnawaz/Tika.git" }],
       },
       {
         slug: "library",
@@ -83,7 +85,7 @@ export default {
         role: "With a teammate",
         stack: ["Python", "OOP", "Web frontend", "LLM"],
         status: "Live",
-        image: "/assets/projects/library-system.webp",
+        image: "/images/projects/library-system.webp",
         links: [
           { label: "Live site", url: "https://saifnawaz.pythonanywhere.com" },
           { label: "GitHub", url: "" }, // TODO: repo link
@@ -97,7 +99,7 @@ export default {
         role: "With Anas Shiekh",
         stack: ["Web design", "Scroll animation"],
         status: "Live",
-        image: "/assets/projects/assembled.webp",
+        image: "/images/projects/assembled.webp",
         links: [
           { label: "Live site", url: "https://assembled.foundingdev.com" },
           { label: "GitHub", url: "" }, // TODO: repo link (github.com/saifnawaz/Design-Hackathon is not public)
@@ -121,12 +123,12 @@ export default {
       { name: "Git / GitHub", tag: "Tools", usedIn: ["tika", "library", "assembled"] },
     ],
     certificatesTitle: "Certificates",
-    // image: a scan or photo of the certificate (e.g. "/assets/certificates/aptech.webp").
+    // image: a scan or photo of the certificate (e.g. "/images/certs/aptech.webp").
     // With an image, the row previews it on hover and opens it full-screen on click.
     certificates: [
-      { name: "Diploma in Software Development", issuer: "Aptech", year: "2026", image: "" }, // TODO: year, image
-      { name: "German A2", issuer: "Goethe-Institut", year: "2026", image: "" }, // TODO: year, image
-      { name: "Design Hackathon: Assembled", issuer: "founding.dev", year: "2026", image: "" }, // TODO: year, image
+      { name: "Diploma in Software Development", issuer: "Aptech", year: "2026", image: "" }, // TODO: image
+      { name: "German A2", issuer: "Goethe-Institut", year: "2026", image: "" }, // TODO: image
+      { name: "Design Hackathon: Assembled", issuer: "founding.dev", year: "2026", image: "/images/certs/founding-dev-hackathon.webp" },
     ],
   },
 
