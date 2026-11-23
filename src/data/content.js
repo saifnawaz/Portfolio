@@ -85,7 +85,7 @@ export default {
         image: "/images/projects/library-system.webp",
         links: [
           { label: "Live site", url: "https://saifnawaz.pythonanywhere.com" },
-          { label: "GitHub", url: "" }, // TODO: repo link
+          { label: "GitHub", url: "https://github.com/saifnawaz/University-Library-Management-System.git" }, // TODO: repo link
         ],
       },
       {
@@ -94,13 +94,10 @@ export default {
         blurb:
           "Design hackathon entry: a landing page for a PC shop where the computer comes apart piece by piece as you scroll.",
         role: "With Anas Shiekh",
-        stack: ["Web design", "Scroll animation"],
+        stack: ["founding.dev AI builder", "Design"],
         status: "Live",
         image: "/images/projects/assembled.webp",
-        links: [
-          { label: "Live site", url: "https://assembled.foundingdev.com" },
-          { label: "GitHub", url: "" }, // TODO: repo link (github.com/saifnawaz/Design-Hackathon is not public)
-        ],
+        links: [{ label: "Live site", url: "https://assembled.foundingdev.com" }],
       },
     ],
   },
@@ -128,7 +125,7 @@ export default {
       {
         name: "Vortex Science Olympiad: Winner, Al-Khawrizmi's Arithmetic module",
         issuer: "Bahria College",
-        year: "", // TODO: year
+        year: "2025",
         image: "/images/certs/vortex-arithmetic-winner.webp",
         imageAlt: "Vortex Science Olympiad trophy: Al Khawrizmi's Arithmetic Module Winner",
       },
