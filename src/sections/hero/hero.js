@@ -7,6 +7,9 @@
  *   (Clash Display has no kerning table, so splitting the name loses nothing.)
  * - The name fills the width via CSS: font-size = 100cqi / (name width in em).
  *   JS measures that em width once the font is loaded (`--name-em`).
+ * - Phones (<48rem): the name is two lines, "SAIF" / "NAWAZ", each filling the
+ *   width on its own (`--word-em` per word); the statement and a one-line
+ *   status sit small below it, and "Currently" moves to the About section.
  * - The Karachi clock is any element with [data-clock] (see lib/clock.js).
  */
 import "./hero.css";
@@ -17,9 +20,11 @@ import { initGlow } from "./glow.js";
 import { renderStack } from "./stack.js";
 
 const NAME_FONT = '600 100px "Clash Display"';
+// Rough em widths of 4- and 5-letter words, until JS measures the real ones.
+const WORD_EM = { 4: 2.35, 5: 3.82 };
 
 const word = (text, start) =>
-  html`<span class="hero__word">${[...text].map(
+  html`<span class="hero__word" style="--word-em: ${WORD_EM[text.length] ?? text.length * 0.75}">${[...text].map(
     (char, i) => html`<span class="hero__char" style="--i: ${start + i}">${char}</span>`,
   )}</span>`;
 
@@ -80,6 +85,11 @@ export default {
       .then(() => {
         fit(hero, text);
         remeasure();
+        // The two layouts measure differently: refit when crossing the phone breakpoint.
+        matchMedia("(max-width: 47.99rem)").addEventListener("change", () => {
+          fit(hero, text);
+          remeasure();
+        });
         // Two frames so the hidden start state is painted before the intro runs.
         requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add("is-ready")));
       });
@@ -93,11 +103,17 @@ export default {
   },
 };
 
-/** Measures the name's width in em, so CSS can size it to fill the row exactly. */
+/**
+ * Measures widths in em, so CSS can size the name to fill the row exactly:
+ * the whole name (one line, `--name-em`) and each word (phones, `--word-em`).
+ */
 function fit(hero, text) {
   const previous = text.style.transform;
   text.style.transform = "none"; // measure the unscaled name
-  const size = parseFloat(getComputedStyle(text).fontSize);
-  hero.style.setProperty("--name-em", (text.getBoundingClientRect().width / size).toFixed(4));
+  const em = (el) => el.getBoundingClientRect().width / parseFloat(getComputedStyle(el).fontSize);
+  const words = [...text.querySelectorAll(".hero__word")];
+  const wordEms = words.map(em); // read everything before writing
+  if (!matchMedia("(max-width: 47.99rem)").matches) hero.style.setProperty("--name-em", em(text).toFixed(4));
+  words.forEach((word, i) => word.style.setProperty("--word-em", wordEms[i].toFixed(4)));
   text.style.transform = previous;
 }

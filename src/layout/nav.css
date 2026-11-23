@@ -47,9 +47,10 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
-/* While the hero name is still on its way up, the logo waits (instant swap, no fade). */
+/* While the hero name is still on its way up, the logo waits: an instant swap,
+   except on phones, where the two-line name crossfades into it (--logo-in, morph.js). */
 .js .site-nav[data-dock]:not(.is-compact) .site-nav__logo {
-  opacity: 0;
+  opacity: var(--logo-in, 0);
 }
 .js .site-nav[data-dock]:not(.is-compact) .site-nav__brand:focus-visible .site-nav__logo {
   opacity: 1;

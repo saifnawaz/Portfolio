@@ -10,12 +10,21 @@
  *
  * Touch (lib/touch.js): a subtle parallax too. The name drifts down by LAG of
  * the scroll, so it moves slower than the page; the docking distance grows to
- * match, so it still lands exactly on the logo.
+ * match, so it still lands exactly on the logo. The details under the name
+ * (statement, status) fade out over the first part of the shrink, so the
+ * name never runs over them (`--details` on the hero).
+ *
+ * Phones (two-line name): it shrinks to about two logo-heights (each line
+ * roughly logo-sized) and crossfades into the one-line logo as it lands
+ * (`--logo-in` on the nav).
  */
 import { onScroll, onResize, reducedMotion } from "../../lib/scroll.js";
 import { touchMode } from "../../lib/touch.js";
 
 const LAG = 0.15; // share of the scroll the name holds back (touch only)
+const DETAILS_OUT = 0.3; // details are gone by this share of the shrink (touch only)
+const CROSSFADE = 0.8; // two-line name: crossfade to the logo from here to the end
+const STACKED = "(max-width: 47.99rem)"; // the name is on two lines (hero.css)
 
 export function initNameMorph(text) {
   const nav = document.querySelector("[data-nav]");
@@ -26,7 +35,10 @@ export function initNameMorph(text) {
   let endScale = 1;
   let shiftX = 0;
   let lag = 0;
+  let stacked = false;
+  let fadeDetails = false;
   let lastY = 0;
+  const hero = text.closest(".hero");
 
   const measure = () => {
     const previous = text.style.transform;
@@ -36,8 +48,15 @@ export function initNameMorph(text) {
     text.style.transform = previous;
 
     lag = !reducedMotion && touchMode() ? LAG : 0;
+    stacked = matchMedia(STACKED).matches;
+    fadeDetails = !reducedMotion && (lag > 0 || stacked);
+    if (!fadeDetails) hero?.style.removeProperty("--details");
+    if (!stacked || reducedMotion) {
+      nav.style.removeProperty("--logo-in");
+      text.style.opacity = "";
+    }
     distance = Math.max(1, (name.top + window.scrollY - target.top) / (1 - lag));
-    endScale = target.width / name.width;
+    endScale = stacked ? (target.height * 2) / name.height : target.width / name.width;
     shiftX = target.left - name.left;
     update(lastY);
   };
@@ -54,6 +73,13 @@ export function initNameMorph(text) {
       progress > 0 && !docked
         ? `translate3d(${(shiftX * progress).toFixed(2)}px, ${(y * lag).toFixed(2)}px, 0) scale(${(1 + (endScale - 1) * progress).toFixed(4)})`
         : "";
+
+    if (fadeDetails) hero?.style.setProperty("--details", Math.max(0, 1 - progress / DETAILS_OUT).toFixed(3));
+    if (stacked) {
+      const fade = Math.min(Math.max((progress - CROSSFADE) / (1 - CROSSFADE), 0), 1);
+      text.style.opacity = fade ? (1 - fade).toFixed(3) : "";
+      nav.style.setProperty("--logo-in", fade.toFixed(3));
+    }
   };
 
   onResize(measure);

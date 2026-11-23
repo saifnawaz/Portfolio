@@ -100,43 +100,10 @@
   }
 }
 
-/* Phones: a shorter hero, balanced in the viewport. The free space is split
-   evenly above the statement and between "Currently" and the name, the
-   "Currently" rows are compact, and the name + details close it at the bottom. */
-@media (max-width: 47.99rem) {
-  .hero {
-    grid-template-rows: 1fr auto 1fr auto auto;
-    padding-top: calc(var(--nav-h) + 1rem);
-  }
-  .hero__top {
-    grid-row: 2;
-    padding-bottom: 2rem;
-  }
-  .hero__intro {
-    gap: 1.75rem;
-  }
-  .hero__glow {
-    top: 4.5rem; /* a fixed offset: never moves while the hero's height settles */
-  }
-  .hero__name {
-    grid-row: 4;
-  }
-  .hero__meta {
-    grid-row: 5;
-  }
-  .hero__now-title {
-    margin-bottom: 0.5rem;
-  }
-  .hero__now-row {
-    grid-template-columns: 7.5rem 1fr;
-    padding-block: 0.45rem;
-  }
-}
-/* Very narrow phones: the statement and the name are enough. */
-@media (max-width: 23.74rem) {
-  .hero__now {
-    display: none;
-  }
+/* Touch: the details fade out as the name starts shrinking into the nav (morph.js). */
+.hero__intro,
+.hero__meta > p {
+  opacity: var(--details, 1);
 }
 
 /* Statement lines start once the name has mostly landed. */
@@ -242,5 +209,75 @@
     visibility: visible;
     opacity: 1;
     translate: none;
+  }
+}
+
+/* Phones: the name is the hero. Two full-width lines ("SAIF" / "NAWAZ") in the
+   upper middle, then the statement at body size and a one-line status. The
+   "Currently" list moves to the About section (about.js). The free space is
+   split unevenly (1 : 1.4) so the block sits above centre. */
+@media (max-width: 47.99rem) {
+  .hero {
+    grid-template-rows: 1fr auto auto auto 1.4fr;
+    min-height: 90svh;
+    padding-top: calc(var(--nav-h) + 1rem);
+  }
+  .hero__name {
+    grid-row: 2;
+  }
+  .hero__top {
+    grid-row: 3;
+    padding-bottom: 0;
+    margin-top: clamp(1.25rem, 4svh, 2rem);
+  }
+  .hero__meta {
+    grid-row: 4;
+  }
+  .hero__glow {
+    top: 4.5rem; /* a fixed offset: never moves while the hero's height settles */
+  }
+  .hero__now {
+    display: none;
+  }
+  .hero__statement {
+    max-width: 22em;
+    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.25rem); /* ~18-20px */
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  /* Each word on its own line, as wide as the row (hero.js measures --word-em).
+     Each word clips its own intro, so rising letters never show over the other line. */
+  .hero__name-text {
+    clip-path: none;
+  }
+  .hero__word {
+    display: block;
+    width: fit-content;
+    font-size: calc(100cqi / var(--word-em, 2.4));
+    clip-path: inset(-0.5em -0.5em 0 -0.5em);
+  }
+  .hero__word + .hero__word {
+    margin-top: 0.05em;
+  }
+  .hero__char:last-child {
+    letter-spacing: 0; /* each line ends exactly on the edge */
+  }
+
+  /* One status line: ● Open to internships · BS-AI · University of Karachi */
+  .hero__meta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.35rem 0;
+    margin-top: 1rem;
+  }
+  .hero__meta > p:nth-child(2)::before {
+    content: "·" / "";
+    margin-inline: 0.6em;
+  }
+  .hero__meta > p:nth-child(n + 3) {
+    display: none; /* location + clock: desktop only */
   }
 }

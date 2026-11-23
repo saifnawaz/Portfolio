@@ -236,3 +236,31 @@ span.interest__word {
     translate: none;
   }
 }
+
+/* Currently (phones only; wider screens show it in the hero) -------------- */
+.about__now {
+  display: none;
+}
+@media (max-width: 47.99rem) {
+  .about__now {
+    display: block;
+  }
+  .about__now dl {
+    border-top: 1px solid var(--line);
+  }
+  .about__now-row {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: baseline;
+    padding-block: 0.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .about__now-row dt {
+    color: var(--ink-faint);
+  }
+  .about__now-row dd {
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+}

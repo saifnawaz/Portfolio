@@ -3,7 +3,9 @@
  *   left   the section label and a big statement (sticky on desktop)
  *   right  a short bio whose words brighten as you scroll through it,
  *          then "Path", a timeline that draws itself (path.js),
- *          and "Off the clock", interests with hover images (interests.js)
+ *          and "Off the clock", interests with hover images (interests.js),
+ *          and on phones only, hero.currently as a compact list (the
+ *          hero shows it on wider screens)
  *
  * Without JS (or with reduced motion) everything is plain, static text.
  */
@@ -19,7 +21,7 @@ const DIM = 0.5; // starting opacity: still 4.5:1 against the background
 export default {
   id: "about",
 
-  render: ({ about }, { label, number }) => html`
+  render: ({ about, hero }, { label, number }) => html`
     <section class="section about" id="about" aria-labelledby="about-title">
       <div class="wrap cols">
         <div class="cols__aside">${asideHead({ id: "about", number, label, title: about.statement })}</div>
@@ -38,6 +40,20 @@ export default {
             ? html`<div>
                 <h3 class="cols__block-title label" data-reveal>${about.interestsTitle}</h3>
                 ${renderInterests(about.interests)}
+              </div>`
+            : ""}
+
+          ${hero?.currently?.length
+            ? html`<div class="about__now">
+                <h3 class="cols__block-title label" data-reveal>Currently</h3>
+                <dl data-reveal>
+                  ${hero.currently.map(
+                    (item) => html`<div class="about__now-row">
+                      <dt class="label">${item.label}</dt>
+                      <dd>${item.value}</dd>
+                    </div>`,
+                  )}
+                </dl>
               </div>`
             : ""}
         </div>
