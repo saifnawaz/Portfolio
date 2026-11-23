@@ -4,6 +4,7 @@
   overflow: clip;
   container-type: inline-size; /* 100cqi = the row the name fills */
   display: grid;
+  grid-template-columns: minmax(0, 1fr); /* never wider than the screen (the phone strip scrolls inside it) */
   grid-template-rows: auto 1fr auto auto; /* top block, (space), name, details */
   min-height: 85svh;
   padding: calc(var(--nav-h) + clamp(1.5rem, 4vh, 3rem)) var(--gutter) clamp(1.25rem, 3vw, 2rem);
@@ -39,8 +40,8 @@
   }
 }
 
-/* Top: the intro (statement, then "Currently") on the left, the project card
-   stack on the right (stack.css). It starts just below the nav. */
+/* Top: the intro (role line + buttons) on the left, the project card stack on
+   the right (stack.css). It starts just below the nav. */
 .hero__top {
   grid-row: 1;
   align-self: start;
@@ -51,43 +52,73 @@
 .hero__intro {
   display: grid;
   align-content: start;
-  gap: 2.25rem;
+  justify-items: start;
+  gap: 1.75rem;
 }
-.hero__statement {
-  max-width: 13em; /* em, not ch: ch changes with the font and would rewrap on swap */
-  font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem); /* ~28-40px */
+.hero__role {
+  max-width: 24em;
+  font-family: var(--font-sans);
+  font-size: clamp(1.125rem, 1rem + 0.45vw, 1.375rem); /* ~18-22px */
   font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: color-mix(in srgb, var(--ink) 82%, var(--bg)); /* muted off-white, ~11:1 */
 }
-.hero__statement em {
-  color: var(--accent); /* red on near-black: 5.65:1 */
+
+/* Buttons: solid red (View work) and outline (Résumé), 48px tall (44px+ on any
+   screen), magnetic with a mouse (lib/magnetic.js), pressed on touch (lib/tap.js). */
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
-.hero__now {
-  width: min(100%, 22rem);
-}
-.hero__now-title {
-  margin-bottom: 0.75rem;
-  color: var(--ink-faint);
-}
-.hero__now dl {
-  border-top: 1px solid var(--line);
-}
-.hero__now-row {
-  display: grid;
-  grid-template-columns: 8.5rem 1fr;
-  gap: 1rem;
-  align-items: baseline;
-  padding-block: 0.7rem;
-  border-bottom: 1px solid var(--line);
-}
-.hero__now-row dt {
-  color: var(--ink-faint);
-}
-.hero__now-row dd {
-  margin: 0;
+.hero__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 3rem;
+  padding: 0 1.4rem;
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-sans);
   font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
+.hero__btn.is-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent); /* near-black on red: 5.65:1 */
+}
+.hero__btn-icon {
+  transition: translate 0.4s var(--ease-out);
+}
+@media (hover: hover) {
+  .hero__btn:hover {
+    border-color: var(--ink);
+  }
+  .hero__btn.is-primary:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .hero__btn:hover .hero__btn-icon {
+    translate: 2px -2px;
+  }
+  .hero__btn[href^="#"]:hover .hero__btn-icon {
+    translate: 0 3px; /* ↓ */
+  }
+}
+.hero__btn:focus-visible {
+  outline-offset: 3px;
+}
+
 .hero__name {
   grid-row: 3;
 }
@@ -100,16 +131,17 @@
   }
 }
 
-/* Touch: the details fade out as the name starts shrinking into the nav (morph.js). */
+/* Touch: the details fade out as the name starts shrinking into the nav (morph.js).
+   Set on inner parts: the outer ones have their own opacity transitions (intro). */
 .hero__intro,
-.hero__meta > p {
+.hero__meta > p,
+.hero__strip > ul {
   opacity: var(--details, 1);
 }
-
-/* Statement lines start once the name has mostly landed. */
-.hero__statement .split-line > span {
-  transition-delay: calc(0.9s + var(--line, 0) * 90ms);
+.hero__cue {
+  filter: opacity(var(--details, 1));
 }
+
 /* The whole top block waits (invisible, so font-swap reflow can't count as a
    layout shift) until fonts are in and the intro starts. */
 .js .hero__top {
@@ -121,16 +153,26 @@
   opacity: 1;
   transition: opacity 0.8s ease 0.8s;
 }
-.js .hero__now-row {
+/* Role line, buttons, then (phones) the strip and the cue rise in once the name has mostly landed. */
+.js :is(.hero__role, .hero__actions, .hero__strip, .hero__cue) {
   opacity: 0;
   translate: 0 0.5rem;
 }
-.hero.is-ready .hero__now-row {
+.hero.is-ready :is(.hero__role, .hero__actions, .hero__strip, .hero__cue) {
   opacity: 1;
   translate: 0 0;
   transition:
-    opacity 0.8s ease calc(1.1s + var(--i) * 0.1s),
-    translate 1s var(--ease-out) calc(1.1s + var(--i) * 0.1s);
+    opacity 0.8s ease var(--delay, 0.9s),
+    translate 1s var(--ease-out) var(--delay, 0.9s);
+}
+.hero__actions {
+  --delay: 1.05s;
+}
+.hero__strip {
+  --delay: 1.2s;
+}
+.hero__cue {
+  --delay: 1.4s;
 }
 
 /* The name: font-size makes it exactly as wide as the row. --name-em is the
@@ -204,23 +246,32 @@
     translate: none;
   }
   .js .hero__meta,
-  .js .hero__now-row,
-  .js .hero__top {
+  .js .hero__top,
+  .js :is(.hero__role, .hero__actions, .hero__strip, .hero__cue) {
     visibility: visible;
     opacity: 1;
     translate: none;
   }
 }
 
-/* Phones: the name is the hero. Two full-width lines ("SAIF" / "NAWAZ") in the
-   upper middle, then the statement at body size and a one-line status. The
-   "Currently" list moves to the About section (about.js). The free space is
-   split unevenly (1 : 1.4) so the block sits above centre. */
+/* Desktop and tablets: the project strip and the scroll cue are phone-only. */
+@media (min-width: 48rem) {
+  .hero__strip,
+  .hero__cue {
+    display: none;
+  }
+}
+
+/* Phones: the name is the hero. Two full-width lines ("SAIF" / "NAWAZ"), then
+   the role line, the buttons, a one-line status, a swipeable strip of project
+   thumbnails and a small scroll cue. The free space is split evenly above the
+   name and above the cue, so there's no large empty band. */
 @media (max-width: 47.99rem) {
   .hero {
-    grid-template-rows: 1fr auto auto auto 1.4fr;
+    grid-template-rows: 1fr auto auto auto auto 1fr auto;
     min-height: 90svh;
     padding-top: calc(var(--nav-h) + 1rem);
+    padding-bottom: 0.5rem;
   }
   .hero__name {
     grid-row: 2;
@@ -228,22 +279,25 @@
   .hero__top {
     grid-row: 3;
     padding-bottom: 0;
-    margin-top: clamp(1.25rem, 4svh, 2rem);
+    margin-top: clamp(1.25rem, 3.5svh, 1.75rem);
   }
   .hero__meta {
     grid-row: 4;
   }
+  .hero__strip {
+    grid-row: 5;
+  }
+  .hero__cue {
+    grid-row: 7;
+  }
   .hero__glow {
     top: 4.5rem; /* a fixed offset: never moves while the hero's height settles */
   }
-  .hero__now {
-    display: none;
+  .hero__intro {
+    gap: 1.25rem;
   }
-  .hero__statement {
+  .hero__role {
     max-width: 22em;
-    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.25rem); /* ~18-20px */
-    line-height: 1.35;
-    letter-spacing: -0.01em;
   }
 
   /* Each word on its own line, as wide as the row (hero.js measures --word-em).
@@ -271,7 +325,7 @@
     justify-content: flex-start;
     align-items: center;
     gap: 0.35rem 0;
-    margin-top: 1rem;
+    margin-top: 1.25rem;
   }
   /* The "·" ends the item before it, glued on with a no-break space, so a
      separator can end a line but never start one when the line wraps. */
@@ -281,5 +335,61 @@
   }
   .hero__meta > p:nth-child(n + 3) {
     display: none; /* location + clock: desktop only */
+  }
+
+  /* Project strip: small cards in a row that bleeds to the screen edges,
+     swiped sideways with snapping; each card jumps to its project. */
+  .hero__strip {
+    margin: 1.5rem calc(-1 * var(--gutter)) 0;
+  }
+  .hero__strip > ul {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .hero__strip > ul::-webkit-scrollbar {
+    display: none;
+  }
+  .hero__strip li {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  .hero__thumb {
+    display: grid;
+    gap: 0.45rem;
+    width: 9.5rem;
+  }
+  .hero__thumb img,
+  .hero__thumb-blank {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top;
+    border: 1px solid var(--line-strong);
+    background: var(--bg-raised);
+  }
+  .hero__thumb-title {
+    overflow: hidden;
+    color: var(--ink-muted);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /* Scroll cue: small, at the bottom, a 44px tap target that jumps to About. */
+  .hero__cue {
+    justify-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: 44px;
+    padding-inline: 0.75rem;
+    color: var(--ink-faint);
   }
 }

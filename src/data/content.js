@@ -28,11 +28,11 @@ export default {
     lastName: "Nawaz",
     study: "BS-AI · University of Karachi", // shown in the details under the name
     status: "Open to internships",
-    // *asterisks* here are highlighted in red
-    statement: "I build *web apps* and I'm learning how *machines think*.",
-    currently: [
-      { label: "Now building", value: "Lecture Notes AI" },
-      { label: "Reading", value: "Tuesdays with Morrie" },
+    role: "AI student & developer. Building web apps and AI agents.",
+    // Buttons under the role line. A url to a page or PDF opens in a new tab.
+    actions: [
+      { label: "View work", url: "#projects", icon: "↓", primary: true },
+      { label: "Résumé", url: "/resume.pdf", icon: "↗" },
     ],
   },
 
@@ -41,6 +41,11 @@ export default {
     // *asterisks* here are highlighted in red
     statement: "I like knowing how things work *underneath*.",
     bio: "I'm Saif. I love building things, reading, and thinking about how stuff works. I'm studying AI because I want to understand how machines learn, and I enjoy figuring out how computers work underneath.",
+    // Shown at the end of About, as compact rows.
+    currently: [
+      { label: "Now building", value: "Lecture Notes AI" },
+      { label: "Reading", value: "Tuesdays with Morrie" },
+    ],
     pathTitle: "Path",
     // The line draws through these in order; the last point is red and pulses.
     path: [

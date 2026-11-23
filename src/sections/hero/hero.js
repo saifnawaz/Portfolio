@@ -1,19 +1,21 @@
 /**
- * Hero: a statement and a "Currently" list, a fanned stack of project cards
- * (desktop, stack.js), then the name edge to edge, with small details under it
- * (status, study, location + clock).
+ * Hero: a role line and two buttons (View work, Résumé), a fanned stack of
+ * project cards (desktop, stack.js), then the name edge to edge, with small
+ * details under it (status, study, location + clock).
  *
  * - Each letter is its own span (for the intro and the cursor reaction).
  *   (Clash Display has no kerning table, so splitting the name loses nothing.)
  * - The name fills the width via CSS: font-size = 100cqi / (name width in em).
  *   JS measures that em width once the font is loaded (`--name-em`).
- * - Phones (<48rem): the name is two lines, "SAIF" / "NAWAZ", each filling the
- *   width on its own (`--word-em` per word); the statement and a one-line
- *   status sit small below it, and "Currently" moves to the About section.
+ * - Phones (<48rem): the name comes first, on two lines ("SAIF" / "NAWAZ"),
+ *   each filling the width on its own (`--word-em` per word); then the role
+ *   line, the buttons, a one-line status, a swipeable strip of project
+ *   thumbnails (each jumps to its project) and a small scroll cue.
  * - The Karachi clock is any element with [data-clock] (see lib/clock.js).
  */
 import "./hero.css";
-import { html, rich } from "../../lib/html.js";
+import { html } from "../../lib/html.js";
+import { projectId } from "../../lib/ui.js";
 import { initLetterField } from "./letters.js";
 import { initNameMorph } from "./morph.js";
 import { initGlow } from "./glow.js";
@@ -25,6 +27,35 @@ const WORD_EM = { 4: 2.35, 5: 3.82 };
 
 // " · " inside a value: a no-break space before the dot keeps it off the start of a line.
 const glueDots = (text) => String(text).replace(/ · /g, "\u00a0· ");
+
+/** A hero button: { label, url, icon, primary }. External/PDF links open in a new tab. */
+const button = ({ label, url, icon, primary }) => {
+  const newTab = /^https?:|\.pdf$/i.test(url);
+  return html`<a class="hero__btn ${primary ? "is-primary" : ""}" href="${url}" data-magnetic
+    ${newTab ? html`target="_blank" rel="noopener noreferrer"` : ""}
+    >${label}${icon ? html` <span class="hero__btn-icon" aria-hidden="true">${icon}</span>` : ""}${newTab
+      ? html`<span class="sr-only"> (opens in a new tab)</span>`
+      : ""}</a
+  >`;
+};
+
+/** Phones: a row of small project cards to swipe through; each jumps to its project. */
+const strip = (items) => html`
+  <nav class="hero__strip" aria-label="Projects">
+    <ul role="list">
+      ${items.map(
+        (item) => html`<li>
+          <a class="hero__thumb" href="#${projectId(item)}">
+            ${item.image
+              ? html`<img src="${item.image}" alt="" width="1440" height="900" loading="lazy" decoding="async" />`
+              : html`<span class="hero__thumb-blank" aria-hidden="true"></span>`}
+            <span class="hero__thumb-title label">${item.title}</span>
+          </a>
+        </li>`,
+      )}
+    </ul>
+  </nav>
+`;
 
 const word = (text, start) =>
   html`<span class="hero__word" style="--word-em: ${WORD_EM[text.length] ?? text.length * 0.75}">${[...text].map(
@@ -43,20 +74,8 @@ export default {
         <div class="hero__glow" aria-hidden="true"><span></span></div>
         <div class="hero__top">
           <div class="hero__intro">
-            ${hero.statement ? html`<p class="hero__statement" data-split>${rich(hero.statement)}</p>` : ""}
-            ${hero.currently?.length
-              ? html`<div class="hero__now">
-                  <p class="hero__now-title label">Currently</p>
-                  <dl>
-                    ${hero.currently.map(
-                      (item, i) => html`<div class="hero__now-row" style="--i: ${i}">
-                        <dt class="label">${item.label}</dt>
-                        <dd>${item.value}</dd>
-                      </div>`,
-                    )}
-                  </dl>
-                </div>`
-              : ""}
+            ${hero.role ? html`<p class="hero__role">${hero.role}</p>` : ""}
+            ${hero.actions?.length ? html`<div class="hero__actions">${hero.actions.map(button)}</div>` : ""}
           </div>
           ${projects?.items?.length ? renderStack(projects.items) : ""}
         </div>
@@ -74,6 +93,9 @@ export default {
             <time data-clock data-tz="${site.timezone}" data-suffix="${site.utcOffset}">${site.utcOffset}</time>
           </p>
         </div>
+
+        ${projects?.items?.length ? strip(projects.items) : ""}
+        <a class="hero__cue label" href="#about">Scroll <span aria-hidden="true">↓</span></a>
       </section>
     `;
   },

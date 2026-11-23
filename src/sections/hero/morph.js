@@ -11,7 +11,7 @@
  * Touch (lib/touch.js): a subtle parallax too. The name drifts down by LAG of
  * the scroll, so it moves slower than the page; the docking distance grows to
  * match, so it still lands exactly on the logo. The details under the name
- * (statement, status) fade out over the first part of the shrink, so the
+ * (role line, buttons, status, project strip) fade out over the first part of the shrink, so the
  * name never runs over them (`--details` on the hero).
  *
  * Phones (two-line name): it shrinks to about two logo-heights (each line
