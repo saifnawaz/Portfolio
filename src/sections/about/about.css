@@ -214,3 +214,25 @@ span.interest__word {
   height: 100%;
   object-fit: cover;
 }
+
+/* Touch: the words slide in from the right one by one once the list is
+   revealed (.is-in, lib/reveal.js). Reduced motion: shown at once. */
+@media (max-width: 47.99rem), (hover: none) {
+  .js .interest {
+    opacity: 0;
+    translate: 2.5rem 0;
+  }
+  .js .interests.is-in .interest {
+    opacity: 1;
+    translate: 0 0;
+    transition:
+      opacity 0.6s ease calc(0.15s + var(--i, 0) * 0.12s),
+      translate 0.9s var(--ease-out) calc(0.15s + var(--i, 0) * 0.12s);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .interest {
+    opacity: 1;
+    translate: none;
+  }
+}

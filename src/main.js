@@ -9,6 +9,7 @@ import { initClock } from "./lib/clock.js";
 import { initMagnetic } from "./lib/magnetic.js";
 import { initCursor } from "./lib/cursor.js";
 import { initBackground } from "./layout/background.js";
+import { initHeadingSlide } from "./lib/touch.js";
 
 window.__portfolioReady = true;
 
@@ -22,6 +23,7 @@ function start() {
 
   initNav();
   initReveal();
+  initHeadingSlide();
   initClock();
   initMagnetic();
   initCursor();

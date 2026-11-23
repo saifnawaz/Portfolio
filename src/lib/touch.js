@@ -5,8 +5,10 @@
  *   TOUCH_QUERY             phones (<768px) or no-hover devices; use it in CSS too
  *   initScrollActive(list)  the item crossing the middle of the screen gets
  *                           .is-active (styled like :hover), one per list
+ *   initHeadingSlide()      section headings slide in from the left as they
+ *                           scroll into view
  */
-import { reducedMotion } from "./scroll.js";
+import { onScroll, reducedMotion } from "./scroll.js";
 
 export const TOUCH_QUERY = "(max-width: 47.99rem), (hover: none)";
 
@@ -69,4 +71,49 @@ export function initScrollActive(list, selector, { prefer = "nearest" } = {}) {
   };
   query.addEventListener("change", sync);
   sync();
+}
+
+const SLIDE = 40; // px a heading starts to the left of its place
+
+/**
+ * Section headings drift in from the left, tied to scroll: SLIDE px off while
+ * their top is at the bottom of the screen, in place by the time it reaches
+ * 55% of the viewport height. Touch mode only, not with reduced motion.
+ */
+export function initHeadingSlide(root = document) {
+  if (reducedMotion || !("IntersectionObserver" in window)) return;
+  const query = matchMedia(TOUCH_QUERY);
+  const headings = [...root.querySelectorAll(".section-head__title, .cols__title")];
+  if (!headings.length) return;
+
+  const visible = new Set();
+  const offsets = new Map();
+
+  const update = () => {
+    if (!query.matches) return;
+    const tops = [...visible].map((el) => [el, el.getBoundingClientRect().top]); // reads, then writes
+    for (const [el, top] of tops) {
+      const progress = Math.min(Math.max((innerHeight - top) / (innerHeight * 0.45), 0), 1);
+      const offset = Math.round(-SLIDE * (1 - progress) * (1 - progress) * 10) / 10; // eases out
+      if (offsets.get(el) === offset) continue;
+      offsets.set(el, offset);
+      el.style.translate = offset ? `${offset}px 0` : "";
+    }
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) visible.add(entry.target);
+      else visible.delete(entry.target);
+    }
+    update();
+  });
+  headings.forEach((el) => observer.observe(el));
+
+  query.addEventListener("change", () => {
+    if (query.matches) return update();
+    offsets.clear();
+    headings.forEach((el) => (el.style.translate = ""));
+  });
+  onScroll(update);
 }

@@ -3,6 +3,7 @@
  * red; if it has an image, the image floats next to the cursor (the same
  * hover preview as the project rows, lib/preview.js). Words with an image are
  * buttons: on touch (or from the keyboard) they show the image inline below.
+ * Touch: the words slide in one by one as the list scrolls into view (CSS).
  */
 import { html } from "../../lib/html.js";
 import { initPreview } from "../../lib/preview.js";
@@ -13,7 +14,7 @@ const PHOTO_ID = "interest-photo";
 export const renderInterests = (items) => html`
   <ul class="interests" role="list" data-reveal>
     ${items.map(
-      (item) => html`<li class="interest" ${item.image ? html`data-image="${item.image}" data-alt="${item.imageAlt ?? ""}"` : ""}>
+      (item, i) => html`<li class="interest" style="--i: ${i}" ${item.image ? html`data-image="${item.image}" data-alt="${item.imageAlt ?? ""}"` : ""}>
         ${item.image
           ? html`<button class="interest__word" type="button" aria-expanded="false" aria-controls="${PHOTO_ID}">
               ${item.name}
