@@ -10,6 +10,7 @@ import { initMagnetic } from "./lib/magnetic.js";
 import { initCursor } from "./lib/cursor.js";
 import { initBackground } from "./layout/background.js";
 import { initHeadingSlide } from "./lib/touch.js";
+import { initTap } from "./lib/tap.js";
 
 window.__portfolioReady = true;
 
@@ -27,6 +28,7 @@ function start() {
   initClock();
   initMagnetic();
   initCursor();
+  initTap();
 }
 
 // Start one frame in: the browser first lays out and paints the prerendered
