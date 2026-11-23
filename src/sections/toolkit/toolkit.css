@@ -59,6 +59,11 @@
   font-size: var(--text-lg);
   font-weight: 500;
   line-height: 1.25;
+}
+/* Shifted on hover instead of .cert__name, so the row-wide ::after keeps the row
+   as its containing block (see .project__name). */
+.cert__title {
+  display: inline-block;
   transition: translate 0.6s var(--ease-out);
 }
 .cert__link::after {
@@ -124,7 +129,7 @@
     opacity: 1;
     translate: 0 0;
   }
-  .cert:has(.cert__link):hover .cert__name {
+  .cert:has(.cert__link):hover .cert__title {
     translate: 0.5rem 0;
   }
   .cert:hover .cert__arrow {

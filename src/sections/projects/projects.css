@@ -47,6 +47,12 @@
   font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3.25rem);
   line-height: 1.05;
   letter-spacing: -0.02em;
+}
+/* The hover shift moves this inner span, never the title or link: a translated
+   ancestor would become the containing block of the row-wide link's ::after
+   and shrink it to the title (leaving the rest of the row unclickable). */
+.project__name {
+  display: inline-block;
   transition: translate 0.6s var(--ease-out);
 }
 .project__blurb {
@@ -82,7 +88,8 @@
 .project__extras {
   grid-area: extras;
   position: relative;
-  z-index: 1; /* above the row-wide link */
+  z-index: 1; /* above the row-wide link... */
+  pointer-events: none; /* ...but only the links themselves catch clicks */
   display: flex;
   gap: 1.25rem;
   margin-top: 0.5rem;
@@ -206,7 +213,7 @@
   .projects__list:hover .project:not(:hover) {
     opacity: 0.35;
   }
-  .project:has(.project__link):hover .project__title {
+  .project:has(.project__link):hover .project__name {
     translate: 0.5rem 0;
   }
   .project:hover .project__arrow {
@@ -371,4 +378,8 @@
   .project {
     position: relative; /* touch: a plain list of cards, nothing slides over */
   }
+}
+
+.project__extras a {
+  pointer-events: auto;
 }

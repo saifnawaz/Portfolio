@@ -1,7 +1,9 @@
 /**
  * Projects as a list, from content.projects.items. Add a project by adding an object.
  *
- * - The whole row opens the project's first link that has a url.
+ * - The whole row opens the project's first link that has a url (the title
+ *   link's ::after covers the row); the ↗ arrow is a link to it too. Other
+ *   links (e.g. GitHub next to Live) sit above and stay separately clickable.
  * - Desktop: hovering a row floats its screenshot next to the cursor (lib/preview.js).
  *   Touch, no JS, or reduced motion: the screenshot is shown inline in the row.
  * - Touch (phones and no-hover screens): stacking cards. Each card sticks below
@@ -33,9 +35,9 @@ const row = (item, i) => {
         <h3 class="project__title">
           ${primary
             ? html`<a class="project__link" href="${primary.url}" target="_blank" rel="noopener noreferrer"
-                >${item.title}<span class="sr-only"> (${primary.label}, opens in a new tab)</span></a
+                ><span class="project__name">${item.title}</span><span class="sr-only"> (${primary.label}, opens in a new tab)</span></a
               >`
-            : item.title}
+            : html`<span class="project__name">${item.title}</span>`}
         </h3>
         <p class="project__blurb">${item.blurb}</p>
       </div>
@@ -47,7 +49,9 @@ const row = (item, i) => {
           <span class="dot ${live ? "" : "is-hollow"}" aria-hidden="true"></span>${item.status}
         </p>
       </div>
-      <span class="project__arrow" aria-hidden="true">${primary ? "↗" : ""}</span>
+      ${primary
+        ? html`<a class="project__arrow" href="${primary.url}" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">↗</a>`
+        : html`<span class="project__arrow" aria-hidden="true"></span>`}
 
       ${extras.length ? html`<p class="project__extras label">${extras.map((link) => smartLink(link))}</p>` : ""}
       ${item.image ? html`<img class="project__thumb" src="${item.image}" alt="${alt}" loading="lazy" decoding="async" />` : ""}

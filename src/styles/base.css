@@ -153,7 +153,7 @@ main:focus {
 }
 @media (pointer: coarse) {
   .link {
-    --hit: 0.75rem; /* 44px+ tall targets */
+    --hit: 0.8125rem; /* 44px+ tall targets */
   }
 }
 /* A link whose url is still empty in content.js */
@@ -341,5 +341,25 @@ body::after {
   .js [data-split]:not(.is-split):not(.is-done) {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Row arrows (projects, certificates): real links to the row's target, above
+   the row-wide link, with a 44px+ hit area on touch/narrow screens that
+   doesn't change the layout. */
+a.project__arrow,
+a.cert__arrow {
+  position: relative;
+  z-index: 1;
+}
+@media (pointer: coarse), (max-width: 47.99rem) {
+  a.project__arrow,
+  a.cert__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    margin: -0.75rem;
   }
 }

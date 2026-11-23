@@ -37,13 +37,15 @@ const certificate = (item, i) => html`
     <h4 class="cert__name">
       ${item.image
         ? html`<a class="cert__link" href="${item.image}" data-alt="${item.imageAlt ?? `${item.name} certificate`}"
-            >${item.name}<span class="sr-only"> (view ${item.imageAlt ? "photo" : "certificate"})</span></a
+            ><span class="cert__title">${item.name}</span><span class="sr-only"> (view ${item.imageAlt ? "photo" : "certificate"})</span></a
           >`
-        : item.name}
+        : html`<span class="cert__title">${item.name}</span>`}
     </h4>
     <p class="cert__issuer label"><span class="sr-only">Issued by </span>${item.issuer}</p>
     <p class="cert__year label">${item.year ?? ""}</p>
-    <span class="cert__arrow" aria-hidden="true">${item.image ? "↗" : ""}</span>
+    ${item.image
+      ? html`<a class="cert__arrow" href="${item.image}" tabindex="-1" aria-hidden="true">↗</a>`
+      : html`<span class="cert__arrow" aria-hidden="true"></span>`}
   </li>
 `;
 
@@ -83,10 +85,11 @@ export default {
     initScrollActive(section.querySelector(".skills"), ".skill");
     initScrollActive(list, ".cert");
     list?.addEventListener("click", (event) => {
-      const link = event.target.closest(".cert__link");
+      // The row-wide title link or the arrow: both open the row's image.
+      const link = event.target.closest(".cert__link, .cert__arrow")?.closest(".cert")?.querySelector(".cert__link");
       if (!link || event.metaKey || event.ctrlKey || event.shiftKey) return;
       event.preventDefault();
-      const name = link.firstChild.textContent.trim();
+      const name = link.querySelector(".cert__title").textContent.trim();
       openLightbox({ src: link.getAttribute("href"), alt: link.dataset.alt, caption: name });
     });
   },
