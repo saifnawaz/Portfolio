@@ -9,7 +9,7 @@
 import { reducedMotion } from "./scroll.js";
 
 const TAPPABLE = 'a, button:not(:disabled), [role="button"], summary, label, .skill';
-const ROW_LINKS = ".project__link, .cert__link, .project__arrow, .cert__arrow"; // stand for their row: press the row
+const ROW_LINKS = ".project__link, .cert__link"; // cover their whole row: press the row
 const ROWS = ".project, .cert, .skill"; // filled blocks: tint with an overlay, not text colour
 const DELAY = 60; // ms before pressing, so a touch that turns into a scroll doesn't flash
 const PRESS = 120; // ms in, and again out

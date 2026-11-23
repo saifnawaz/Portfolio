@@ -344,22 +344,10 @@ body::after {
   }
 }
 
-/* Row arrows (projects, certificates): real links to the row's target, above
-   the row-wide link, with a 44px+ hit area on touch/narrow screens that
-   doesn't change the layout. */
-a.project__arrow,
-a.cert__arrow {
-  position: relative;
-  z-index: 1;
-}
-@media (pointer: coarse), (max-width: 47.99rem) {
-  a.project__arrow,
-  a.cert__arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 44px;
-    min-height: 44px;
-    margin: -0.75rem;
-  }
+/* Row arrows (projects, certificates) are decoration: the row-wide link
+   underneath takes every click. They shift on hover, and a transformed
+   element paints above that link, so they must never catch the pointer. */
+.project__arrow,
+.cert__arrow {
+  pointer-events: none;
 }

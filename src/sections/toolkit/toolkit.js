@@ -43,9 +43,7 @@ const certificate = (item, i) => html`
     </h4>
     <p class="cert__issuer label"><span class="sr-only">Issued by </span>${item.issuer}</p>
     <p class="cert__year label">${item.year ?? ""}</p>
-    ${item.image
-      ? html`<a class="cert__arrow" href="${item.image}" tabindex="-1" aria-hidden="true">↗</a>`
-      : html`<span class="cert__arrow" aria-hidden="true"></span>`}
+    <span class="cert__arrow" aria-hidden="true">${item.image ? "↗" : ""}</span>
   </li>
 `;
 
@@ -85,8 +83,7 @@ export default {
     initScrollActive(section.querySelector(".skills"), ".skill");
     initScrollActive(list, ".cert");
     list?.addEventListener("click", (event) => {
-      // The row-wide title link or the arrow: both open the row's image.
-      const link = event.target.closest(".cert__link, .cert__arrow")?.closest(".cert")?.querySelector(".cert__link");
+      const link = event.target.closest(".cert__link"); // covers the whole row, arrow included
       if (!link || event.metaKey || event.ctrlKey || event.shiftKey) return;
       event.preventDefault();
       const name = link.querySelector(".cert__title").textContent.trim();
