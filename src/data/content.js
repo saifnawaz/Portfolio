@@ -31,9 +31,8 @@ export default {
     // *asterisks* here are highlighted in red
     statement: "I build *web apps* and I'm learning how *machines think*.",
     currently: [
-      { label: "Now building", value: "Tika, in Laravel" },
+      { label: "Now building", value: "Lecture Notes AI" },
       { label: "Reading", value: "Tuesdays with Morrie" },
-      { label: "Listening", value: "Artist or album" }, // TODO
     ],
   },
 
@@ -41,7 +40,7 @@ export default {
     label: "About",
     // *asterisks* here are highlighted in red
     statement: "I like knowing how things work *underneath*.",
-    bio: "I'm Saif. I love creating things, reading and thinking. I like computer science, I'm fascinated by artificial intelligence, and I enjoy learning how computers work. AI is my field.",
+    bio: "I'm Saif. I love building things, reading, and thinking about how stuff works. I'm studying AI because I want to understand how machines learn, and I enjoy figuring out how computers work underneath.",
     pathTitle: "Path",
     // The line draws through these in order; the last point is red and pulses.
     path: [
@@ -54,10 +53,8 @@ export default {
     // Add imageAlt to describe it; leave it out if the image is decorative.
     interests: [
       { name: "Books", image: "" }, // e.g. "/images/interests/books.webp"
-      { name: "Music", image: "" },
       { name: "Cricket", image: "" },
       { name: "Chess", image: "" },
-      { name: "Story games", image: "" },
     ],
   },
 
@@ -126,9 +123,29 @@ export default {
     // image: a scan or photo of the certificate (e.g. "/images/certs/aptech.webp").
     // With an image, the row previews it on hover and opens it full-screen on click.
     certificates: [
-      { name: "Diploma in Software Development", issuer: "Aptech", year: "2026", image: "" }, // TODO: image
-      { name: "German A2", issuer: "Goethe-Institut", year: "2026", image: "" }, // TODO: image
-      { name: "Design Hackathon: Assembled", issuer: "founding.dev", year: "2026", image: "/images/certs/founding-dev-hackathon.webp" },
+      { name: "Diploma in Software Development", issuer: "Aptech", year: "2026", image: "" },
+      { name: "German A2 course", issuer: "Goethe-Institut", year: "2026", image: "" },
+      {
+        name: "Vortex Science Olympiad: Winner, Al-Khawrizmi's Arithmetic module",
+        issuer: "Bahria College",
+        year: "",
+        image: "/images/certs/vortex-arithmetic-winner.webp",
+        imageAlt: "Vortex Science Olympiad trophy: Al Khawrizmi's Arithmetic Module Winner",
+      },
+      { name: "Agent Sprint, The Engineer's Code 2026 (participation)", issuer: "SENTEC · NED", year: "2026", image: "" }, // TODO: image
+      {
+        name: "Vibe Coding Competition, TechFest'26 (participation)",
+        issuer: "CS&IT · NED",
+        year: "2026",
+        image: "/images/certs/techfest-vibe-coding.webp",
+      },
+      {
+        name: "Design Hackathon: Assembled (participation)",
+        issuer: "founding.dev",
+        year: "2026",
+        image: "/images/certs/founding-dev-hackathon.webp",
+      },
+      { name: "Professional Networking for Career Growth", issuer: "HP LIFE", year: "2026", image: "" }, // TODO: image
     ],
   },
 

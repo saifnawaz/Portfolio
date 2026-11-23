@@ -12,6 +12,7 @@
  * Certificates: rows like the project list. With an `image`, hovering floats
  * the image next to the cursor (lib/preview.js) and clicking or tapping opens
  * it full-screen (lib/lightbox.js); without JS the link opens the image itself.
+ * `imageAlt` describes an image that isn't the certificate itself (e.g. a trophy photo).
  */
 import "./toolkit.css";
 import { html } from "../../lib/html.js";
@@ -35,7 +36,9 @@ const certificate = (item, i) => html`
   <li class="cert" data-reveal style="--reveal-i: ${i}" ${item.image ? html`data-image="${item.image}"` : ""}>
     <h4 class="cert__name">
       ${item.image
-        ? html`<a class="cert__link" href="${item.image}">${item.name}<span class="sr-only"> (view certificate)</span></a>`
+        ? html`<a class="cert__link" href="${item.image}" data-alt="${item.imageAlt ?? `${item.name} certificate`}"
+            >${item.name}<span class="sr-only"> (view ${item.imageAlt ? "photo" : "certificate"})</span></a
+          >`
         : item.name}
     </h4>
     <p class="cert__issuer label"><span class="sr-only">Issued by </span>${item.issuer}</p>
@@ -84,7 +87,7 @@ export default {
       if (!link || event.metaKey || event.ctrlKey || event.shiftKey) return;
       event.preventDefault();
       const name = link.firstChild.textContent.trim();
-      openLightbox({ src: link.getAttribute("href"), alt: `${name} certificate`, caption: name });
+      openLightbox({ src: link.getAttribute("href"), alt: link.dataset.alt, caption: name });
     });
   },
 };
