@@ -123,7 +123,7 @@ export default {
     stackTitle: "Stack",
     // usedIn: project slugs (see projects.items[].slug). Empty shows "Coursework".
     stack: [
-      { name: "JavaScript", tag: "Web", usedIn: ["library", "assembled"] },
+      { name: "JavaScript", tag: "Web", usedIn: ["library"] },
       { name: "PHP / Laravel", tag: "Backend", usedIn: ["tika"] },
       { name: "Python", tag: "AI / Scripting", usedIn: ["agent-sprint", "library"] },
       { name: "C / C++", tag: "Core", usedIn: [] },
