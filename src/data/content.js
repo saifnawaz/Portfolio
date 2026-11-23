@@ -175,7 +175,7 @@ export default {
     label: "Contact",
     title: "Let's talk",
     note: "I'm looking for software and AI internships. Email is the fastest way to reach me.",
-    email: "saifaptech100@gmail.com", // the big heading becomes a mailto link
+    email: "saifnawaz.dev@gmail.com", // the big heading becomes a mailto link
     links: [
       { label: "GitHub", url: "https://github.com/saifnawaz" },
       { label: "LinkedIn", url: "www.linkedin.com/in/saif-nawaz-154891352" },
