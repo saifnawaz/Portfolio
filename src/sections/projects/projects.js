@@ -4,14 +4,18 @@
  * - The whole row opens the project's first link that has a url.
  * - Desktop: hovering a row floats its screenshot next to the cursor (lib/preview.js).
  *   Touch, no JS, or reduced motion: the screenshot is shown inline in the row.
- * - Touch: the row crossing the middle of the screen fills red (lib/touch.js).
+ * - Touch (phones and no-hover screens): stacking cards. Each card sticks below
+ *   the nav and the next slides over it; the covered card scales down and
+ *   darkens (initStack). The card crossing the middle of the screen fills red
+ *   (lib/touch.js).
  * - Status "Live" gets a filled accent dot, anything else (e.g. "In progress") a hollow one.
  */
 import "./projects.css";
 import { html } from "../../lib/html.js";
 import { projectId, sectionHead, smartLink } from "../../lib/ui.js";
 import { initPreview } from "../../lib/preview.js";
-import { initScrollActive } from "../../lib/touch.js";
+import { initScrollActive, touchMode, TOUCH_QUERY } from "../../lib/touch.js";
+import { onScroll, reducedMotion } from "../../lib/scroll.js";
 
 const pad = (n) => String(n).padStart(2, "0");
 
@@ -71,7 +75,50 @@ export default {
 
   init(section) {
     const list = section.querySelector(".projects__list");
-    initPreview(list, { item: ".project" });
-    initScrollActive(list, ".project");
+    if (!touchMode()) initPreview(list, { item: ".project" }); // cards show their screenshot
+    initScrollActive(list, ".project", { prefer: "last" }); // the card on top
+    initStack(list);
   },
 };
+
+/**
+ * Sets --cover (0..1) on each card as the next card slides over it: 0 while
+ * the next card is a full card-height below, 1 once it fully covers it.
+ * Touch mode only; with reduced motion the cards don't stick at all.
+ */
+function initStack(list) {
+  if (!list || reducedMotion) return;
+  const query = matchMedia(TOUCH_QUERY);
+  const cards = [...list.querySelectorAll(".project")];
+  const covers = cards.map(() => 0);
+  let near = false;
+
+  const update = () => {
+    if (!near || !query.matches) return;
+    // Read every box first, then write: one layout per frame at most.
+    const boxes = cards.map((card) => card.getBoundingClientRect());
+    cards.forEach((card, i) => {
+      const next = boxes[i + 1];
+      const box = boxes[i];
+      const cover = next ? Math.min(Math.max(1 - (next.top - box.top) / box.height, 0), 1) : 0;
+      const rounded = Math.round(cover * 1000) / 1000;
+      if (rounded === covers[i]) return;
+      covers[i] = rounded;
+      card.style.setProperty("--cover", rounded);
+    });
+  };
+
+  new IntersectionObserver((entries) => {
+    near = entries[0].isIntersecting;
+    update();
+  }).observe(list);
+
+  query.addEventListener("change", () => {
+    if (query.matches) return update();
+    cards.forEach((card, i) => {
+      covers[i] = 0;
+      card.style.removeProperty("--cover");
+    });
+  });
+  onScroll(update);
+}

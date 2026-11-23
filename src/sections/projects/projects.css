@@ -97,9 +97,9 @@
   border: 1px solid var(--line);
 }
 
-/* Phones and tablets: the number sits small above the title, so text gets the
+/* Phones, tablets and touch screens: the number sits small above the title, so text gets the
    full width; role · stack · status share one line of small mono meta. */
-@media (max-width: 63.99rem) {
+@media (max-width: 63.99rem), (hover: none) {
   .project {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
@@ -161,7 +161,7 @@
 }
 
 /* Desktop: one line per project, aligned columns -------------------------- */
-@media (min-width: 64rem) {
+@media (min-width: 64rem) and (hover: hover) {
   .project__meta {
     display: contents; /* role, stack and status are columns of the row */
   }
@@ -269,7 +269,7 @@
 .project__link:focus-visible {
   outline-color: var(--on-accent);
 }
-@media (min-width: 64rem) {
+@media (min-width: 64rem) and (hover: hover) {
   .projects__head,
   .project {
     padding-inline: 1rem; /* breathing room inside the red fill */
@@ -309,4 +309,66 @@
 }
 .project.is-active .project__arrow {
   translate: 0.2rem -0.2rem;
+}
+
+/* Touch: stacking cards ----------------------------------------------------
+   Each project is a full-width card (screenshot, title, blurb, meta). Cards
+   stick just below the nav, each a little lower than the last, and the next
+   one slides over; projects.js sets --cover (0..1) on the card underneath,
+   which scales it down and darkens it. The whole card is the link. */
+@media (max-width: 47.99rem), (hover: none) {
+  .projects__head {
+    display: none;
+  }
+  .projects__list {
+    display: grid;
+    gap: 1rem;
+    border-top: 0;
+  }
+  .project {
+    --pad: 1.1rem;
+    position: sticky;
+    top: calc(var(--nav-h) + 0.75rem + var(--reveal-i, 0) * 0.6rem);
+    grid-template-areas:
+      "thumb thumb"
+      "num arrow"
+      "main main"
+      "meta meta"
+      "extras extras";
+    align-items: start;
+    padding: 0 var(--pad) 1.25rem;
+    overflow: clip;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    transform-origin: 50% 0;
+    scale: calc(1 - 0.05 * var(--cover, 0));
+  }
+  .js .project__thumb {
+    display: block; /* also with a mouse on a narrow window: cards always show it */
+  }
+  .project__thumb {
+    width: auto;
+    max-height: 45svh;
+    margin: 0 calc(-1 * var(--pad)) 1.1rem;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .project__arrow {
+    padding-top: 0;
+  }
+  /* Darkens the card as the next one covers it (above the content, never in the way). */
+  .project::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: #000;
+    opacity: calc(var(--cover, 0) * 0.6);
+    pointer-events: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project {
+    position: relative; /* touch: a plain list of cards, nothing slides over */
+  }
 }
