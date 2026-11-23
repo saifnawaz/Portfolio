@@ -64,9 +64,9 @@ export default {
     items: [
       {
         slug: "agent-sprint",
-        title: "Agent Sprint: Student Helpdesk Triage Agent",
+        title: "Agent Sprint",
         blurb:
-          "An AI agent that reads student helpdesk emails (English, Roman Urdu, Urdu), sorts them by category and urgency, escalates sensitive cases to humans, and drafts policy-compliant replies. Built at Agent Sprint, NED.",
+          "Student Helpdesk Triage Agent: an AI agent that reads student helpdesk emails (English, Roman Urdu, Urdu), sorts them by category and urgency, escalates sensitive cases to humans, and drafts policy-compliant replies. Built at Agent Sprint, NED.",
         role: "Team project with Anas Furqan · Sentec Hackathon",
         stack: ["Python", "Gemini", "Streamlit"],
         status: "Live",
@@ -81,7 +81,7 @@ export default {
         slug: "tika", // used in links (#project-tika) and by toolkit.stack[].usedIn
         title: "Tika",
         blurb:
-          "A child vaccination booking system. It started as an unfinished PHP project; I'm rebuilding it properly in Laravel with new features and a new identity.",
+          "A child vaccination booking system. It started as an unfinished PHP project; I rebuilt it from scratch in Laravel with new features and a new identity.",
         role: "Solo",
         stack: ["Laravel", "PHP", "MySQL"],
         status: "Complete",
@@ -135,7 +135,7 @@ export default {
     // image: a scan or photo of the certificate (e.g. "/images/certs/aptech.webp").
     // With an image, the row previews it on hover and opens it full-screen on click.
     certificates: [
-      { name: "Diploma in Software Development", issuer: "Aptech", year: "2026", image: "" },
+      { name: "Diploma in Software Development", issuer: "Aptech", year: "2025", image: "" },
       { name: "German A2 course", issuer: "Goethe-Institut", year: "2026", image: "" },
       {
         name: "Vortex Science Olympiad: Winner, Al-Khawrizmi's Arithmetic module",
