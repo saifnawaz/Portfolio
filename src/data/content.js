@@ -128,11 +128,16 @@ export default {
       {
         name: "Vortex Science Olympiad: Winner, Al-Khawrizmi's Arithmetic module",
         issuer: "Bahria College",
-        year: "",
+        year: "", // TODO: year
         image: "/images/certs/vortex-arithmetic-winner.webp",
         imageAlt: "Vortex Science Olympiad trophy: Al Khawrizmi's Arithmetic Module Winner",
       },
-      { name: "Agent Sprint, The Engineer's Code 2026 (participation)", issuer: "SENTEC · NED", year: "2026", image: "" }, // TODO: image
+      {
+        name: "Agent Sprint, The Engineer's Code 2026 (participation)",
+        issuer: "SENTEC · NED",
+        year: "2026",
+        image: "/images/certs/sentec-agent-sprint.webp",
+      },
       {
         name: "Vibe Coding Competition, TechFest'26 (participation)",
         issuer: "CS&IT · NED",
@@ -145,7 +150,12 @@ export default {
         year: "2026",
         image: "/images/certs/founding-dev-hackathon.webp",
       },
-      { name: "Professional Networking for Career Growth", issuer: "HP LIFE", year: "2026", image: "" }, // TODO: image
+      {
+        name: "Professional Networking for Career Growth",
+        issuer: "HP LIFE",
+        year: "2026",
+        image: "/images/certs/hp-life-networking.webp",
+      },
     ],
   },
 
