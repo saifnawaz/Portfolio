@@ -179,7 +179,7 @@ export default {
     links: [
       { label: "GitHub", url: "https://github.com/saifnawaz" },
       { label: "LinkedIn", url: "www.linkedin.com/in/saif-nawaz-154891352" },
-      { label: "Résumé", url: "" }, // TODO: put resume.pdf in /public and use "/resume.pdf"
+      { label: "Résumé", url: "/resume.pdf" },
     ],
   },
 
