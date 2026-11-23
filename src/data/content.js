@@ -17,7 +17,7 @@ export default {
     title: "Saif Nawaz · AI student & developer",
     description:
       "Saif Nawaz, BS Artificial Intelligence student at the University of Karachi. Building for the web, learning AI, open to internships.",
-    url: "https://saifnawaz.vercel.app", // TODO: production URL, e.g. "https://saifnawaz.vercel.app" (turns on social preview tags)
+    url: "https://saifnawaz.vercel.app", // turns on social preview tags
     location: "Karachi, PK",
     timezone: "Asia/Karachi",
     utcOffset: "UTC+5",
@@ -136,10 +136,10 @@ export default {
     label: "Contact",
     title: "Let's talk",
     note: "I'm looking for software and AI internships. Email is the fastest way to reach me.",
-    email: "saifaptech100@gmail.com", // TODO: your email address (the big heading becomes a mailto link)
+    email: "saifaptech100@gmail.com", // the big heading becomes a mailto link
     links: [
       { label: "GitHub", url: "https://github.com/saifnawaz" },
-      { label: "LinkedIn", url: "www.linkedin.com/in/saif-nawaz-154891352" }, // TODO
+      { label: "LinkedIn", url: "www.linkedin.com/in/saif-nawaz-154891352" },
       { label: "Résumé", url: "" }, // TODO: put resume.pdf in /public and use "/resume.pdf"
     ],
   },
