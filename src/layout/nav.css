@@ -47,13 +47,10 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
-/* While the hero name is still on screen, the logo waits: an instant swap on
-   desktop (the name shrinks into it), a fade on touch (morph.js). */
+/* While the hero name is still on its way up, the logo waits: an instant swap,
+   except on phones, where the two-line name crossfades into it (--logo-in, morph.js). */
 .js .site-nav[data-dock]:not(.is-compact) .site-nav__logo {
-  opacity: 0;
-}
-.site-nav.is-fade-dock .site-nav__logo {
-  transition: opacity 0.3s;
+  opacity: var(--logo-in, 0);
 }
 .js .site-nav[data-dock]:not(.is-compact) .site-nav__brand:focus-visible .site-nav__logo {
   opacity: 1;
