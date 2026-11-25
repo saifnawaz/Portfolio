@@ -257,9 +257,13 @@
    name and above the cue, so there's no large empty band. */
 @media (max-width: 47.99rem) {
   .hero {
-    grid-template-rows: 1fr auto auto auto auto 1fr auto;
+    grid-template-rows: auto auto auto auto auto 1fr auto;
     min-height: 90svh;
-    padding-top: calc(var(--nav-h) + 1rem);
+    /* The name starts well below the nav, so its shrink into the logo (morph.js)
+       runs over ~200-250px of scroll. Sized from the screen height so that the
+       role, buttons, status and strip still fit above the fold: ~235px on a
+       390x844 phone, never less than just under the nav, capped on tall screens. */
+    padding-top: clamp(calc(var(--nav-h) + 1rem), 100svh - 38rem, 17rem);
     padding-bottom: 0.5rem;
   }
   .hero__name {
