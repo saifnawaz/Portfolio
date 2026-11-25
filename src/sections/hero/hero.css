@@ -131,17 +131,6 @@
   }
 }
 
-/* Touch: the details fade out as the name starts shrinking into the nav (morph.js).
-   Set on inner parts: the outer ones have their own opacity transitions (intro). */
-.hero__intro,
-.hero__meta > p,
-.hero__strip > ul {
-  opacity: var(--details, 1);
-}
-.hero__cue {
-  filter: opacity(var(--details, 1));
-}
-
 /* The whole top block waits (invisible, so font-swap reflow can't count as a
    layout shift) until fonts are in and the intro starts. */
 .js .hero__top {
