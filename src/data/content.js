@@ -43,7 +43,7 @@ export default {
     bio: "I'm Saif. I love building things, reading, and thinking about how stuff works. I'm studying AI because I want to understand how machines learn, and I enjoy figuring out how computers work underneath.",
     // Shown at the end of About, as compact rows.
     currently: [
-      { label: "Now building", value: "Lecture Notes AI" },
+      { label: "Recently shipped", value: "Lapse" },
       { label: "Reading", value: "Tuesdays with Morrie" },
     ],
     pathTitle: "Path",
