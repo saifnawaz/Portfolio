@@ -68,6 +68,21 @@ export default {
     title: "Selected projects",
     items: [
       {
+        slug: "lapse",
+        title: "Lapse",
+        blurb:
+          "Upload a lecture PDF and get notes, MCQs and flashcards from Gemini. Quizzes bring back the topics you miss, flashcards are spaced with SM-2, and each topic gets a progress bar. The public demo gives every visitor their own progress.",
+        role: "Solo",
+        stack: ["Python", "FastAPI", "Gemini", "Postgres", "Vercel"],
+        status: "Live",
+        image: "/images/projects/lapse-home.webp",
+        imageAlt: "Lapse home page: the heading \"Read it once. Fix what slips.\" next to a Today box with cards due, weakest topic and last score",
+        links: [
+          { label: "Live demo", url: "https://lapse-notes.vercel.app" },
+          { label: "GitHub", url: "https://github.com/saifnawaz/lecture-notes-ai" },
+        ],
+      },
+      {
         slug: "agent-sprint",
         title: "Agent Sprint",
         blurb:
