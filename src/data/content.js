@@ -71,9 +71,9 @@ export default {
         slug: "lapse",
         title: "Lapse",
         blurb:
-          "Upload a lecture PDF and get notes, MCQs and flashcards from Gemini. Quizzes bring back the topics you miss, flashcards are spaced with SM-2, and each topic gets a progress bar. The public demo gives every visitor their own progress.",
+          "Upload a lecture PDF, get notes, MCQs and flashcards, then see what you keep getting wrong.",
         role: "Solo",
-        stack: ["Python", "FastAPI", "Gemini", "Postgres", "Vercel"],
+        stack: ["Python", "FastAPI", "Gemini API", "PostgreSQL", "Vercel"],
         status: "Live",
         image: "/images/projects/lapse-home.webp",
         imageAlt: "Lapse home page: the heading \"Read it once. Fix what slips.\" next to a Today box with cards due, weakest topic and last score",
