@@ -143,13 +143,15 @@ export default {
     stackTitle: "Stack",
     // usedIn: project slugs (see projects.items[].slug). Empty shows "Coursework".
     stack: [
-      { name: "JavaScript", tag: "Web", usedIn: ["library"] },
+      { name: "JavaScript", tag: "Web", usedIn: ["lapse", "library"] },
       { name: "PHP / Laravel", tag: "Backend", usedIn: ["tika"] },
-      { name: "Python", tag: "AI / Scripting", usedIn: ["agent-sprint", "library"] },
+      { name: "Python", tag: "AI / Scripting", usedIn: ["lapse", "agent-sprint", "library"] },
+      { name: "FastAPI", tag: "Backend", usedIn: ["lapse"] },
       { name: "C / C++", tag: "Core", usedIn: [] },
       { name: "Java", tag: "Core", usedIn: [] },
-      { name: "SQL", tag: "Data", usedIn: ["tika"] },
-      { name: "Git / GitHub", tag: "Tools", usedIn: ["agent-sprint", "tika", "library"] },
+      { name: "SQL", tag: "Data", usedIn: ["lapse", "tika"] },
+      { name: "Git / GitHub", tag: "Tools", usedIn: ["lapse", "agent-sprint", "tika", "library"] },
+      { name: "Vercel", tag: "Deploy", usedIn: ["lapse"] },
     ],
     certificatesTitle: "Certificates",
     // image: a scan or photo of the certificate (e.g. "/images/certs/aptech.webp").
